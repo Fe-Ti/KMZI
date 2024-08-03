@@ -1,0 +1,560 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath} 
+\usepackage{mathtext}
+\usepackage{amsfonts}
+\usepackage[english,russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}            % внутренняя кодировка  TeX
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{geometry}
+\geometry{left=3cm}
+\geometry{right=1.5cm}
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{indentfirst}
+\setlength{\parindent}{1cm}
+\usepackage{soul}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fvextra}
+\usepackage{tabularx}
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+\fvset{breaklines=true, breakafter=\space}
+
+
+\begin{document}
+	\begin{center}
+		\begin{tabularx}{\textwidth}[c]{c p{12cm}}
+			\raisebox{-1.1\totalheight}{\includegraphics[width=0.15\linewidth]{../../bauman_logo.png}}
+			&\begin{center}
+				\textbf{ Министерство науки и высшего образования Российской Федерации \\
+					Федеральное государственное бюджетное образовательное учреждение 
+					высшего образования \\
+					"<Московский государственный технический университет
+					имени Н.Э. Баумана \\
+					(национальный исследовательский университет)"> \\ (МГТУ им. Н.Э. Баумана)} \\
+				
+			\end{center}
+		\end{tabularx}
+	\end{center}
+	
+	\begin{tabularx}{\linewidth}[c]{p{1cm} c}
+		&\\&\\ &\\ &\\ &\\ &\\ &\\ &\\ &\\ &\\ &\\
+		&\Large\textbf{Домашнее задание №1}
+		\\ &По дисциплине "Криптографические методы защиты информации"
+	\end{tabularx}
+	
+	
+	\begin{center}
+		\begin{tabularx}{\textwidth}[c]{l c c}
+			&&\\ &&\\ &&\\ &&\\ &&\\ &&\\ 
+			Студент: & Кравченко Т.М., группа ИУ8Ц-104  &  \\
+			&&\\
+			Преподаватель: & Поляков М.В. & \\
+		\end{tabularx}
+	\end{center}
+	
+	
+	
+	
+	\pagebreak
+	
+	\tableofcontents
+	
+	\pagebreak
+	\section{Задача 1}
+	Дешифровать текст, зашифрованный аффинным шифром
+	
+\begin{Verbatim}
+BXWMFFGZWEGRXWJGSMBURWIFQIZIMHRXMVWBGESKVSBGBKBGIZEGRXWJCXWJWWME
+XHWBBWJGZMZMHRXMVWBGSQMRRWNBIGBSZKQWJGEWAKGTMHWZBWZEJURBWNKSGZOM
+SGQRHWQMBXWQMBGEMHFKZEBGIZMZNEIZTWJBWNVMEYBIMHWBBWJBXWFIJQKHMKSW
+NQWMZSBXMBWMEXHWBBWJWZEJURBSBIIZWIBXWJHWBBWJMZNVMEYMOMGZQWMZGZOB
+XWEGRXWJGSWSSWZBGMHHUMSBMZNMJNSKVSBGBKBGIZEGRXWJCGBXMJKHWOITWJZG
+ZOCXGEXHWBBWJOIWSBICXGEXMSSKEXGBXMSBXWCWMYZWSSWSIFMHHSKVSBGBKBGI
+ZEGRXWJSWMEXHWBBWJGSWZEGRXWJWNCGBXBXWFKZEBGIZBXWEGRXWJSRJGQMJUCW
+MYZWSSEIQWSFJIQBXWFMEBBXMBGFBXWEJURBMZMHUSBEMZNGSEITWJVUQWMZSIFF
+JWAKWZEUMZMHUSGSVJKBWFIJEWOKWSSGZOIJIBXWJCGSWBXWRHMGZBWLBIFBCIEG
+RXWJBWLBEXMJMEBWJSBXWZBXWYWUEMZVWIVBMGZWNVUSIHTGZOMSGQKHBMZWIKSW
+AKMBGIZSGZEWCWYZICMMZNQMJWJWHMBGTWHURJGQWBXGSEMZVWKSWNBIJMRGNHUN
+GSEMJNQMZUFMHSWYWUSGZMZMKBIQMBWNSUSBWQBXWSMQWBURWIFBJMZSFIJQMBGI
+ZKSWNGZMFFGZWEGRXWJSGSKSWNGZHGZWMJEIZOJKWZBGMHOWZWJMBIJSMBURWIFR
+SWKNIJMZNIQZKQVWJOWZWJMBIJBXGSOWZWJMBIJGSZIBMEJURBIOJMRXGEMHHUSW
+EKJWRSWKNIJMZNIQZKQVWJOWZWJMBIJFIJBXWSMQWJWMSIZBXMBBXWMFFGZWEGRX
+WJGSZIBSWEKJW
+\end{Verbatim}
+	
+	\subsection{Решение}
+	
+	Поиск ключа --- пары чисел $a$ и $b$ --- производился методом перебора. 
+	Грубо оценить количество вариантов можно как $26^2 = 676$.
+		
+	Уравнение для аффинного шифра выглядит следующим образом:
+	$$
+	y = ax + b \mod 26 ~~~ \Rightarrow ~~~ x = a^{-1}(x - b) \mod 26
+	$$
+	
+	Для корректной работы шифра параметр $a$ должен быть обратим, соответственно, достаточно перебрать не более $\phi(26) = 12$ вариантов его значений: $\{1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25\}$. Отсюда число возможных комбинаций параметров равно $26 \cdot 12 = 312$.
+	
+	Для того чтобы не тратить время на дешифрование полного текста с помощью ложных ключей, можно взять участок $n_0 \ge \frac{\log_2 312}{R_L \cdot \log_2 26} = 3$.
+	
+	В целях ускорения процесса поиска ключа был написан скрипт на языке Python 3, который приведён в разделе Приложение.
+	
+	\section{Задача 2}
+	
+	Дешифровать текст, зашифрованный шифром Вижинера. Найти длину ключевого слова и само слово
+\begin{Verbatim}
+VYCPYTKECRBDJVPXLOVPNTHTOFLDTZRYYQXHKTQJUGVZRJMWQEAXIVGIUWXFGVYR
+AZGKRTKWPRLPEDJRZTMWUDYEISFKMXMGPLKTKWEVOJBJCCCCMSPTPNIHGUSHBBIR
+QXFDNVKPMVGDYIBQCCDJGQVZMCTBFTMCOSTKCSUOEBRDTZGKRTKHJVDDKAWCYJLS
+FDCPGGVYYIXOEYJTMHGICCVFAGRHMCQECDMVGIJTMHGIYCWPCTIPZOKEKTTBKEEI
+ASEZNWXFKJCHLSPKGPEZARQITBFRPSLIDJRXMIVZMCVWRYCGPWVYYGNZGXMKXFPZ
+LVPVKTFAXHVVPVHSUKMLAWEYYHLIEYGIAOUKFTPSCBLTLGGJMUTZNJSQLHKKSIBC
+PTGEASTJCPVVNVRIXFKJCCVWRYCGXRYZRWMVGWSCVHKFLIASEZNWXFUGPXFOTPUT
+TYPVQHVCOVQUKCOKFTYOEKRWTHKWRWXQTPNITBCCWHMQCEBXLQQMCGUMOVYCLCHW
+PTJIGEANTBCCWHBGDISIXTQIATZIGJQXGUQIMIASTNGHXHJVNATWPKCMMCHKUDVW
+RYCGMSZKAWTFCTRTKGVYCCMVGBCNVOPSCDUHCZLTWPAJMAOWPXYHBAWCRPGSQLQT
+JICKGDGGKEATPSMEMLTOPUKPKSTVJPMWXVJNIFKDCIAWUTYCUSWJCSMCTRNXWZAU
+GHVOTUKPGMHRJHXYGPQXGOPRSIHACKCSLMUKCBMVGJYBXHAGCDYHTRLHYCTDYIBC
+PLQTWWPRDUBBGTGEASTJGHNGGUGCEWPVYGVCPXPJXBVZYAZSPVPPMCTJYIRDGFDE
+LSWUMGTBFFKCNADVPVXBGIYIHFVYGHZSPVPPMCTZQCHHCTPNIHQXPPIVKTYAEMUV
+AJKSRJCJWCTRLSHAPLKQXFIVLTKOVFPUHFVYCHTAGICPLCPKFPMHJVYUYWPVAXIV
+GIGHGCVJCRNF
+\end{Verbatim}
+
+	\subsection{Решение}
+	
+	Дешифровку шифра Вижинера произведём в два этапа: поиск длины ключа через индекс совпадений и частотный анализ для получения самого ключа. В разделе Приложение представлен скрипт автоматизирующий подсчёт индекса совпадений и частот символов. 
+	
+	Для поиска длины ключа посчитаем индексы совпадений для вариантов от 1 до 10 (референс рассчитывается из фрагмента "<Treasure Island"> приведённого к подходящему виду):
+	\begin{Verbatim}
+	[stage 1] Enter command (l - select length, key - start kay guessing, kic - calc kappa IC, ff - finish stage):kic
+	Max useful length: 972
+	IC should be close to: 0.06569397115437749
+	Enter limit key length:10
+	Key length 1 gives ic=0.035015447991761074
+	Key length 2 gives ic=0.03505154639175258
+	Key length 3 gives ic=0.04231166150670795
+	Key length 4 gives ic=0.03305785123966942
+	Key length 5 gives ic=0.045501551189245086
+	Key length 6 gives ic=0.06728778467908902
+	Key length 7 gives ic=0.04145077720207254
+	Key length 8 gives ic=0.03734439834024896
+	Key length 9 gives ic=0.03842159916926272
+	Key length 10 gives ic=0.04261954261954262
+	\end{Verbatim}
+	
+	Из полученной картины можно предположить, что ключ имеет длину равную 6.
+	
+	Перейдём к подбору ключа.\footnote{Здесь стоит отметить, что при отладке программы сразу после получения длины ключа, было подставлено слово "<CRYPTO">, которое было на семинаре, и оно совершенно случайно подошло...}
+	При известной длине, для шифра Вижинера становится применим частотный анализ. Для этого была составлена таблица, в которой по букве "<Е"> довольно быстро можно прийти к ключу "<CRYPIO">, который даёт текст близкий к предыдущей задаче. Следующий кандидат на предпоследний символ ключа --- "<Т">.
+	
+	В итоге длина ключа 6, ключевое слово "<CRYPTO">. 
+	
+	\section{Задача 3}
+
+	Дан открывок из литературного произведения. Часть этого текста (непрерывным блоком) была зашифрована шифром Хилла с матрицей размерности 3. Найти матрицу.
+	
+	Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever
+	.... It is the image of the ungraspable phantom of life; and this is the key to it all.
+	
+	Шифртекст:
+	
+\begin{Verbatim}
+YDFRBCNXICSDDORSHMCZROVCLZYSRAMYMFVCOGTQXPCGUJCHESEVYRWXCQWL
+KULRNWPQHYDFWQKJKNOJGYOZXJAVPCJKNGPMTOJZGYUUGMBCSQZONFTROMAF
+EPRJKNKHDODYYDFXWIYIXLBUMFNKIKPUEFBIYPACYDFBQAYHJFGVEMAXAZTU
+IYQFCOZIMQWLGNVZQICTUZZQOOPPRAYYVIJKIHULCTNHVEWRBMWBTGIGPSKQ
+SEZHROAADVBWOXNWGGGZLCPRQAHJWRRHGMYVOUCRXKEMJRSKEPRKQXMKFNAC
+EEQYDFHKRVEANQURVJUUJOUNPHIYOZBXOOQLNGGKJIYDFMNCKIKUVRUJUOOP
+PRAMVSUMBMGURKIIWLHTIDPUBLUPBMADQXRESHXKCWCENYYWNWTBIYICVFPT
+GWHQVTMUBDCHJNCXYMLAFCGZDVSOQLPTOGPUOPNMAFMNFCZVSRAHUWZPGRKW
+LUVVCQUVRYXWUWGMAFFMCHGDOKBVEYHNBHROGWUQUKVENPOLMZZOQODQIAZF
+WOYOSEACQBSEGKSNDHQQQMWOWLUSKFZZMEMJXIXOQPJVYBWVNODQXPUXNISR
+IDWDMUYPHVKGVOWROEDDIPSHKLYWEUGZLMCXDMFSQGGFNSMASTMPLYIGWDDI
+VWSDZUJKNNYUSULPOLXOIKTNVOWMAFMNFBCMABRRCCPTUAQVAVUCWXMDKUVR
+EXGMNFTMKZMRYMLEMWADQOQOQQBJKNPHEAYHAFXYOZTGUPSVJKNCSMCCBECD
+XOIBGAEJZKJZGUIIXEAVUZUAJKNBDYIYQCEOGMXFICPZWMXASVUJKNYRMXRE
+NOWYSVLINHIDMBZTCGHPSXSGAWIXGLMIJAUTCMLSRSQBBCVCIKIWASREMUBM
+HMMZQTGMBQXPNVMUBMPUVMZZYDFDTWZFNSRAHUWJJCIGWIKGOJGIMNEJZAID
+\end{Verbatim}
+	\subsection{Решение}
+	
+	Сперва приведём текст к подходящему виду, а именно оставим только буквы латинского алфавита.
+	
+\begin{Verbatim}
+sage: sss = ''
+sage: for ch in string:
+....:     if ord(ch) >= 97 and ord(ch) <= 122:
+....:         sss += ch.upper()
+....:     elif ord(ch) >= 65 and ord(ch) <= 90:
+....:         sss += ch
+....:     else:
+....:         pass
+\end{Verbatim}
+
+В итоге строка пример следующий вид:
+
+\begin{Verbatim}
+'CALLMEISHMAELSOMEYEARSAGONEVERMINDHOWLONGPRECISELYHAVINGLIT
+TLEORNOMONEYINMYPURSEANDNOTHINGPARTICULARTOINTERESTMEONSHORE
+ITHOUGHTIWOULDSAILABOUTALITTLEANDSEETHEWATERYPARTOFTHEWORLDI
+TISAWAYIHAVEOFDRIVINGOFFTHESPLEENANDREGULATINGTHECIRCULATION
+WHENEVERIFINDMYSELFGROWINGGRIMABOUTTHEMOUTHWHENEVERITISADAMP
+DRIZZLYNOVEMBERINMYSOULWHENEVERIFINDMYSELFINVOLUNTARILYPAUSI
+NGBEFORECOFFINWAREHOUSESANDBRINGINGUPTHEREAROFEVERYFUNERALIM
+...
+LUNGEDINTOITANDWASDROWNEDBUTTHATSAMEIMAGEWEOURSELVESSEEINALL
+RIVERSANDOCEANSITISTHEIMAGEOFTHEUNGRASPABLEPHANTOMOFLIFEANDT
+HISISTHEKEYTOITALL'
+\end{Verbatim}
+
+	Поскольку $Y=AX$, где $A$ --- квадратная матрица размера $3\times3$, то для получения элементов матрицы необходимо решить СЛАУ размера из 9 уравнений над кольцом $\mathbb{Z}_{26}$. Для автоматизации процесса был написан скрипт, приведённый в приложении.
+	
+	После запуска получим примерно следующий вывод:
+\begin{Verbatim}
+	HER DSE YEW Error: (21, 25, 7) != (4, 17, 4)
+	[14 14  5]
+	[ 7 24 20]
+	[ 7 11 16]
+	Non-valid solution
+	...
+	PON THE MAG Error: (19, 7, 7) != (8, 2, 18)
+	[20  4  9]
+	[17 22 14]
+	[16 21 23]
+	Non-valid solution
+\end{Verbatim}
+
+	Вывод говорит о том, что первые 9 символов дают корректный результат при расшифровке имеющимся ключом, а остальные начинают не совпадать с открытым текстом.
+	
+	Согласно документации к SageMath, метод \verb|solve_right(...)|, который используется в скрипте, выдаёт решение, даже если некоторые уравнения в СЛАУ линейно зависимы, что в свою очередь даёт матрицу, которая корректно преобразует лишь 9 символов (или вовсе не является обратимой, т.е. не может быть ключом). Соответственно, первым "<наивным"> решением этой проблемы будет проверка ранга матрицы СЛАУ через приведение её к ступенчатому виду, однако в $\mathbb{Z}_{26}$ не все элементы обратимы и встроенная функция вычисления ранга также не определена для таких колец. 
+	
+	Второй вариант --- вслепую увеличить размер системы. Поэтому заменим квадрат на куб (параметр \verb|power| в начале скрипта), получив тем самым 27 уравнений в системе и снова запустим скрипт. На 80 символе система даст корректный ключ:
+\begin{Verbatim}
+NOT HIN GPA RTI CUL ART OIN TER EST MEO NSH ORE ITH OUG HTI WOU LDS AIL ABO UTA LIT TLE AND SEE THE WAT ERY PAR TOF THE WOR LDI TIS AWA YIH AVE OFD RIV ING OFF THE SPL EEN AND REG ULA TIN GTH ECI RCU LAT ION WHE NEV ERI FIN DMY SEL FGR OWI NGG RIM ABO UTT HEM OUT HWH ENE VER ITI SAD AMP DRI ZZL YNO VEM BER INM YSO ULW HEN EVE RIF IND MYS ELF INV OLU NTA RIL YPA USI NGB EFO REC OFF INW ARE HOU SES AND BRI NGI NGU PTH ERE ARO FEV ERY FUN ERA LIM EET AND ESP ECI ALL YWH ENE VER MYH YPO SGE TSU CHA NUP PER HAN DOF MET HAT ITR EQU IRE SAS TRO NGM ORA LPR INC IPL ETO PRE VEN TME FRO MDE LIB ERA TEL YST EPP ING INT OTH EST REE TAN DME THO DIC ALL YKN OCK ING PEO PLE SHA TSO FFT HEN IAC COU NTI THI GHT IME TOG ETT OSE AAS SOO NAS ICA NTH ISI SMY SUB STI TUT EFO RPI STO LAN DBA LLW ITH APH ILO SOP HIC ALF LOU RIS HCA TOT HRO WSH IMS ELF UPO NHI SSW ORD IQU IET LYT AKE TOT HES HIP THE REI SNO THI NGS URP RIS ING INT HIS IFT HEY BUT KNE WIT ALM OST ALL MEN INT HEI RDE GRE ESO MET IME ORO THE RCH ERI SHV ERY NEA RLY THE SAM EFE ELI NGS TOW ARD STH EOC EAN WIT HME THE REN OWI SYO URI NSU LAR CIT YOF THE MAN HAT TOE SBE LTE DRO UND BYW HAR VES ASI NDI ANI SLE SBY COR ALR EEF SCO MME RCE SUR ROU NDS ITW ITH HER SUR FRI GHT AND LEF TTH EST REE TST AKE YOU WAT ERW ARD ITS 
+[15  8  8]
+[22  8  1]
+[14  5  6]
+Got invertible solution:
+[15  8  8]
+[22  8  1]
+[14  5  6]
+The ciphertext possibly starts at 80
+\end{Verbatim}
+	
+	В итоге ключ равен:
+	$$
+	A = \begin{pmatrix}
+		15 & 8 & 8 \\
+		22 & 8 & 1 \\
+		14 & 5 & 6
+	\end{pmatrix}
+	$$
+
+	\pagebreak
+	\section{Приложение}
+	\subsection{Программа к задаче 1 (Python 3)}
+
+\begin{Verbatim}
+from math import gcd
+msg = input("Enter encrypted phrase: ")
+is_solved = False
+# using equations   y = E(x) = ax+b
+#               and x = D(y) = (a^-1)(y - b)
+a = 1 # initial conditions
+b = 0
+decrypt_size = 5
+possible_a = set()
+possible_b = set()
+module = 26
+for i in range(1,module+1):
+    possible_b.add(i)
+    if gcd(i, module) == 1:
+        possible_a.add(i)
+# reusing generator for table of inverse elements from previous semester
+print(f"Calculating inverse (multiplicative) elements in field $\\mathbb{{F}}_{{{module}}}$.\n")
+elements = {i for i in range(module)}
+inverse_table = [':) Nope'] + [ 0 for i in range(1, module) ]
+# index of element corresponds to inverse one
+# dumb stupid way for getting inverse elements :)
+for i in range(1, module):
+	for j in elements:
+		if (i * j) % module == 1:
+			elements.remove(j)
+			inverse_table[i] = j
+			# ~ print(f"Mutually inverse elements found: {i} and {j}")
+			break
+
+def decrypt_aff(msg, a, b):
+    global module, decrypt_size
+    ctr = 0
+    string = ''
+    for ch in msg:
+        ctr += 1
+        string += chr(65 + (inverse_table[a]*(ord(ch) - b - 65)) % module)
+        if ctr == decrypt_size:
+            break
+    return string
+
+print(decrypt_aff(msg, a, b))
+current_possible_b = possible_b
+while True:
+    cmd = input("Enter command (a, b, s, ff):").strip()
+    if cmd == 'a':
+        try:
+            print(possible_a)
+            a = int(input("Enter new a:"))
+            possible_a.remove(a)
+            current_possible_b = possible_b
+            for b in current_possible_b:
+                print(f"b = {b}: {decrypt_aff(msg, a, b)}")
+        except:
+            print("Input error.")
+    elif cmd == 'b':
+        try:
+            print(possible_b)
+            b = int(input("Enter new b:"))
+            current_possible_b.remove(b)
+        except:
+            print("Input error.")
+    elif cmd == 's':
+        try:
+            print(f"max: {len(msg)}")
+            decrypt_size = int(input("Enter new size to be decrypted:"))
+        except:
+            print("Input error.")
+    elif cmd == 'ff':
+        break
+
+decrypt_size = len(msg)
+print(decrypt_aff(msg, a, b))
+\end{Verbatim}
+	
+	\pagebreak
+	\subsection{Программа к задаче 2 (Python 3)}
+	
+	\begin{Verbatim}
+msg = input("Enter encrypted phrase: ")
+max_diff = 0.05
+is_solved = False
+module = 26
+
+def count_letters(text):
+    table = dict()
+    for ch in text:
+            if ch not in table:
+                    table[ch] = 1
+            else:
+                    table[ch] += 1
+    return table
+# sample text for IC (fragments from "Treasure Island")
+sample = "HOWTHATPERSONAGEHAUNTEDMYDREAMSINEEDSCARCELYTELLYOUONSTORMYNIGHTSWHENTHEWINDSHOOKTHEFOURCORNERSOFTHEHOUSEANDTHESURFROAREDALONGTHECOVEANDUPTHECLIFFSIWOULDSEEHIMINATHOUSANDFORMSANDWITHATHOUSANDDIABOLICALEXPRESSIONSNOWTHELEGWOULDBECUTOFFATTHEKNEENOWATTHEHIPNOWHEWASAMONSTROUSKINDOFACREATUREWHOHADNEVERHADBUTTHEONELEGANDTHATINTHEMIDDLEOFHISBODYTOSEEHIMLEAPANDRUNANDPURSUEMEOVERHEDGEANDDITCHWASTHEWORSTOFNIGHTMARESANDALTOGETHERIPAIDPRETTYDEARFORMYMONTHLYFOURPENNYPIECEINTHESHAPEOFTHESEABOMINABLEFANCIESBUTTHOUGHIWASSOTERRIFIEDBYTHEIDEAOFTHESEAFARINGMANWITHONELEGIWASFARLESSAFRAIDOFTHECAPTAINHIMSELFTHANANYBODYELSEWHOKNEWHIMTHEREWERENIGHTSWHENHETOOKADEALMORERUMANDWATERTHANHISHEADWOULDCARRYANDTHENHEWOULDSOMETIMESSITANDSINGHISWICKEDOLDWILDSEASONGSMINDINGNOBODYBUTSOMETIMESHEWOULDCALLFORGLASSESROUNDANDFORCEALLTHETREMBLINGCOMPANYTOLISTENTOHISSTORIESORBEARACHORUSTOHISSINGINGOFTENIHAVEHEARDTHEHOUSESHAKINGWITHYOHOHOANDABOTTLEOFRUMALLTHENEIGHBOURSJOININGINFORDEARLIFEWITHTHEFEAROFDEATHUPONTHEMANDEACHSINGINGLOUDERTHANTHEOTHERTOAVOIDREMARKFORINTHESEFITSHEWASTHEMOSTOVERRIDINGCOMPANIONEVERKNOWNHEWOULDSLAPHISHANDONTHETABLEFORSILENCEALLROUNDHEWOULDFLYUPINAPASSIONOFANGERATAQUESTIONORSOMETIMESBECAUSENONEWASPUTANDSOHEJUDGEDTHECOMPANYWASNOTFOLLOWINGHISSTORYNORWOULDHEALLOWANYONETOLEAVETHEINNTILLHEHADDRUNKHIMSELFSLEEPYANDREELEDOFFTOBEDALLTHETIMEHELIVEDWITHUSTHECAPTAINMADENOCHANGEWHATEVERINHISDRESSBUTTOBUYSOMESTOCKINGSFROMAHAWKERONEOFTHECOCKSOFHISHATHAVINGFALLENDOWNHELETITHANGFROMTHATDAYFORTHTHOUGHITWASAGREATANNOYANCEWHENITBLEWIREMEMBERTHEAPPEARANCEOFHISCOATWHICHHEPATCHEDHIMSELFUPSTAIRSINHISROOMANDWHICHBEFORETHEENDWASNOTHINGBUTPATCHESHENEVERWROTEORRECEIVEDALETTERANDHENEVERSPOKEWITHANYBUTTHENEIGHBOURSANDWITHTHESEFORTHEMOSTPARTONLYWHENDRUNKONRUMTHEGREATSEACHESTNONEOFUSHADEVERSEENOPENIASKEDHIMWHATWASFORHISSERVICEANDHESAIDHEWOULDTAKERUMBUTASIWASGOINGOUTOFTHEROOMTOFETCHITHESATDOWNUPONATABLEANDMOTIONEDMETODRAWNEARIPAUSEDWHEREIWASWITHMYNAPKININMYHANDWELLMOTHERWASUPSTAIRSWITHFATHERANDIWASLAYINGTHEBREAKFASTTABLEAGAINSTTHECAPTAINSRETURNWHENTHEPARLOURDOOROPENEDANDAMANSTEPPEDINONWHOMIHADNEVERSETMYEYESBEFOREHEWASAPALETALLOWYCREATUREWANTINGTWOFINGERSOFTHELEFTHANDANDTHOUGHHEWOREACUTLASSHEDIDNOTLOOKMUCHLIKEAFIGHTERIHADALWAYSMYEYEOPENFORSEAFARINGMENWITHONELEGORTWOANDIREMEMBERTHISONEPUZZLEDMEHEWASNOTSAILORLYANDYETHEHADASMACKOFTHESEAABOUTHIMTOO"
+
+def ic_and_prob(text):
+    prob_table = dict()
+    ic = 0
+    for ch, cnt in count_letters(text).items():
+        prob_table[ch] = cnt / len(text)
+        ic += (cnt / len(text))**2
+    return ic, prob_table
+
+def kappa_ic(text1, text2):
+    ic = 0
+    for i in range(len(text1)):
+        ic += text1[i] == text2[i]
+    ic = ic / len(text1)
+    return ic
+
+def closest_in_ref(ref, prob):
+    global max_diff
+    symbol = '-'
+    min_diff = max_diff
+    
+    for key in ref:
+        # ~ print(key,prob - ref[key], abs(prob - ref[key]), min_diff)
+        if abs(prob - ref[key]) < min_diff:
+            symbol = key
+            min_diff = abs(prob - ref[key])
+    return symbol
+
+def print_table(table):
+    keys = list(table[0].keys())
+    keys.sort()
+    for i, row in enumerate(table):
+        print(f"{i-2:3}",end='')
+        for key in keys:
+            if key in row:
+                if type(row[key]) == float and i < 2:
+                    print(f" {row[key]:7.4f}    ", end='')
+                elif type(row[key]) == float:
+                    print(f" {row[key]:7.4f} {closest_in_ref(table[0],row[key])}? ", end='')
+                else:
+                    print(f" {row[key]:^7.4}    ", end='')
+            else:
+                print(f" {'-':^7.4}    ", end='')
+        print()
+
+# 65 is magic constant for ascii offset
+def decrypt_vig(msg, key, decrypt_size):
+    global module
+    string = ''
+    k = 0
+    for i, ch in enumerate(msg):
+        if i > decrypt_size:
+            break
+        string += chr((ord(ch) - ord(key[k])) % module + 65)
+        k = (k + 1) % len(key)
+    return string
+
+key_len = 1
+key = ''
+while not(is_solved): 
+    print(f"Selected key length is {key_len}")
+    cmd = input(f"[stage 1] Enter command (l - select length, key - start kay guessing, kic - calc kappa IC, ff - f* finish stage):").strip()
+    if cmd == 'l':
+        try:
+            print(f"Max useful length: {len(msg)}")
+            key_len = int(input("Enter key length:"))
+            key = ['A'] * key_len
+        except:
+            print("Input error.")
+    elif cmd == 'kic':
+        try:
+            print(f"Max useful length: {len(msg)}")
+            print(f"IC should be close to: {ic_and_prob(sample)[0]}")
+            key_len = int(input("Enter limit key length:"))
+            for i in range(1,key_len+1):
+                text1 = msg[:-i]
+                text2 = msg[i:]
+                print(f"Key length {i} gives ic={kappa_ic(text1, text2)}")
+        except:
+            print("Input error.")
+    elif cmd == 'key':
+        # ~ key = list(input('key:'))
+        while not(is_solved):
+            cmd = input(f"[stage 2] Enter command (k, scroll, decrypt, freq): ").strip()
+            if cmd == 'k':
+                try:
+                    key = []
+                    for ch in input("Enter key:").strip():
+                        key.append(ch)
+                except:
+                    print("Input error.")
+            elif cmd == "scroll":
+                try:
+                    scroll_ind = int(input("Enter index:"))
+                    tmpkey = key[:]
+                except:
+                    print("Input error.")
+                for ch in range(ord('A'), ord('Z')+1):
+                    tmpkey[scroll_ind] = chr(ch)
+                    print(f"key={tmpkey}, {decrypt_vig(msg, tmpkey, 2 * key_len)}")
+                
+            elif cmd == "freq":
+                ic, prob = ic_and_prob(sample)
+                prob_table = [prob, {key:f"{key},{ord(key)-65}" for key in prob}]
+                for offset in range(key_len):
+                    text = [msg[i] for i in range(offset, len(msg), key_len)]
+                    ic, prob = ic_and_prob(text)
+                    print(f"Offset={offset}, IC={ic}")
+                    prob_table.append(prob)
+                print(msg)
+                print_table(prob_table)
+            elif cmd == "decrypt":
+                try:
+                    decrypt_size = int(input("Enter size to decrypt:"))
+                    print(decrypt_vig(msg, key, decrypt_size))
+                except:
+                    print("Input error.")
+    elif cmd == 'ff':
+        break
+decrypt_size = len(msg)
+print(key, decrypt_vig(msg, key, decrypt_size))
+	\end{Verbatim}
+	\pagebreak
+	\subsection{Программа к задаче 3 (Sage)}
+	\begin{Verbatim}
+# Main equation is:
+# Ax = y
+
+plaintext = "CALLM...ITALL"
+ciphertext = "YDFRBCN...JGIMNEJZAID"
+#ciphertext = "RBCNXICSD...UWJJCIGWIKGOJGIMNEJZAID"
+
+ASCII_offset = ord('A')
+
+module = 26
+Zmod = IntegerModRing(module)
+matrix_size = 3
+power = 3   # power of matrix_size which determines height of a system (e.g. 3^3)
+offset = 0  # Y vector offset
+
+def get_y_vector(encrypted_text, matrix_size, start):
+    global Zmod, ASCII_offset
+    y_str = encrypted_text[start:start+matrix_size]
+    y_vec = []
+    for ch in y_str:
+        y_vec.append(ord(ch) - ASCII_offset)
+    return vector(Zmod,y_vec)
+
+def get_xA_matrix(plain_text, matrix_size, start, power=2):
+    global Zmod, ASCII_offset
+    x_str = plain_text[start:start+matrix_size^power]
+    xmatrix = [[0 for i in range(matrix_size^2) ] for j in range(matrix_size^power)]
+    for i, ch in enumerate(x_str):
+        for rownum in range(matrix_size):
+            xmatrix[(i // matrix_size) * matrix_size + rownum][i % matrix_size + rownum * matrix_size] = ord(ch) - ASCII_offset
+    return Matrix(Zmod, xmatrix)
+
+def check_solution(A, start, encrypted, plain, matrix_size):
+    global Zmod, ASCII_offset
+    invA = A^(-1)
+    for i in range(0, len(encrypted), matrix_size):
+        # ~ print(i)
+        y_vec = get_y_vector(encrypted, matrix_size, i)
+        x_vec = invA * y_vec
+        x_ref = get_y_vector(plain, matrix_size, start + i)
+        if x_vec != x_ref:
+            print("Error:", x_vec,"!=", x_ref)
+            return False
+        x = x_vec.change_ring(ZZ)
+        for chnum in x:
+            print(chr(chnum + ASCII_offset), end='')
+        print(end=' ')
+    print()
+    return True
+
+
+Y = get_y_vector(ciphertext, matrix_size^power, offset)
+for i in range(len(plaintext)-len(ciphertext)):
+    XA = get_xA_matrix(plaintext, matrix_size, i, power)
+    try:
+        A_vec = XA.solve_right(Y)
+        A = Matrix(Zmod, matrix_size, A_vec)
+        if A.is_invertible():
+            is_valid = check_solution(A, i, ciphertext, plaintext, matrix_size)
+            pretty_print(A)
+            if is_valid:
+                print("Got invertible solution:")
+                pretty_print(A)
+                print(f"The ciphertext possibly starts at {start}")
+                break
+            else:
+                print("Non-valid solution.")
+                pass
+        else:
+            pass
+            # ~ print(f"Solution matrix is not invertible at {i}")
+    except Exception as e:
+        pass
+        # ~ print(f"{e} at {i}")
+
+\end{Verbatim}
+
+\end{document}
