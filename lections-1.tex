@@ -619,9 +619,53 @@ $$
 	
 \pagebreak
 \lection{Лекция 5}
-\defn
+\subsection{Критерий биективности. Алгебраическая зависимость}
 
-	
+\defn
+Отображение $g: X^n \rightarrow X$ называется отличным от константы, если не существует такого $b \in X$, что
+$$
+\forall (x_1, ... , x_n) \in X^n: ~ g(x_1, ... , x_n) = b.
+$$
+
+\defn
+Множество $\Lambda = \{\lambda_1, ..., \lambda_r\} \subseteq P_{n,m}(X)$ называется алгебраически зависимым, если существуют $b \in X$ и отличное от константы $g: X^r \rightarrow X$ такие, что выполняется
+$$
+\forall \vec{x} = (x_1, ... , x_n) \in X^n: ~ g(\lambda_1(\vec{x}), ..., \lambda_r(\vec{x})) = b.
+$$
+В противном случае множество $\Lambda$ называется независимым.
+
+\theorem{Пусть $X$ --- поле, $n \ge 1, n \in \mathbb{N}$. Преобразование $\phi = (\phi_1, ...,\phi_n) \in P_{n,n}(X)$ является биективным тогда и только тогда, когда множество его координатных функций $\Phi = \{\phi_1, ...,\phi_n\}$ алгебраически независимо.}
+\paragraph{Доказательство} ($\Leftarrow$) Если $\Phi$ алгебраически зависимо, то существуют такие $b \in X$ и $g:X^n \rightarrow X$ (отличное от константы), что
+$$
+\forall (x_1,...,x_n) \in X^n:~~ g(\phi_1(x_1, ..., x_n),...,\phi_n(x_1, ..., x_n)) = b .
+$$
+
+Так как $g$ отлично от константы, то существует $(\alpha_1,...,\alpha_n) \in X^n$, для которого $g(\alpha_1,...,\alpha_n) \ne b.$
+
+Если $\phi \in S(X^n)$, то существует $(\beta_1, ..., \beta_n) \in X^n$
+$(\beta_1, ..., \beta_n) = \phi^{-1}(\alpha_1,...,\alpha_n),$ для которого $g(\phi_1(\beta_1,...,\beta_n),...,\phi_n(\beta_1,...,\beta_n)) = g(\alpha_1,...,\alpha_n) \ne b.
+$ Следовательно $\phi$ небиективно.
+
+($\Rightarrow$) Пусть $\phi$ небиективно.
+
+Тогда $\phi^{-1} (\alpha_1,...,\alpha_n) = \emptyset$ для некоторого набора $(\alpha_1,...,\alpha_n) \in X^n.$
+
+Зафиксируем $a, b \in X,~ a\ne b$. И зададим функцию $g:X^n \rightarrow X$ с условием
+$$
+g(x_1,...,x_n) = \left\{\begin{aligned}
+	a,& ~\text{если} ~(x_1, ..., x_n) = (\alpha_1,...,\alpha_n) \\
+	b,& ~\text{если} ~(x_1, ..., x_n) \ne (\alpha_1,...,\alpha_n).
+\end{aligned} \right.
+$$
+
+Так как $g$ отлична от константы, то $\forall (\beta_1, ..., \beta_n) \in X^n$ имеем
+$$
+g(\phi_1(\beta_1,...,\beta_n),...,\phi_n(\beta_1,...,\beta_n)) = b.
+$$
+Соответственно $\Phi$ алгебраически зависимо. $\blacksquare$
+
+
+
 \pagebreak
 \lection{Лекция 6}
 
