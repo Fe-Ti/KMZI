@@ -55,6 +55,7 @@
 \newcommand{\defn}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
 }
 
+\newcommand{\refeq}[1]{(\ref{#1})}
 
 \newcounter{theorem}
 \newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
@@ -796,7 +797,7 @@ $$
 \paragraph{Пример}
 
 $$\begin{aligned}
-	X = \{x_0, x_1\}, ~ Y &= \{y_0,y_1,y_2\}, ~ K= \{k_0, k_1, k_2\} \\
+	X = \{x_0, x_1\}, ~ Y = \{y_0,&y_1,y_2\}, ~ K= \{k_0, k_1, k_2\} \\
 	e_{k_i}(x_j) = y_{i + j \mod 3}, ~i &= 0,1,2,~ j=0,1.	
 \end{aligned}$$
 
@@ -807,8 +808,8 @@ $$\begin{aligned}
 \subsection{Имитостойкость}
 
 \begin{tikzcd}
-	&\text{Активные действия нарушителя}\dlar \drar &  \\
-	\text{Попытки подмены} & &\text{Попытки имитации сообщения}
+	&\begin{matrix}\text{Активные действия}\\ \text{нарушителя}\end{matrix}\dlar \drar &  \\
+	\text{Подмена сообщения} & &\text{Имитация сообщения}
 \end{tikzcd}
 
 \begin{tikzcd}
@@ -848,6 +849,123 @@ $$
 p_{nav} = \max\{p_{im}, p_{pod}\}.
 $$
 
+\paragraph{Утв.}
+Для шифра $(X,Y,K,e,d,P(X),P(K))$ со случайными и равновероятными ключами справедлива оценка
+\begin{equation}
+	p_{im} \ge \frac{|X|}{|Y|}. \label{eq:est1}
+\end{equation}
+
+\paragraph{Доказательство}
+
+Обозначим $K(y) = \{k \in K ~|~ d_k(y) \in X\}$.
+
+\begin{itemize}
+	\item В силу равновероятности ключей $p(d_k(y)\in X) = \frac{|K(y)|}{|K|}$.
+	\item При этом $\sum_{y\in Y} |K(y)| = |X|\cdot |K|$.
+	\item Рассмотрим таблицу зашифрования
+	$$
+	\left.
+	\begin{matrix}
+		\text{Строки занумерованы ключами.} \\
+		\text{Столбцы --- открытым текстом.} \\
+		\text{На пересечении}\text{ строки с номером} ~ k \in K ~\\
+		\text{и столбца с номером} ~ x \in X ~ \\
+		\text{расположен ШТ} ~ y=e_k(x).
+	\end{matrix}
+	\right\} ~\Rightarrow ~ \begin{matrix} \sum_{y\in Y}|K(y)| - \text{число клеток}\\ \text{в таблице зашифрования}.\end{matrix}
+	$$
+	\item Отсюда получаем $$
+	p_{im} = \max \left\{\frac{|K(y)|}{|K|} ~:~ y\in Y \right\} ~\ge~ |K|^{-1} \cdot \max\{|K(y)| : y \in Y \} \ge \frac{|X| \cdot |K|}{|Y| \cdot |K|} = \frac{|X|}{|Y|} ~~~\blacksquare
+	$$
+\end{itemize}
+
+\paragraph{Задача}
+
+Найти:
+\begin{itemize}
+	\item $p_im$ для эндоморфного шифра;
+	\item $p_im$ для шифра гаммирования с равновероятной гаммой.
+\end{itemize}
+
+Из решения этой задачи можно сделать вывод, что абсолютно стойкий (по Шеннону) шифр оказывается в числе самых слабых по способности противостоять имитации
+сообщений.
+
+\paragraph{Задача}
+
+Доказать, что оценка \refeq{eq:est1} является достижимой для шифра, у которого
+$$
+e_{k_1}(x_1) = e_{k_2}(x_2) \Leftrightarrow k_1 = k_2, x_1 = x_2.
+$$
+
+Для этого нужно доказать, что $|Y| = |X| \cdot |K|$ и $\forall y \in Y : ~|K(y)| = 1$.
+
+Найти вероятность подмены.
+
+\paragraph{Утв. 2}
+Для шифра $(X,K,Y,e,d, P(X), P(K))$ случайными и равновероятными ключами справедлива оценка 
+\begin{equation}
+	p_{pod} \ge \frac{|X|-1}{|Y|-1}. \label{eq:est2}
+\end{equation}
+
+\paragraph{Доказательство}
+Пусть $K(y,y') = K(y) \bigcap K(y').$
+
+Из равновероятности ключей
+\begin{equation}
+	p_{pod} = \max \{p(d_k(y') \in X) ~|~ y \ne y' \in Y\} =\max \left\{ \frac{|K(y,y')|}{|K(y)|} ~\vline ~ y\ne y' \in Y \right\}. \label{eq:est3}
+\end{equation}
+
+Справедливо равенство (док-ть)
+\begin{equation}
+	\sum_{y' \in Y: ~ y' \ne y} |K(y, y')| = (|X| - 1) \cdot |K(y)|. \label{eq:est4}
+\end{equation}
+
+Из него следует
+\begin{equation}
+	\max_{y' \in Y:~ y\ne y'} \frac{|K(y,y')|}{|K(y)|} \ge \frac{|X|-1}{|Y|-1}. 
+\end{equation}
+
+В итоге получаем
+\begin{equation}
+	p_{pod} \ge \max_{y' \in Y:~ y\ne y'} \frac{|K(y,y')|}{|K(y)|} \ge \frac{|X|-1}{|Y|-1}. ~~\blacksquare
+\end{equation}
+
+\subsection{Шифр на основе ортогональных латинских квадратов}
+\defn
+Два латинских $n\times n$-квадрата $d = [[d_{i,j}]], ~ b = [[b_{i,j}]]$ с элементами из множества $A = \{a_1, ~...,~ a_n\}$ называются ортогональными, если таблица $c = [[c_{i,j}]], ~ c_{i,j} = (d_{i,j}, b_{i,j})$ содержит все $n^2$ пар множества $\{(a_t, a_r)|~ t,r = 1,...,n\}$.
+
+\paragraph{Пример}
+$A = \{1,2,3\}$
+
+$$
+\left. \begin{aligned} 
+	d = & \begin{bmatrix}
+		1 & 2 & 3 \\
+		2 & 3 & 1 \\
+		3 & 1 & 2 \\
+	\end{bmatrix} \\
+	b = & \begin{bmatrix}
+		1 & 3 & 2 \\
+		2 & 1 & 3 \\
+		3 & 2 & 1 \\
+	\end{bmatrix} \\
+\end{aligned} \right\}  \Rightarrow  c = \begin{bmatrix}
+(1,1) & (2,3) & (3,2) \\
+(2,2) & (3,1) & (1,3) \\
+(3,3) & (1,2) & (2,1) \\
+\end{bmatrix}
+$$ \\
+
+Пусть $A = \{1, ..., n\}$.
+
+Перестановкой строк и столбцов каждый латинский квадрат
+можно привести к виду, в котором в первом столбце числа
+$1,2, ..., n$ идут в порядке возрастания. Такой латинский квадрат называется полунормализованным.
+
+\paragraph{Утв.}
+Любую пару ортогональных латинских квадратов можно
+привести к паре полунормализованных латинских квадратов.
+
 \pagebreak
 \lection{Лекция 7}
 
@@ -864,12 +982,12 @@ $$
 \lection{Лекция 10}
 
 \subsection{Принципы К. Шеннона}
+
+К. Шеннон выделил три принципа которые используются для повышения стойкости шифра:
 \begin{itemize}
 	\item  Усложнение
 	\item  Перемешивание
 	\item  Рассеивание
-	\item  Строго не формализуемые свойства функции зашифрования
-	\item  Современная трактовка
 \end{itemize}
 
 \defn
