@@ -108,15 +108,23 @@
 	Стандартный базис $V_n(p)$:
 	$$
 	\begin{aligned}
-		e_j = (0,...,0,&\underbrace{1},0,...,0), j = 1, ..., n. \\
+		\mathbf{e}_j = (0,...,0,&\underbrace{1},0,...,0), j = 1, ..., n. \\
 		&j\text{-я позиция}
 	\end{aligned}
 	$$
 	
 	Базис пространства $F(p,n)$, разложение по которому часто используется на практике.
 	
-	\theorem{Множество всех гомоморфизмов $\phi : (V_n(p), +) \rightarrow \mathbb{C}$ \hl{...} }
+	\theorem{
+		Множество всех гомоморфизмов $\phi : (V_n(p), +) \rightarrow (\mathbb{C}, \cdot)$ состоит из $p^n$ различных гомоморфизмов $\omega_\mathbf{\alpha}$, $\mathbf{\alpha} = (\alpha_1, ... , \alpha_n) \in V_n(p)$, каждый из которых однозначно определяется своим действием на векторах стандартного базиса $\mathbf{e}_j, ~j = 1,...,n,$ условием
+		$$
+		\omega_\mathbf{\alpha}(\mathbf{e}_j) = e^{\frac{2 \pi i}{p} \alpha_j},
+		$$
+		где $e$ --- экспонента, $i$ --- мнимая единица.
+	}
 	
 	\subsection{Аддитивные характеры}
+	
+	\subsection{Преобразования Фурье}
 	
 \end{document}
