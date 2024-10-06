@@ -51,8 +51,13 @@
 	\setcounter{subsection}{0}
 }
 
-
 \newcommand{\defn}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
+}
+
+%\newcommand{\statement}{\stepcounter{paragraph}\paragraph{Утв. \arabic{section}.\arabic{subsection}.\arabic{paragraph}
+%}
+
+\newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1
 }
 
 \newcommand{\refeq}[1]{(\ref{#1})}
@@ -885,8 +890,8 @@ $$
 
 Найти:
 \begin{itemize}
-	\item $p_im$ для эндоморфного шифра;
-	\item $p_im$ для шифра гаммирования с равновероятной гаммой.
+	\item $p_{im}$ для эндоморфного шифра;
+	\item $p_{im}$ для шифра гаммирования с равновероятной гаммой.
 \end{itemize}
 
 Из решения этой задачи можно сделать вывод, что абсолютно стойкий (по Шеннону) шифр оказывается в числе самых слабых по способности противостоять имитации
@@ -1025,10 +1030,22 @@ $$
 p_{pod} = \frac{n - 2}{n - 1}
 $$
 
+\statement{Для каждого $n > 6$ существует пара ортогональных латинских квадратов порядка $n$.}
+
+\statement{Оценка $p_{pod} \ge \frac{|X| - 1}{|Y| - 1}$ достижима. \\}
+
+\statement{
+Из оценок \ref{eq:est1} и \ref{eq:est2} следует, что для шифра с равновероятными ключами вероятность навязывания $$
+p_{nav} \ge \frac{|X|}{Y}.
+$$
+}
+
+\statement{Хорошей имитостойкотью обладают только шифры у которых $$|Y| > |X|.$$}
 
 \pagebreak
 \lection{Лекция 7}
-
+\subsection{Усиление имитозащиты}
+Для усиления имитозащиты используется введение избыточности в передаваемом сообщении
 	
 \pagebreak
 \lection{Лекция 8}
@@ -1040,6 +1057,9 @@ $$
 	
 \pagebreak
 \lection{Лекция 10}
+
+\subsection{Аннулирующий многочлен}
+
 
 \subsection{Принципы К. Шеннона}
 
