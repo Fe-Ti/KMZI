@@ -66,10 +66,12 @@
 
 \newcommand{\angles}[1]{\langle #1 \rangle}
 \newcommand{\iftext}{\text{если}}
+\newcommand{\xor}{\oplus}
+%\newcommand{\dist}[2]{d(#1,#2)}
 \newcommand{\weight}[1]{\|#1\|}
 \newcommand{\transp}[1]{#1^\top}
 \newcommand{\ind}[1]{\text{I}(#1)}
-
+\newcommand{\stack}[1]{\begin{matrix} #1 \end{matrix}}
 
 \newcommand{\refeq}[1]{(\ref{#1})}
 
@@ -386,13 +388,63 @@ $$
 	$$}
 
 
-%	\seminary{Семинар 3}
+	\seminary{Семинар 3}
+	\subsection{Преобразование Мёбиуса}
+	\paragraph{Пример и утверждение}
+	$f = 10011101$
+	$$
+	f(\vec{x}= [x_1, x_2, x_3]) = a_0 \xor a_1 x_1 \xor a_2 x_2 \xor a_3 x_3 \xor a_{12} x_1 x_2 \xor a_{13} x_1 x_3 \xor a_{23} x_2 x_3 \xor a_{123} x_1 x_2 x_3
+	$$
+	$$\begin{aligned}
+		a_0 &= 1 = f(000) \\
+		a_3 &= 0 \xor a_0 = f(001) \xor a_0 = f(001) \xor f(000) \\
+		a_2  = a_{010} &= f(010) \xor f(000) \\
+		a_{23} =  a_{011} & = f(011) \xor f(010) \xor f(001) \xor f(000) \\
+		...\\
+		a_{23} x_2 x_3 &: ~~ x_2 x_3 \Rightarrow x_1^0 x_2^1 x_3^1 \Rightarrow \vec{\sigma} = (011) \\
+		\Rightarrow & a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha})
+	\end{aligned}
+	$$
+	\proof
+	\begin{enumerate}
+		\item База индукции: $a_0 \Rightarrow \vec{\sigma} = \vec{0} \Rightarrow x_1^0 ... x_n^0, ~ a_{\vec{\sigma}} = f(\vec{\sigma}) = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha}) $. Для $a_1 = a_{10...0} = f(10...0)\xor a_0$. Аналогично для $a_2,...,a_n$.
 	
-%	\subsection{Бент-функции}
-
-
-
-
+	\item Пусть для $\forall \vec{\sigma} \in V_n(2), \weight{\vec{\sigma}} = k: ~~ a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\sigma})$.
+	
+	\hl{На индукционном переходе мы застряли и взялись за другую задачу. Поэтому текст ниже должен расцениваться как потенциально неверный, ибо был дописан из собственных размышлений автора.}
+	
+	\item Тогда для $\vec{\nu} \in V_n(2), \weight{\vec{\nu}} = k+1$:
+	%Пусть $\vec{\mu}: ~ d(\nu, \mu) = 1, \weight{\mu} = k$, $i$ --- номер разряда, где $\mu_i = 0, ~ \nu_i = 1$.
+	$$
+	f(x_1, ..., x_n) = a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ... \xor a_{1...n} x_1 ... x_n
+	$$
+	
+	Выразим $a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}}$, которое соответствует вектору $\vec{\nu}$. Получим следующее:
+	$$
+	a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}} =  f(x_1, ..., x_n) \xor a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ...
+	$$
+	
+	Чтобы получить значение коэффициента подставим в $ x_{i_1} ... x_{i_{k+1}}$ единицы, а в остальные переменные нули. Тогда в правой части останутся конъюнкции содержавшие только $ x_{i_1} ... x_{i_{k+1}}$, коэффициент $a_0$ и функция от вектора $\vec{\nu}$.
+	$$
+	a_{i_1...i_{k+1}} =  f(x_1, ..., x_n) \xor (a_{i_2 ... i_{k+1}} \xor a_{i_1 i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_k}) \xor (a_{i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_{k-1}}) \xor ... \xor a_0
+	$$
+	
+	Заменим обозначения на бинарные вектора (как в примере выше) и свернём суммирование в скобках:
+	$$
+	a_{\vec{\nu}} = f(\vec{\nu}) \xor
+	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+				\weight{\vec{\sigma}} = k}} } a_{\vec{\sigma}} \xor
+	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+				\weight{\vec{\sigma}} = k-1}} } a_{\vec{\sigma}} \xor
+	...
+	\xor
+	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+				\weight{\vec{\sigma}} = 1}} } a_{\vec{\sigma}} \xor
+	a_{\vec{0}}
+	$$
+	
+	
+\end{enumerate}
 	
 	
 \end{document}
