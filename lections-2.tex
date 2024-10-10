@@ -433,6 +433,9 @@ $$
 
 
 	\seminary{Семинар 3}
+	\hl{Семинар про бент-функции}
+	
+	\seminary{Семинар 4}
 	\subsection{Преобразование Мёбиуса}
 	\paragraph{Пример и утверждение}
 	$f = 10011101$
@@ -489,6 +492,47 @@ $$
 	
 	
 \end{enumerate}
+
+	\pagebreak
+	\lection{Лекция 2}
+	\subsection{Преобразование Фурье (продолжение)}
 	
+	\paragraph{Задача}
+	$\weight{\vec{\alpha} \oplus \vec{\beta}} = \weight{\vec{\alpha}} + \weight{\vec{\beta}} - 2 \weight{\vec{\alpha} \cdot \vec{\beta}}$
+	
+	\statement{Пусть $f \in \mathbb{F}_2(n)$. Тогда $$\tilde{w}_f (\vec{\alpha}) = \left\{ \begin{aligned}
+			&\weight{f}, ~\iftext~ \vec{\alpha} = \vec{0} \\
+			&\weight{f(\vec{x}) \oplus \angles{\vec{\alpha}, \vec{x}}} - 2^{n-1}, ~\iftext~ \vec{\alpha} \ne \vec{0}
+		\end{aligned} \right.$$}
+	
+	\proof
+	Пусть 
+	$$
+	\begin{aligned}
+	\Omega_0 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 0\}, \\
+	\Omega_1 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 1\}.	
+	\end{aligned}
+	$$
+	
+	Тогда
+	$$
+	\tilde{w}_f (\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f(\vec{\beta}) (-1)^{\angles{\vec{\alpha}, \vec{\beta}}} = \left(\sum_{\vec{\beta} \in \Omega_0} 1 - \sum_{\vec{\beta} \in \Omega_1} \right)
+	$$
+	Необходимо найти мощности $\Omega_0, \Omega_1$. Из их определения
+	$$\begin{aligned}
+		|\Omega_0| &= \weight{f(\vec{x}) \cdot (\angles{\vec{\alpha},\vec{x}} \oplus 1)} = 
+		\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \oplus f(\vec{x})} = \\ 
+		& =\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}} + \weight{f(\vec{x})} - 2 \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \cdot f(\vec{x})} = \\
+		& = \weight{f(\vec{x})} - \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}},
+	\end{aligned}
+	$$
+	$$
+	|\Omega_1| = \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}.
+	$$
+	
+	Отсюда следует, что
+	$$
+	\tilde{w}_f (\vec{\alpha}) = (\weight{f(\vec{x})} - 2\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}) = 
+	$$
 	
 \end{document}
