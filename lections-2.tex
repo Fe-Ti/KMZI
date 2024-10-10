@@ -334,8 +334,46 @@ $$
 	$$
 	называется разложением в ряд Фурье.
 	
-	Комплексное число $\tilde{w}_f(\vec{\alpha})$ называется коэффициентом Фурье, соответствующему набору 
+	\defn
+	Комплексное число $\tilde{w}_f(\vec{\alpha})$ называется коэффициентом Фурье, соответствующему набору $\vec{\alpha}$.
 	
+	\defn
+	Отображение $\mathbb{C}(p,n) \rightarrow \mathbb{C}^n$, ставящее каждой функции в соответствие набор её коэффициентов Фурье (спектр Фурье), называется преобразованием Фурье. Также есть другие названия: преобразование Уолша-Адамара первого рода, преобразование Уолша (type I Walsh transform).
+	
+	\statement{Пусть $\vec{\gamma} \in V_n (p)$. Тогда
+	$$
+	\tilde{w}_f(\vec{\gamma}) = \sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})}
+	$$}
+	
+	\proof
+	$$\sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\beta} \in V_n(p)} p^{-n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \ind{\vec{\alpha} = \vec{\gamma}} = \tilde{w}_f(\vec{\gamma}). ~\blacksquare$$
+	
+	\paragraph{Замечание} Далее $p = 2$.
+	
+	$$
+	\omega_{\vec{\alpha}} (\vec{\beta}) = (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}}
+	$$
+	$$
+	\Rightarrow ~~ \tilde{w}_f(\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
+	$$
+	
+	\hrule
+	\paragraph{Замечание} В литературе иногда встречается и без коэффициента нормировки
+	$$
+	\tilde{w}_f (\vec{\alpha}) = 2^{-n} \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
+	$$
+	В таком случае:
+	$$
+	f(\vec{x}) = \sum_{\vec{\alpha} \in V_n(2)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}.
+	$$ \hrule ~\\
+	
+	Соотношение ортогональности:
+	$$
+	\sum_{\vec{\gamma} \in V_n(2)} \omega_{\vec{\alpha}} (\vec{\gamma}) \omega_{\vec{\beta}} (\vec{\gamma}) = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
+	$$
+	$$
+	\sum_{\vec{\gamma} \in V_n(2)} (-1)^{\angles{\vec{\alpha} \oplus \vec{\beta}, \vec{\gamma}}} = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
+	$$
 	
 	\pagebreak
 	
@@ -367,10 +405,16 @@ $$
 	P\{f(x) = \angles{u,x}\} = \frac{2^n - d(f(x), \angles{u,x})}{2^n} = 1 - \frac{d(f(x), \angles{u,x})}{2^n} = 1 - \frac{2^n - \hat{F}_f (u)}{2^{n+1}} =
 	$$
 	$$
-	= \frac{1}{2} + \frac{\hat{F}_f (u)}{2^{n+1}} = \vline \begin{matrix}
-		\text{}
-		
-	\end{matrix}
+	= \frac{1}{2} + \frac{\hat{F}_f (u)}{2^{n+1}} =
+	\vline \begin{matrix}
+		\text{Обозначим} \\
+		\frac{\hat{F}_f(u)}{2^n} = \hat{S}_f(u)
+	\end{matrix} \vline
+	=  \frac{1}{2} + \frac{\hat{S}_f (u)}{2}
+	$$
+	
+	$$
+	P\{f(x) = \angles{u, x} \oplus 1\} = \frac{1}{2} - \frac{\hat{S}_f (u)}{2}
 	$$
 	
 	
