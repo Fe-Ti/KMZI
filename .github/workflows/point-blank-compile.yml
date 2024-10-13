@@ -42,9 +42,9 @@ jobs:
           root_file: hw-1.tex
       - name: Artifact upload
         uses: actions/upload-artifact@v4
-          with:
-            name: pdftex_artifact
-            path: ./*.pdf
+        with:
+          name: pdftex_artifact
+          path: ./*.pdf
 
 
 #      - name: Run a one-line script
