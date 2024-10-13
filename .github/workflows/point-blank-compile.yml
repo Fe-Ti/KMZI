@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+#  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Compile document.tex
+        uses: dante-ev/latex-action@edge
+        with:
+          root_file: lections-1.tex
+      # Runs a single command using the runners shell
+      - name: Compile document.tex
+        uses: dante-ev/latex-action@edge
+        with:
+          root_file: lections-2.tex
+      # Runs a single command using the runners shell
+      - name: Compile document.tex
+        uses: dante-ev/latex-action@edge
+        with:
+          root_file: hw-1.tex
+      - name: Artifact upload
+        uses: actions/upload-artifact@v4
+          with:
+            name: pdftex_artifact
+            path: ./*.pdf
+
+
+#      - name: Run a one-line script
+#        uses: Jatus93/Latex-multicompiler@v1.0
+#          with:
+#          path_to_list: .github/workflows/doc-list.txt
+#          artifact: true
+
+      # Runs a set of commands using the runners shell
+#      - name: Run a multi-line script
+#        run: Finished.
