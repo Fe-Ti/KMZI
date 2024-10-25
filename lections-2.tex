@@ -61,7 +61,7 @@
 	\addcontentsline{toc}{section}{#1}
 }
 
-\newcommand{\defn}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
+\newcommand{\definition}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
 }
 
 \newcommand{\property}[1]{\textbf{#1}.
@@ -75,12 +75,14 @@
 \newcommand{\transp}[1]{#1^\top}
 \newcommand{\ind}[1]{\text{I}(#1)}
 \newcommand{\stack}[1]{\begin{matrix} #1 \end{matrix}}
+\newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\refeq}[1]{(\ref{#1})}
 
 \newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1}
 \newcommand{\proof}{\paragraph{Доказательство}}
 
+\newcommand{\ZZ}{\mathbb{Z}}
 
 \newcounter{theorem}
 \newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
@@ -129,7 +131,7 @@
 	\subsection{Псевдобулева функция}
 	Пусть $F$ --- произвольное поле, $p \ge 2$ --- простое число, $V_n(p) = GF(p)^n$ --- $n$-мерное пространство над полем $GF(p)$.
 	
-	\defn
+	\definition
 	Псевдобулевой функцией от $n$ переменных называется произвольное отображение $f: V_n(2) \rightarrow F$. \\
 	
 	Если $F = GF(2)$, то функция называется булевой (двоичной). $f: V_n(p) \rightarrow F$ --- обобщение псевдобулевой функции.
@@ -155,17 +157,17 @@
 	$$
 	
 	\subsection{Скалярное произведение}
-	\defn 
+	\definition 
 	Скалярным произведением векторов $\vec{\alpha} = (\alpha_1, ..., \alpha_n)$, $\vec{\beta} = (\beta_1, ..., \beta_n)$, $\vec{\alpha}, \vec{\beta} \in V_n(2)$ называется $$\angles{\vec{\alpha},\vec{\beta}} = \bigoplus_{i=1}^{n} \alpha_i \beta_i.$$
 	
-	\defn
+	\definition
 	Два вектора $\vec{\alpha}, \vec{\beta}$ ортогональны, если $\angles{\vec{\alpha}, \vec{\beta}} = 0$.
 	
 	\subsection{Аффинные функции}
-	\defn
+	\definition
 	$\mathcal{AL}_n = \{f \in \mathbb{F}_2 (n) ~|~ \deg f \le 1 \}$ --- множество аффинных функций.
 	
-	\defn
+	\definition
 	$\mathcal{L}_n = \{f \in \mathcal{AL}_n ~|~ f(\vec{0} = 0)\}$ --- множество всех линейных функций.
 	
 	$$f \in \mathcal{AL}_n ~\Leftrightarrow ~ f(\vec{x}) = \alpha_1 x_1 \oplus ... \oplus \alpha_n x_n \oplus \alpha_0 = \angles{\vec{x}, \vec{\alpha}} \oplus \alpha_0.$$
@@ -181,7 +183,7 @@
 	\subsection{Равновероятная функция}
 	Пусть $f = \vec{f} = (f(0), f(1), ..., f(2^n - 1))$ --- вектор столбец булевой функции $f(\vec{x})$, а $\weight{f} = \sum_{\vec{\alpha} \in V_n(2)} f(\vec{\alpha})$ --- вес этой функции.
 	
-	\defn
+	\definition
 	Функция $f \in F_2(n)$ называется равновероятной (сбалансированной, равновесной), если $\weight{f} = 2^{n-1}$.
 	
 	\paragraph{Задача} Доказать, что если $f \in \mathcal{AL}_n$, то $f$ является равновесной.
@@ -197,13 +199,13 @@
 
 	\subsection{Производная булевой функции}
 	
-	\defn
+	\definition
 	Производной булевой функции $f \in \mathbb{F}_2(n)$ по направлению $\vec{\delta} \in V_n(2)$ называется булева функция
 	$$
 	d_{\vec{\delta}} f(\vec{x}) = f(\vec{x} \oplus \vec{\delta}) \oplus f(\vec{x}), ~~ \vec{x} \in V_n (2).
 	$$
 	
-	\defn
+	\definition
 	Производной булевой функции $f \in \mathbb{F}_2(n)$ по подпространству $L \le V_n(2)$ называется булева функция
 	$$
 	d_L f(\vec{x}) = \sum_{\vec{\delta} \in L} f(\vec{x}  \oplus \vec{\delta}), ~~ \vec{x} \in V_n (2).
@@ -225,9 +227,9 @@
 	\end{itemize}
 	
 	\subsection{Гомоморфизмы (флешбэк)}
-	\defn Отображение $\phi: (G, \circ) \rightarrow (H, \diamond)$ называется гомоморфизмом, если $\forall x,y \in G: ~ \phi(x \circ y) = \phi(x) \diamond \phi(y)$.
+	\definition Отображение $\phi: (G, \circ) \rightarrow (H, \diamond)$ называется гомоморфизмом, если $\forall x,y \in G: ~ \phi(x \circ y) = \phi(x) \diamond \phi(y)$.
 	
-	\defn Биективный гомоморфизм называется изоморфизмом.
+	\definition Биективный гомоморфизм называется изоморфизмом.
 	
 	\subsection{Гомоморфизмы $(V_n(p), +)$ в мультипликативную группу поля$\mathbb{C}$}
 	
@@ -269,13 +271,13 @@
 	
 	Аддитивная группа поля $GF(p^n)$ может быть представлена как векторное пространство $(V_n(p), +)$.
 	
-	\defn
+	\definition
 	Гомоморфизмы $\omega_{\vec{\alpha}}$ называются аддитивными характерами поля $GF(p^n).$
 	
 	\subsubsection{Основное свойство характеров}
 	Обозначим комплексное сопряжение как $\omega_{\vec{\alpha}}(\vec{e}_j) = \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\beta}} }\right).$
 	
-	\defn $\ind{A} = \left\{ \begin{aligned}
+	\definition $\ind{A} = \left\{ \begin{aligned}
 		&1, ~ \text{если условие А справедливо} \\
 		&0, ~ \text{если условие А несправедливо}
 	\end{aligned} \right.$ называется индикатором.
@@ -330,17 +332,17 @@ $$
 	
 	
 	\subsection{Преобразования Фурье}
-	\defn
+	\definition
 	Разложение произвольной функции $f \in \mathbb{C}(p,n)$ по базису характеров $\{\omega_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n(p)\}$:
 	$$
 	f(\vec{x}) = \frac{1}{p^n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f(\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{x})
 	$$
 	называется разложением в ряд Фурье.
 	
-	\defn
+	\definition
 	Комплексное число $\tilde{w}_f(\vec{\alpha})$ называется коэффициентом Фурье, соответствующему набору $\vec{\alpha}$.
 	
-	\defn
+	\definition
 	Отображение $\mathbb{C}(p,n) \rightarrow \mathbb{C}^n$, ставящее каждой функции в соответствие набор её коэффициентов Фурье (спектр Фурье), называется преобразованием Фурье. Также есть другие названия: преобразование Уолша-Адамара первого рода, преобразование Уолша (type I Walsh transform).
 	
 	\statement{Пусть $\vec{\gamma} \in V_n (p)$. Тогда
@@ -383,8 +385,8 @@ $$
 	\seminary{Семинар 1}
 	\subsection{Коэффициенты Уолша-Адамара и иже с ними}
 	
-	\defn
-	Пусть $f : \mathbb{Z}_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
+	\definition
+	Пусть $f : \ZZ_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
 	
 	
 	Обозначим скалярное произведение как $\angles{a,b}$, коэффициент Уолша-Адамара 1-го рода $w_f$, матрицу Адамара как $H$.
@@ -396,8 +398,8 @@ $$
 	\statement{
 		$$
 		\begin{aligned}
-			f &:~ \mathbb{Z}_2^n \rightarrow \mathbb{Z}_2 \\
-			\hat{F}_f (u) &= \sum_{x \in \mathbb{Z}_2^n} (-1)^{\angles{u,x} \oplus f(x)}
+			f &:~ \ZZ_2^n \rightarrow \ZZ_2 \\
+			\hat{F}_f (u) &= \sum_{x \in \ZZ_2^n} (-1)^{\angles{u,x} \oplus f(x)}
 		\end{aligned}
 		$$}
 	
@@ -421,7 +423,7 @@ $$
 	$$
 	
 	
-	\defn
+	\definition
 	Линейный статистический аналог булевой функции $f(x)$ --- это такая линейная функция $\angles{u,x}$, что расстояние $d(f(x), \angles{u,x})$ является минимальным.
 
 	\theorem[Руппеля]{Пусть $u : |\hat{F}_f (n)|$ --- $\max$, тогда $\angles{u,x}\oplus c$ --- линейный статаналог для $f(x)$. Причём 
@@ -435,8 +437,8 @@ $$
 	$$}
 
 
-	\seminary{Семинар 3}
-	\hl{Семинар про бент-функции}
+%	\seminary{Семинар 3}
+%	\hl{Семинар про бент-функции}
 	
 	\seminary{Семинар 4}
 	\subsection{Преобразование Мёбиуса}
@@ -538,7 +540,7 @@ $$
 	\tilde{w}_f (\vec{\alpha}) = (\weight{f(\vec{x})} - 2\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}) = 
 	$$
 
-	\seminary{Семинар 5}
+	\seminary{Семинар 5/6}
 	\paragraph{Летучка}
 	\begin{enumerate}
 		\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
@@ -546,8 +548,23 @@ $$
 		\item $f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} + x_1 x_2 x_3 + x_1 x_2 x_5 x_6 x_7 x_8$
 	\end{enumerate}
 	
+	\paragraph{Решение варианта №3}
+	Вынесем $x_1, x_2$ за скобки, тогда
+	$$
+	f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} \xor x_1 x_2 x_3 \xor x_1 x_2 x_5 x_6 x_7 x_8 = 
+	x_1 x_2 (x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8)
+	$$
+
+	Тогда 
+	$$
+	\begin{aligned}
+		h(x_1 x_2) &= x_1 x_2 & \Rightarrow & \weight{h} = 1 \cdot 2^8 = 256\\ 
+		g(x_4 x_9 x_{10} x_3 x_5 x_6 x_7 x_8) &= x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8 & \Rightarrow & \weight{g}= 2^7 \cdot 2^2 = 2^9 \\
+	\end{aligned}
+	$$
+
 	\pagebreak
-	
+
 	\lection{Лекция 3}
 	\subsection{Фильтрующий генератор}
 	\property{При $q = 2$ верхняя граница линейной сложности гаммы фильтрующего генератора равна \[ \sum_{i=0}^{deg f} \binom{n}{i} \]}
@@ -670,13 +687,13 @@ $$
 		\item о входе $x_1, ..., x_n$\\ -- Данная информация может являться основой для разработки статистических методов криптоанализа.
 	\end{itemize}
 
-	\defn Функция $f$ называется
+	\definition Функция $f$ называется
 	\begin{itemize}
 		\item $m$-равновероятной, если $\forall (\gamma_1, ..., \gamma_m) \in V_m(2)$ система уравнений (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] имеет ровно $2^{n-1}$ решений относительно неизвестных $x_1, ..., x_{n+m-1}$.
 		\item сильно равновероятной, если $f$ является $m$-равновероятной $\forall m \in \mathbb{N}$.\\ -- Сильная равновероятность $f$ означает равновероятность $\forall m \in \mathbb{N}$ выходной $m$-граммы $(\gamma_1, ..., \gamma_m)$, удовлетворяющей системе (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] и получаемой на случайном равновероятном и независимом входе $x_1, ..., x_{n+m-1}$.
 	\end{itemize}
 
-	\defn Вектор $(\gamma_1, ..., \gamma_m) \in V_m(2)$ называется запретом функции $f: V_n(2) \rightarrow \mathbb{F}_2$, если система (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] не имеет решений.
+	\definition Вектор $(\gamma_1, ..., \gamma_m) \in V_m(2)$ называется запретом функции $f: V_n(2) \rightarrow \mathbb{F}_2$, если система (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] не имеет решений.
 
 	\theorem[Сумароков]{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ не имеет запретов $\Leftrightarrow$ она сильно равновероятна.}
 
@@ -731,4 +748,56 @@ $$
 			\item Какие выходные последовательности для $f$ являются запретными: $(\gamma_1, ..., \gamma_5) \in {(1,1,1,1,1), (0,1,0,0,1), (1,0,1,1,0), (0,1,1,0,1), (1,0,0,1,0)}$ ?
 		\end{itemize}
 	\end{enumerate}
+
+	\seminary{Семинар 6}
+	
+	$$
+	\begin{aligned}
+		f(x_1, ..., x_n), ~ a \not = 0 \in \ZZ_2^n
+	\end{aligned}
+	$$
+	Доказать, что
+	$$
+	f(x) \xor f(x \xor a) = \partialfrac{f}{a}, ~ \deg \partialfrac{f}{a} \le \deg f -1
+	$$
+	
+	\proof
+	$$
+	\begin{aligned}
+		~& f &= \gamma_0 \xor \gamma_1 x_1 \xor ... \xor \gamma_{1...n}x_1 ... x_n \\
+		\xor &~&~ \\
+		~& f(x \xor a) &= \gamma_0 \xor \gamma_1(x_1 \xor a_1) \xor ... \xor \gamma_{1...n} (x_1 \xor a_1) ... (x_n\xor a_n)\\
+		\\
+		~&f \xor f(x \xor a)& \\
+	\end{aligned}
+	$$
+	
+	\paragraph{Пример}
+	$f(x_1, x_2, x_3) = x_1 x_2 \xor x_2 x_3 \xor x_3, ~~ \vec{a} = \overset{a_1}{1}\overset{a_2}{0}\overset{a_3}{0}$
+	
+	\definition Если для $f(x_1, ..., x_n), ~ \vec{a} \ne 0 \in \ZZ_2^n$ на $\forall \vec{x} \in \ZZ_2^n:~ \partialfrac{f}{\vec{a}} = \delta \in \ZZ_2^n$, то пара $(\vec{a}, \delta)$ называется линейной структурой булевой функции $f$.
+	
+	\definition $LS(n)$ --- все булевы функции от n переменных, у которых есть линейная структура, $L(n) \subseteq LS(n)$.
+	
+	
+	\statement{
+	Пусть $f(x_1, ..., x_n)$, тогда
+	
+	$$NL(f) \le 2^{n-1} - \frac{1}{2} 2^{\frac{n}{2}}, ~~ NL(f) = \min d(\angles{u, x}, f)$$
+	
+	$$NLS(f) = \min_{g \in LS(n)} d(f,g)$$
+	
+	$$NLS(f) \le 2^{n-2}, ~~ NLS(f) = 2^{n-2}~ \Leftrightarrow ~\forall a \in \ZZ_2^n,~ a \ne 0,~ \weight{\partialfrac{f}{a}} = 2^{n-1}$$
+	}
+	
+	\lection{Лекция 4}
+	
+	\lection{Лекция 5}
+	
+	\lection{Лекция 6}
+	
+	\lection{Лекция 7}
+	
+	\lection{Лекция 8}
+	
 \end{document}
