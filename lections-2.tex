@@ -791,7 +791,259 @@ $$
 	}
 	
 	\lection{Лекция 4}
-	
+        \subsection{Алгебраическая иммунность}
+        % TODO: move to bibliography
+        -- Courtouis N. and Meier W. Algebraic attack on stream
+        ciphers with linear feedback //
+        LNCS. 2003. V. 2656. P. 345-359
+        -- Meier W., Pasalic E., and Carlet C. Algebraic attack and
+        decomposition of Boolean functions //
+        LNCS. 2004. V. 3027. P. 474-491
+
+        \subsection{Применение аннигиляторов}
+        \[ \mathbb{F}_n = { f | f: \mathbb{Z}_2^n \rightarrow
+            \mathbb{Z}_2 }. \]
+        - Для $g \in \mathbb{F}_n$ обозначим $g \equiv 0$, если $g(x)
+        = 0 \forall x \in \mathbb{Z}_2^n$. - $g \not\equiv 0$, если
+        $g(\alpha) = 1$ для некоторого $\alpha \in \mathbb{Z}_2^n$.
+
+        \definition Пусть $f: \mathbb{Z}_2^n \rightarrow
+        \mathbb{Z}_2$. Функция $g \in \mathbb{F}_n$ называется
+        \textit{аннигилятором} функции $f$, если \[ fg \equiv 0
+          \textrm{ и } g \not\equiv 0 \]
+        Равносильно: \[ f(x)g(x) = 0 \forall x \in \mathbb{Z}_2^n
+          \textrm{ и } g \not\equiv 0 \]
+
+        \begin{itemize}
+          \item $Ann(f) = \{ g \in \mathbb{F}_n | fg \equiv 0 \}$ --
+            \textit{множество всех аннигиляторов} функции $f$.
+          \item $supp(f) = \{ x \in \mathbb{Z}_2^n | f(x) = 1 \}$ --
+            \textit{носитель} функции $f$.
+        \end{itemize}
+
+        \paragraph{Пример} Пусть $f(x_1, x_2, x_3) = (01010011)$
+
+        Пусть $\mathfrak{F}_{2, n}$ -- кольцо многочленов из
+        $\mathbb{F}_2[x_1, ..., x_n]$, степень которых по каждой
+        переменной не превосходит 1.
+        \begin{itemize}
+          \item $\mathfrak{F}_{2, n}$ -- множество всех многочленов Жегалкина
+        над $\mathbb{Z}_2$
+        \[ \mathbb{F}_n \cong \mathfrak{F}_{2, n} \]
+
+          \item $||f||$ -- вес (Хемминга функции $f \in \mathbb{F}_n$. --
+            число единиц в её таблице инстинности
+          \end{itemize}
+
+        \theorem{Пусть $f \in \mathbb{F}_n \cong \mathfrak{F}_{2, n}.$
+        Тогда $Ann(f)$ -- главный идеал кольца $\mathfrak{F}_{2, n}$,
+        порождённый функцией $1 + f$: \[ Ann(f) = \{ (1 + f)g | g \in
+            \mathfrak{F}_{2, n} \} = (1 + f),\\
+          |Ann(f)| = 2^{2^n-||f||}
+        \]}
+        \proof Так как $(1 + f) \in Ann(f)$, то $Ann(f) \neq
+        \emptyset$. Пусть $r \in \mathfrak{F}_{2, n}, g \in Ann(f)$,
+        тогда \[ r * g \in Ann(f) \]
+
+        -- $Ann(f)$ -- идеал
+
+        Докажем $Ann(f) = (1 + f)$. Очевидно, что \[ Ann(f) \supseteq
+          (1 + f) \]
+
+        Покажем что $Ann(f) \subseteq (1 + f)$ (в обратную сторону).
+        Пусть $h \in Ann(f)$. \[ fh \equiv 0 \implies (f + 1)h \equiv
+          h \implies h \in (1 + f) \]
+        $Ann(f) \subseteq (1 + f)$.
+
+        Так как \[ Ann(f) \supseteq (1 + f), Ann(f) \subseteq (1 +
+          f), \] то $Ann(f) = (1 + f)$.
+
+        Докажем $|Ann(f)| = 2^{2^n - ||f||}$. \[ g \in Ann(f) \implies
+          \forall x \in supp(f) \implies x \notin supp(g) \]
+        Значения g на множестве $V_n \setminus supp(f)$ выбираются
+        произвольно.
+        Так как \[ |V_n \setminus supp(f)| = 2^n - ||f||, \] то \[
+          Ann(f) = 2^{2^n - ||f||}. \]
+
+        \paragraph{Задача} Если $f \in \mathbb{F}_n$ является
+        равновероятной, то \[|Ann(f)| = 2^{2^{n-1}}. \]
+
+        \definition Порядком алгебраической иммунности функции $f \in
+        \mathbb{F}_n$ называется число \[ Al(f) = min\{deg(g) | g \in
+            \mathbb{F}_n, g \not\equiv 0, f g \equiv 0 \vee (f + 1)g
+            \equiv 0 \} \]
+
+        \paragraph{Задача} Пусть $f \in \mathbb{F}_n$ и $f g \equiv h$
+        для некоторых $g, h \in \mathbb{F}_n$, \[ deg g \leq d, deg f
+          \leq d, g \not\equiv 0. \] Доказать, что $Al(f) \leq d$.
+
+        \statement{Пусть $f \in \mathbb{F}_n$. Тогда $Al(f) \leq \lceil
+        n/2 \rceil$.}
+        \proof Из функций $f, f + 1$ выберем функцию, вес которой не
+        более $2^{n-1}$. Без ограничения общности, пусть $||f|| \leq
+        2^{n-1}$.
+
+        Строим таблицу. \[ supp(f) = {y_1, y_2, ..., y_d}, d =
+          ||f||. \]
+        \begin{itemize}
+          \item каждая строка соответствует $y \in supp(f)$
+          \item столбцы -- всем мономам степеней $0, 1, ..., \lceil
+            \frac{n}{2} \rceil$.
+        \end{itemize}
+        Число всех таких мономов равно \[ \sum_{i = 0}^{\lceil
+            \frac{n}{2} \rceil} \binom{n}{i} > 2^{n-2} \geq ||f|| \]
+        \proof На пересечении строки $y$ и столбца $h$ записывается
+        $h(y)$. Так как столбцов больше чем строк \[ \sum_{i = 0}^{\lceil
+            \frac{n}{2} \rceil} \binom{n}{i} > ||f||, \], то
+        существует их ненулевая линейная комбинация $g$, равная $0
+        \forall x \in V_n$, \[ g(x) = g(x_1, ..., x_n) = \sum_{i = 0}^{\lceil
+            \frac{n}{2} \rceil} \sum_{\substack{J \subseteq \{1, ...,
+              n\}\\i = |J|}}  c_J \prod_{j \in J} x_j = 0 \]
+
+        \begin{itemize}
+          \item $deg(g) \leq \lceil \frac{n}{2} \rceil$
+          \item $g(x) = 0 \forall x \in {y \in V_n | f(y) = 1}$
+          \end{itemize}
+
+        Пусть $\mathbb{A}_n$ -- множество всех аффинных функций от $n$
+        переменных.
+
+        \paragraph{Задача} Доказать что каждый ненулевой аннигилятор
+        $g \in \mathbb{F}_n$ аффинной функции $a \in \mathbb{A}_n,
+        deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
+        -- произвольная функция из $\mathbb{F}, deg(h) = deg(g) - 1$.
+
+        \subsubsection{Алгоритм нахождения множества $Ann_r(f)$}
+        \begin{itemize}
+          \item $Ann_r(f) = \{ g \in \mathbb{F}_n | fg \equiv 0,
+            deg(g) \leq r \}$
+          \item Из доказательства утверждения следует алгоритм
+            нахождения множества $Ann_r(f)$
+        \end{itemize}
+
+        \paragraph{Алгоритм} (нахождение $Ann_r(f)$ методом
+        неопределённых коэффициентов)
+
+        \paragraph{Вход}: $f \in \mathbb{F}_n$
+
+        \begin{enumerate}
+          \item Представим аннигилятор $g \in Ann_r(f)$ в виде
+            многочлена Жегалкина с неопределёнными коэффициентами
+            $c_0, c_{i_1,i_2}, ..., c_{i_1,..., i_r}$:
+            \[ g(x_1, ..., x_n) = c_0 + \sum_{i=1}^n c_ix_i + \sum_{i
+                \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2} +
+              ... + \sum_{i
+                \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2}
+              ... x{i_r} \]
+          \item Выписываем СЛУ. Для всех $(x_1, ..., x_n) \in supp(f)$
+            полагаем $g(x_1, ..., x_n) = 0$
+
+            Получаем однородную систему из $||f||$ линейных уравнений
+            относительно \[ \sum_{i=0}^r \binom{n}{i} \]
+            неизвестных.\\
+            Решением её являются коэффициенты многочленов Жегалкина
+            аннигиляторов из $Ann_r(f)$ и только они.
+        \end{enumerate}
+        \paragraph{Выход}: $Ann_r(f)$
+
+        \paragraph{Задача} Пусть $a \in \mathbb{A}_n, deg(a) =
+        1$. Доказать что для каждого $t \in \mathbb{N}$ справедливо
+        равенство \[ dim Ann_t(a) = \sum_{i=0}^{t-1} \binom{n-1}{i} \]
+
+        \paragraph{Задача}
+        \statement{Пусть  \[ f \in \mathbb{F}_n, a \in \mathbb{A}_n,
+            deg(a) = 1, d = Al(f). \]
+          Тогда \[ d - 1 \leq Al(f + a) \leq d + 1 \]}
+        \proof Пусть $g \in Ann(f) \cup Ann(f + 1), d =
+        deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } fg
+          \not\equiv 0 \].
+        Для каждого из них разбираем: \[ (a + 1)g \equiv 0 \textrm{ и }
+          (a + 1)g \not\equiv 0 \]
+
+        \begin{enumerate}
+        \item Пусть $fg \equiv 0$
+          Рассмотрим два случая: \[ (a + 1)g \equiv 0 \textrm{ и } (a
+            + 1) \not\equiv 0.\]
+          Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
+          \implies$ \[ g \in Ann(f + a + 1). \]
+          Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
+            1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
+            Ann(f + a). \]
+        \item Пусть $fg \equiv 0$. Рассмотрим два случая:
+          \[ (a + 1)g \equiv 0 \textrm{ и } (a
+            + 1) \not\equiv 0. \]
+          Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
+          \implies$ \[ g \in Ann(f + a + 1). \]
+          Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
+            1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
+            Ann(f + a). \]
+        \end{enumerate}
+
+        \subsection{Свойства $Ann_r(f)$}
+        \statement{Пусть $f_1, f_2 \in \mathbb{F}_n, d_i = Al(f_i), i
+          = 1,2,$ \[ g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1) f_1 +
+            x_{n+1}f_2. \] Тогда \[ Al(f) \leq min\{d_1, d_2\} +
+            1. \]}
+        \paragraph{Вывод} Из подфункций с ``низкой'' алгебраической
+        иммунностью нельзя получить функцию с ``высокой''
+        алгебраической иммунностью.
+        \proof Пусть $g \in Ann(f_1) \cup Ann(f_1 + 1)$ и $d_1 =
+        deg(g)$. Если $gf_1 \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
+          0. \]
+        Если $g(f_1 + 1) \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
+          0. \] $\implies$ \[ Al(f_1) \leq d_1 + 1. \]
+        Аналогично, $Al(f_2) \leq d_2 + 1 \implies$ \[ Al(f_2) \leq
+          d_2 + 1 \]
+        $\blacksquare$
+        \paragraph{Следствие} Пусть $n$ чётно, $f_1, f_2 \in
+        \mathbb{F}_n$, \[g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1)f_1
+          + x_{n+1}f_2, \\ Al(g) = 1 + \frac{n}{2}. \]
+        Тогда $Al(f_i) = \frac{n}{2}, i = 1, 2.$
+        \begin{itemize}
+          \item $Al(g) = 1 + \frac{n}{2}.$ (максимально возможная)
+          \item $Al(f_i) = \frac{n}{2}$ (тоже максимально возможная)
+        \end{itemize}
+
+        \statement{Пусть $f \in \mathbb{F}_n, d \in \{1, ..., n\}$ и
+          $d = Al(f)$. Тогда: \[ \sum_{i=0}^{d-1} \binom{n}{i} \leq
+            ||f|| \leq \sum_{i=0}^{n-d} \binom{n}{i} \]}
+        \proof Для доказательства применим метод, используемый для
+        доказательства
+        \begin{itemize}
+          \item \textbf{Утв.} Пусть $f \in \mathbb{F}_n$. Тогда $Al(f)
+              \leq \lceil \frac{n}{2} \rceil$.
+          \item Построим аннигилятор $g$ функции $f$, $deg(g) \leq d -
+            1$.
+            Строим таблицу. \[ supp(f) = \{y_1, y_2, ..., y_d\}, d =
+              ||f||. \]
+          \item Каждая строка соответствует $y \in supp(f)$
+          \item Столбцы -- всем мономам степеней $0, 1, ..., \lceil
+            \frac{n}{2} \rceil$.
+          \item На пересечении строки $y$ и столбца $h$ записывается
+            $h(y)$.
+          \item Число строк в таблице равно $||f||$, число столбцов
+            (мономов) -- $\sum_{i=0}^{d-1} \binom{n}{i}$
+        \end{itemize}
+        Если число столбцов $>$ числа строк, то существует их линейная
+        зависимость $\implies$ существует аннигилятор $g, deg(g) \leq
+        d - 1$\\
+        -- Нижняя оценка доказана $\blacksquare$
+
+        С другой стороны, у функции $f + 1$ не существует
+        аннигиляторов \[ h \in Ann(f), deg(h) \leq d - 1. \]
+        $\implies$ \[ 2^n - ||f|| = ||f + 1|| \geq \sum_{i=0}^{d-1}
+          \binom{n}{i} \]
+        $\implies$ \[ ||f|| \leq 2^n - \sum_{i=0}^{d-1} \binom{n}{i} =
+          \sum_{i=d}^n \binom{n}{i} = \sum_{i=0}^{n-d} \binom{n}{i}
+        \]
+        $\blacksquare$
+
+        \paragraph{Следствие} Если $n$ нечётно, $f \in \mathbb{F}_n,
+        Al(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
+          функция}.
+        \begin{itemize}
+          \item $Al(f) = \frac{n + 1}{2}$ (максимально возможное)
+        \end{itemize}
 	\lection{Лекция 5}
 	
 	\lection{Лекция 6}
