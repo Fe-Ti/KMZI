@@ -51,13 +51,13 @@
 	\mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
 }
 
-\newcommand{\lection}[1]{\section*{#1}
+\newcommand{\lection}[1]{\pagebreak\section*{#1}
 	\addtocounter{section}{1}
 	\addcontentsline{toc}{section}{#1}
 	\setcounter{subsection}{0}
 }
 
-\newcommand{\seminary}[1]{\section*{#1}
+\newcommand{\seminary}[1]{\pagebreak\section*{#1}
 	\addcontentsline{toc}{section}{#1}
 }
 
@@ -749,6 +749,7 @@ $$
 		\end{itemize}
 	\end{enumerate}
 
+	
 	\seminary{Семинар 6}
 	
 	$$
@@ -1044,6 +1045,7 @@ $$
         \begin{itemize}
           \item $Al(f) = \frac{n + 1}{2}$ (максимально возможное)
         \end{itemize}
+
 	\lection{Лекция 5}
 	
 	\lection{Лекция 6}
