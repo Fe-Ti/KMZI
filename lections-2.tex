@@ -77,12 +77,14 @@
 \newcommand{\stack}[1]{\begin{matrix} #1 \end{matrix}}
 \newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
 
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\vecx}{\vec{x}}
+	
+
 \newcommand{\refeq}[1]{(\ref{#1})}
 
 \newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1}
 \newcommand{\proof}{\paragraph{Доказательство}}
-
-\newcommand{\ZZ}{\mathbb{Z}}
 
 \newcounter{theorem}
 \newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
@@ -537,8 +539,10 @@ $$
 	
 	Отсюда следует, что
 	$$
-	\tilde{w}_f (\vec{\alpha}) = (\weight{f(\vec{x})} - 2\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}) = 
+	\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}} - \weight{\angles{\vec\alpha, \vecx}}
 	$$
+	
+	
 
 	\seminary{Семинар 5/6}
 	\paragraph{Летучка}
