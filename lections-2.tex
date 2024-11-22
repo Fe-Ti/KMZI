@@ -78,6 +78,10 @@
 \newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
 \newcommand{\vecx}{\vec{x}}
 	
 
@@ -85,6 +89,7 @@
 
 \newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1}
 \newcommand{\proof}{\paragraph{Доказательство}}
+\newcommand{\corollary}[1]{\stepcounter{paragraph}\paragraph{Следствие} #1}
 
 \newcounter{theorem}
 \newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
@@ -384,14 +389,14 @@ $$
 	
 	\pagebreak
 	
-	\seminary{Семинар 1}
+	\seminary{Семинар 1-4}
 	\subsection{Коэффициенты Уолша-Адамара и иже с ними}
 	
 	\definition
 	Пусть $f : \ZZ_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
 	
 	
-	Обозначим скалярное произведение как $\angles{a,b}$, коэффициент Уолша-Адамара 1-го рода $w_f$, матрицу Адамара как $H$.
+	Обозначим скалярное произведение как $\angles{a,b}$, \hl{(TODO: Проверить обозначение) коэффициент Уолша-Адамара 1-го рода $w_f$}, матрицу Адамара как $H$.
 	
 	\statement{$$
 		H \cdot \transp{H} = nE
@@ -405,7 +410,7 @@ $$
 		\end{aligned}
 		$$}
 	
-	\seminary{Семинар 2}
+%	\seminary{Семинар 2}
 	\subsection{Теорема Руппеля}
 	
 	$$
@@ -442,7 +447,7 @@ $$
 %	\seminary{Семинар 3}
 %	\hl{Семинар про бент-функции}
 	
-	\seminary{Семинар 4}
+%	\seminary{Семинар 4}
 	\subsection{Преобразование Мёбиуса}
 	\paragraph{Пример и утверждение}
 	$f = 10011101$
@@ -539,12 +544,79 @@ $$
 	
 	Отсюда следует, что
 	$$
-	\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}} - \weight{\angles{\vec\alpha, \vecx}}
+	\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \underbrace{\weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}}_{=\weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}} - \weight{\angles{\vec\alpha, \vecx}}
 	$$
 	
+	Тогда возможны два случая:
+	\begin{itemize}
+	\item Если $\vec\alpha = \vec0 ~~\Rightarrow~~ \weight{\angles{\vec\alpha, \vecx}} = \vec0 ~~\Rightarrow~~ \tilde{w}_f(\vec\alpha) = \weight{f}$
+	\item Если $\vec\alpha \ne \vec0$, то из равновероятности $\angles{\vec\alpha, \vecx}$ 
+	$\tilde{w}_f(\vec\alpha) = \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}} - 2^{n-1}$. $\blacksquare$
+	\end{itemize}
 	
+	\subsection{Коэффициенты Уолша-Адамара}
+	\definition Лекционное обозначение действительнозначного аналога булевой функции
+	$$
+	\delta_f (x)= (-1)^{f(x)}, \text{ для } f:\ZZ_2^n \rightarrow \ZZ_2.
+	$$
+	
+	Коэффициенты Фурье для $\delta_f$ называются также коэффициентами Уолша-Адамара второго рода:
+	$$
+	w_f(\vec\alpha) = \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+	$$
+	
+	\hrule
+	\paragraph{Замечание}
+	В литературе встречается и с коэффициентом нормировки
+	$$
+	w_f(\vec\alpha) = 2^{-n} \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+	$$
+	$$
+	\Rightarrow ~~ \delta_f (\vecx) = \sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) \omega_{\vec\alpha}.
+	$$
+	\hrule
+	
+	\paragraph{Задача} Пусть $f, g \in \FF_2(n)$. Доказать:
+	\begin{itemize}
+	\item $\delta_{f \xor g} = \delta_f \delta_g$;
+	\item $2 \delta_{f g} = 1 + \delta_f + \delta_g - \delta_f \delta_g$.
+	\end{itemize}
+	Позсказка: $\delta_f(\vecx) = 1 - 2f(\vecx)$.
 
-	\seminary{Семинар 5/6}
+	\statement{
+	Пусть $f \in \FF_2(n)$. Тогда
+	$$
+	w_f(\vec\alpha) = 2^n - 2 \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}
+	$$
+	}
+	\proof Д/З $~\cap\_\cap$
+
+	\corollary{
+	Пусть $f \in \FF_2(n)$. Тогда
+	\begin{itemize}
+	\item если $\vec\alpha \ne \vec0$ $w_f(\vec\alpha) = -2 \tilde{w}_f (\vec\alpha)$;
+	\item если $\vec\alpha = \vec0$ $w_f(\vec\alpha) = 2^n -2 \tilde{w}_f (\vec\alpha)$.
+	\end{itemize}
+	}
+	
+	\statement{
+	Пусть $f \in \FF_2(n)$. Тогда
+	$$
+	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = 2^n (-1)^{f(0)}.
+	$$
+	}
+	
+	\proof
+	$$
+	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n (-1)^{f(0)}. ~~~ \blacksquare
+	$$
+	
+	\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
+	$$\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}$$
+	}
+	
+	
+	\seminary{Семинар 5-6}
 	\paragraph{Летучка}
 	\begin{enumerate}
 		\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
@@ -755,7 +827,7 @@ $$
 
 	
 	\seminary{Семинар 6}
-	
+	\section{Линейная структура булевой функции}
 	$$
 	\begin{aligned}
 		f(x_1, ..., x_n), ~ a \not = 0 \in \ZZ_2^n
