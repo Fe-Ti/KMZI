@@ -68,6 +68,7 @@
 }
 
 \newcommand{\angles}[1]{\langle #1 \rangle}
+\newcommand{\nonlinty}[1]{n_{#1}}
 \newcommand{\iftext}{\text{если}}
 \newcommand{\xor}{\oplus}
 %\newcommand{\dist}[2]{d(#1,#2)}
@@ -83,6 +84,8 @@
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\vecx}{\vec{x}}
+\newcommand{\vecy}{\vec{y}}
+\newcommand{\hamming}{\chi}
 	
 
 \newcommand{\refeq}[1]{(\ref{#1})}
@@ -612,12 +615,63 @@ $$
 	$$
 	
 	\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
-	$$\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}$$
+	$$
+	\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}.
+	$$
 	}
 	
+	\theorem[Соотношение ортогональности]{
+	$$
+	\sum_{\vec{\alpha} \in V_n(2)} w_f(\vec\alpha) w_f (\vec\alpha \xor \vec\beta) = 2^{2n} \cdot \ind{\vec\beta = \vec0}.
+	$$
+	}
+	
+	\statement{
+	Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y\in V_m(2)$. Тогда
+	$$
+	\forall \vec\alpha \in V_n(2), \forall \vec\beta \in V_m(2): ~~ w_h(\vec\alpha, \vec\beta) = w_f (\vec\alpha) w_g (\vec\beta).
+	$$
+	}
+	
+	\subsection{Расстояние Хемминга}
+	\definition
+	Расстояние (Хемминга) $\hamming(f, g)$ между булевыми функциями $f,g \in \FF_2(n)$ есть $$
+	\hamming(f,g) = |\{\vec\alpha \in V_n(2): ~ f(\vec\alpha) \ne g(\vec\alpha)\}|,
+	$$$$\Downarrow$$$$
+	\hamming (f,g) = \weight{f\xor g}.
+	$$
+	
+	\definition Расстояние $\hamming (f,g)$ от функции $f \in \FF_2(n)$ до множества $C \subseteq \FF_2(n)$ определяется как$$
+	\hamming(f, C) = \min_{g \in C(n)} \hamming(f,g).
+	$$
+	
+	\subsection{Нелинейность}
+	\definition Нелинейностью $\nonlinty{f}$ называется наименьшее расстояние от функции $f \in \FF_2 (n)$ до множества всех аффинных функций $$
+	\nonlinty{f} = \hamming (f, \mathcal{AL}_n).
+	$$
+	
+	Из равенства
+	$$
+	wf_(\vec\alpha) = 2^n - 2 \weight{f(\vecx)\xor \angles{\vec\alpha, \vecx}}
+	$$$$\Downarrow$$$$
+	\nonlinty{f} = 2^{n-1} - \frac{1}{2} \max_{\vec\alpha \in V_n(2)} w_f (\vec\alpha).
+	$$
+	
+	\paragraph{Пример}
+	$
+	f\in \FF_2(3)
+	$ $$
+	f(x_1,x_2,x_3) = 1 \xor x_1 \xor x_2 \xor x_2 x_3 \xor x_1 x_2 x_3 ~~\Rightarrow~~ \vec{f} = (1101~0011).
+	$$
+	Коэффициенты Уолша-Адамара: $(-2,2,2,-2, -2,2,-6,-2)$.$$
+	\Rightarrow |w_f (6)| = 6 ~~ \Rightarrow ~~\text{ближайшая аффинная функция } g = 1 \xor x_1 \xor x_2.
+	$$
+	$$
+	\hamming (f,g) = 1.
+	$$
 	
 	\seminary{Семинар 5-6}
-	\paragraph{Летучка}
+	\paragraph{Летучка} Найти вес функции и определить является ли она бент-функцией.
 	\begin{enumerate}
 		\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
 		\item $f(x_1,...,x_6) = x_1 x_4 x_5 + x_2 x_3 x_5$
@@ -638,6 +692,7 @@ $$
 		g(x_4 x_9 x_{10} x_3 x_5 x_6 x_7 x_8) &= x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8 & \Rightarrow & \weight{g}= 2^7 \cdot 2^2 = 2^9 \\
 	\end{aligned}
 	$$
+	%TODO: закончить семинар 5-6
 
 	\pagebreak
 
