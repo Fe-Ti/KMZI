@@ -1,7 +1,7 @@
 # KMZI: Конспект лекций по КМЗИ
 
 В репозитории представлены конспекты лекций по дисциплине КМЗИ.
-Артифакты (архив с PDF) можно найти на вкладке [Actions](https://github.com/Fe-Ti/KMZI/actions/workflows/point-blank-compile.yml).
+Артефакты (архив с PDF) можно найти на вкладке [Actions](https://github.com/Fe-Ti/KMZI/actions/workflows/point-blank-compile.yml).
 
 # Состояние конспектов
 
@@ -12,6 +12,5 @@
 
 Лекции второго семестра:
 
-* конспекты завершены: 1
+* конспекты завершены: 1-4
 * всего лекций: Н/Д
-
