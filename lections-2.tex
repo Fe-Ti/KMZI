@@ -51,18 +51,34 @@
 	\mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
 }
 
+\newcounter{theorem}
+\newcounter{definition}
+\newcounter{statement}
+\newcounter{corollary}
 \newcommand{\lection}[1]{\pagebreak\section*{#1}
 	\addtocounter{section}{1}
 	\addcontentsline{toc}{section}{#1}
 	\setcounter{subsection}{0}
+	\setcounter{theorem}{0}
+	\setcounter{definition}{0}
+	\setcounter{statement}{0}
+%	\setcounter{corollary}{0}
 }
 
 \newcommand{\seminary}[1]{\pagebreak\section*{#1}
 	\addcontentsline{toc}{section}{#1}
 }
 
-\newcommand{\definition}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
+\newcommand{\definition}{\stepcounter{definition}\paragraph{Определение \arabic{section}.\arabic{definition}}
 }
+
+\newcommand{\statement}[1]{\stepcounter{statement}\setcounter{corollary}{0}\paragraph{Утв. \arabic{section}.\arabic{statement}} #1}
+
+\newcommand{\proof}{\paragraph{Доказательство}}
+
+\newcommand{\corollary}[1]{\stepcounter{corollary}\paragraph{Следствие \arabic{corollary}} #1}
+
+\newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема \arabic{section}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
 
 \newcommand{\property}[1]{\textbf{#1}.
 }
@@ -89,14 +105,6 @@
 	
 
 \newcommand{\refeq}[1]{(\ref{#1})}
-
-\newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1}
-\newcommand{\proof}{\paragraph{Доказательство}}
-\newcommand{\corollary}[1]{\stepcounter{paragraph}\paragraph{Следствие} #1}
-
-\newcounter{theorem}
-\newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
-}
 
 \fancypagestyle{titlepage}{
 	\fancyhf{
@@ -670,6 +678,31 @@ $$
 	\hamming (f,g) = 1.
 	$$
 	
+	\subsection{Бент-функции}
+	\theorem{Для каждой $f \in \FF_2 (n)$ справедливо неравенство
+	$$
+	\nonlinty{f} \le 2^{n-1} - 2^{\frac{n}{2} -1}.
+	$$}
+
+	\definition Функция $f \in \FF_2 (n)$ называется бент-функцией, если $$\forall \vec\alpha \in V_n(2): ~~w_f(\vec\alpha) \in \{-2^{\frac{n}{2}}, 2^{\frac{n}{2}}\}.
+	$$
+	
+	\statement{Очевидно, что если $f$ --- бент-функция, то:
+	\begin{itemize}
+	\item $\forall \vec\alpha \in V_n(2):~~ \left(w_f(\vec\alpha)\right)^2 = 2^n$
+	\item Бент-функции существуют только для чётных $n$.
+	\end{itemize}
+	}
+
+	\paragraph{Пример}
+	\begin{itemize}
+	\item $f(x_1, x_2) = x_1 x_2$;
+	\item $f(x_1,,x_4) = 1 \xor x_1 x_2 \xor x_1 x_3 \xor x_1 x_4 \xor x_2 x_3 \xor x_2 x_4 \xor x_3 x_4$.
+	\end{itemize}	
+	
+	\subsection{Построение бент-функции}
+	\theorem{Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y \in V_m(2)$.}
+
 	\seminary{Семинар 5-6}
 	\paragraph{Летучка} Найти вес функции и определить является ли она бент-функцией.
 	\begin{enumerate}
