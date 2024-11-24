@@ -24,6 +24,7 @@
 \usepackage{setspace}
 \usepackage{tikz}
 \usepackage{tikz-cd}
+\usetikzlibrary{shapes.geometric, positioning, arrows}
 \usepackage{ifthen} % provides \isempty test
 \usepackage{hyperref}
 
@@ -51,23 +52,41 @@
 	\mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
 }
 
+\newcounter{theorem}
+\newcounter{definition}
+\newcounter{statement}
+\newcounter{property}
+\newcounter{corollary}
 \newcommand{\lection}[1]{\pagebreak\section*{#1}
 	\addtocounter{section}{1}
 	\addcontentsline{toc}{section}{#1}
 	\setcounter{subsection}{0}
+	\setcounter{theorem}{0}
+	\setcounter{definition}{0}
+	\setcounter{statement}{0}
+	\setcounter{property}{0}
+%	\setcounter{corollary}{0}
 }
 
 \newcommand{\seminary}[1]{\pagebreak\section*{#1}
 	\addcontentsline{toc}{section}{#1}
 }
 
-\newcommand{\definition}{\stepcounter{paragraph}\paragraph{Определение \arabic{section}.\arabic{subsection}.\arabic{paragraph}}
+\newcommand{\definition}{\stepcounter{definition}\paragraph{Определение \arabic{section}.\arabic{definition}}
 }
 
-\newcommand{\property}[1]{\textbf{#1}.
-}
+\newcommand{\statement}[1]{\stepcounter{statement}\setcounter{corollary}{0}\paragraph{Утв. \arabic{section}.\arabic{statement}} #1}
+
+\newcommand{\proof}{\paragraph{Доказательство}}
+
+\newcommand{\corollary}[1]{\stepcounter{corollary}\paragraph{Следствие \arabic{corollary}} #1}
+
+\newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема \arabic{section}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+
+\newcommand{\property}[1]{\stepcounter{property}\paragraph{Свойство \arabic{section}.\arabic{property}}\textit{#1}}
 
 \newcommand{\angles}[1]{\langle #1 \rangle}
+\newcommand{\nonlinty}[1]{n_{#1}}
 \newcommand{\iftext}{\text{если}}
 \newcommand{\xor}{\oplus}
 %\newcommand{\dist}[2]{d(#1,#2)}
@@ -76,17 +95,19 @@
 \newcommand{\ind}[1]{\text{I}(#1)}
 \newcommand{\stack}[1]{\begin{matrix} #1 \end{matrix}}
 \newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
-
-\newcommand{\refeq}[1]{(\ref{#1})}
-
-\newcommand{\statement}[1]{\stepcounter{paragraph}\paragraph{Утв.} #1}
-\newcommand{\proof}{\paragraph{Доказательство}}
+\newcommand{\mx}[1]{\mathbf{#1}}
 
 \newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\vecx}{\vec{x}}
+\newcommand{\vecy}{\vec{y}}
+\newcommand{\hamming}{\chi}
+	
 
-\newcounter{theorem}
-\newcommand{\theorem}[2][]{\stepcounter{theorem}\paragraph{Теорема \arabic{section}.\arabic{subsection}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }
-}
+\newcommand{\refeq}[1]{(\ref{#1})}
 
 \fancypagestyle{titlepage}{
 	\fancyhf{
@@ -382,14 +403,14 @@ $$
 	
 	\pagebreak
 	
-	\seminary{Семинар 1}
+	\seminary{Семинар 1-4}
 	\subsection{Коэффициенты Уолша-Адамара и иже с ними}
 	
 	\definition
 	Пусть $f : \ZZ_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
 	
 	
-	Обозначим скалярное произведение как $\angles{a,b}$, коэффициент Уолша-Адамара 1-го рода $w_f$, матрицу Адамара как $H$.
+	Обозначим скалярное произведение как $\angles{a,b}$, \hl{(TODO: Проверить обозначение) коэффициент Уолша-Адамара 1-го рода $w_f$}, матрицу Адамара как $H$.
 	
 	\statement{$$
 		H \cdot \transp{H} = nE
@@ -403,7 +424,7 @@ $$
 		\end{aligned}
 		$$}
 	
-	\seminary{Семинар 2}
+%	\seminary{Семинар 2}
 	\subsection{Теорема Руппеля}
 	
 	$$
@@ -440,7 +461,7 @@ $$
 %	\seminary{Семинар 3}
 %	\hl{Семинар про бент-функции}
 	
-	\seminary{Семинар 4}
+%	\seminary{Семинар 4}
 	\subsection{Преобразование Мёбиуса}
 	\paragraph{Пример и утверждение}
 	$f = 10011101$
@@ -537,11 +558,237 @@ $$
 	
 	Отсюда следует, что
 	$$
-	\tilde{w}_f (\vec{\alpha}) = (\weight{f(\vec{x})} - 2\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}) = 
+	\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \underbrace{\weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}}_{=\weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}} - \weight{\angles{\vec\alpha, \vecx}}
+	$$
+	
+	Тогда возможны два случая:
+	\begin{itemize}
+	\item Если $\vec\alpha = \vec0 ~~\Rightarrow~~ \weight{\angles{\vec\alpha, \vecx}} = \vec0 ~~\Rightarrow~~ \tilde{w}_f(\vec\alpha) = \weight{f}$
+	\item Если $\vec\alpha \ne \vec0$, то из равновероятности $\angles{\vec\alpha, \vecx}$ 
+	$\tilde{w}_f(\vec\alpha) = \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}} - 2^{n-1}$. $\blacksquare$
+	\end{itemize}
+	
+	\subsection{Коэффициенты Уолша-Адамара}
+	\definition Лекционное обозначение действительнозначного аналога булевой функции
+	$$
+	\delta_f (x)= (-1)^{f(x)}, \text{ для } f:\ZZ_2^n \rightarrow \ZZ_2.
+	$$
+	
+	Коэффициенты Фурье для $\delta_f$ называются также коэффициентами Уолша-Адамара второго рода:
+	$$
+	w_f(\vec\alpha) = \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+	$$
+	
+	\hrule
+	\paragraph{Замечание}
+	В литературе встречается и с коэффициентом нормировки
+	$$
+	w_f(\vec\alpha) = 2^{-n} \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+	$$
+	$$
+	\Rightarrow ~~ \delta_f (\vecx) = \sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) \omega_{\vec\alpha}.
+	$$
+	\hrule
+	
+	\paragraph{Задача} Пусть $f, g \in \FF_2(n)$. Доказать:
+	\begin{itemize}
+	\item $\delta_{f \xor g} = \delta_f \delta_g$;
+	\item $2 \delta_{f g} = 1 + \delta_f + \delta_g - \delta_f \delta_g$.
+	\end{itemize}
+	Позсказка: $\delta_f(\vecx) = 1 - 2f(\vecx)$.
+
+	\statement{
+	Пусть $f \in \FF_2(n)$. Тогда
+	$$
+	w_f(\vec\alpha) = 2^n - 2 \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}
+	$$
+	}
+	\proof Д/З $~\cap\_\cap$
+
+	\corollary{
+	Пусть $f \in \FF_2(n)$. Тогда
+	\begin{itemize}
+	\item если $\vec\alpha \ne \vec0$ $w_f(\vec\alpha) = -2 \tilde{w}_f (\vec\alpha)$;
+	\item если $\vec\alpha = \vec0$ $w_f(\vec\alpha) = 2^n -2 \tilde{w}_f (\vec\alpha)$.
+	\end{itemize}
+	}
+	
+	\statement{
+	Пусть $f \in \FF_2(n)$. Тогда
+	$$
+	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = 2^n (-1)^{f(0)}.
+	$$
+	}
+	
+	\proof
+	$$
+	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n (-1)^{f(0)}. ~~~ \blacksquare
+	$$
+	
+	\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
+	$$
+	\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}.
+	$$
+	}
+	
+	\theorem[Соотношение ортогональности]{
+	$$
+	\sum_{\vec{\alpha} \in V_n(2)} w_f(\vec\alpha) w_f (\vec\alpha \xor \vec\beta) = 2^{2n} \cdot \ind{\vec\beta = \vec0}.
+	$$
+	}
+	
+	\statement{
+	Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y\in V_m(2)$. Тогда
+	$$
+	\forall \vec\alpha \in V_n(2), \forall \vec\beta \in V_m(2): ~~ w_h(\vec\alpha, \vec\beta) = w_f (\vec\alpha) w_g (\vec\beta).
+	$$
+	}
+	
+	\subsection{Расстояние Хемминга}
+	\definition
+	Расстояние (Хемминга) $\hamming(f, g)$ между булевыми функциями $f,g \in \FF_2(n)$ есть $$
+	\hamming(f,g) = |\{\vec\alpha \in V_n(2): ~ f(\vec\alpha) \ne g(\vec\alpha)\}|,
+	$$$$\Downarrow$$$$
+	\hamming (f,g) = \weight{f\xor g}.
+	$$
+	
+	\definition Расстояние $\hamming (f,g)$ от функции $f \in \FF_2(n)$ до множества $C \subseteq \FF_2(n)$ определяется как$$
+	\hamming(f, C) = \min_{g \in C(n)} \hamming(f,g).
+	$$
+	
+	\subsection{Нелинейность}
+	\definition Нелинейностью $\nonlinty{f}$ называется наименьшее расстояние от функции $f \in \FF_2 (n)$ до множества всех аффинных функций $$
+	\nonlinty{f} = \hamming (f, \mathcal{AL}_n).
+	$$
+	
+	Из равенства
+	$$
+	wf_(\vec\alpha) = 2^n - 2 \weight{f(\vecx)\xor \angles{\vec\alpha, \vecx}}
+	$$$$\Downarrow$$$$
+	\nonlinty{f} = 2^{n-1} - \frac{1}{2} \max_{\vec\alpha \in V_n(2)} w_f (\vec\alpha).
+	$$
+	
+	\paragraph{Пример}
+	$
+	f\in \FF_2(3)
+	$ $$
+	f(x_1,x_2,x_3) = 1 \xor x_1 \xor x_2 \xor x_2 x_3 \xor x_1 x_2 x_3 ~~\Rightarrow~~ \vec{f} = (1101~0011).
+	$$
+	Коэффициенты Уолша-Адамара: $(-2,2,2,-2, -2,2,-6,-2)$.$$
+	\Rightarrow |w_f (6)| = 6 ~~ \Rightarrow ~~\text{ближайшая аффинная функция } g = 1 \xor x_1 \xor x_2.
+	$$
+	$$
+	\hamming (f,g) = 1.
+	$$
+	
+	\subsection{Бент-функции}
+	\theorem{Для каждой $f \in \FF_2 (n)$ справедливо неравенство
+	$$
+	\nonlinty{f} \le 2^{n-1} - 2^{\frac{n}{2} -1}.
+	$$}
+
+	\definition Функция $f \in \FF_2 (n)$ называется бент-функцией, если $$\forall \vec\alpha \in V_n(2): ~~w_f(\vec\alpha) \in \{-2^{\frac{n}{2}}, 2^{\frac{n}{2}}\}.
+	$$
+	
+	\statement{Очевидно, что если $f$ --- бент-функция, то:
+	\begin{itemize}
+	\item $\forall \vec\alpha \in V_n(2):~~ \left(w_f(\vec\alpha)\right)^2 = 2^n$
+	\item Бент-функции существуют только для чётных $n$.
+	\end{itemize}
+	}
+
+	\paragraph{Пример}
+	\begin{itemize}
+	\item $f(x_1, x_2) = x_1 x_2$;
+	\item $f(x_1,,x_4) = 1 \xor x_1 x_2 \xor x_1 x_3 \xor x_1 x_4 \xor x_2 x_3 \xor x_2 x_4 \xor x_3 x_4$.
+	\end{itemize}	
+	
+	\subsection{Построение бент-функции}
+	\theorem{Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y \in V_m(2)$. Тогда$$
+	h \text{ --- бент-функция} ~~ \Leftrightarrow ~~ f,g \text{ --- бент-функции}.
+	$$
+	}
+	\corollary{Функция $f \in \FF_2 (2k),~ k \ge 1,~ f(\vecx) = x_1 x_2 \xor x_3 x_4 \xor ... \xor x_{2k-1} x_{2k}$ является бент-функцией.}
+	
+	\theorem{Пусть $\pi \in S(V_n),~ g\in \FF_2 (n),~ \vecx,\vecy \in V_n(2)$.\\ Тогда функция $f \in \FF_2 (2n), ~ f(\vecx, \vecy) = \angles{\pi(\vecx), \vecy} \xor g(\vecx)$ есть бент-функция.
+	}
+	
+	\subsection{Фильтрующие генераторы}
+	На рисунке \ref{fig:filtering_gen} изображена общая схема фильтрующего генератора. ЛРСОС (он же LFSR, он же сдвиговый регистр с линейной обратной связью) выдаёт свои разряды на вход функции $f$.
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}
+		[node distance = 2cm, on grid]
+		\node[draw,rounded corners, minimum width=5cm,align=center] (lfsr) at (0, 0) {ЛРСОС};
+		\node[isosceles triangle,isosceles triangle stretches,shape border rotate=270, minimum width=5cm,draw,rounded corners,below of=lfsr] (f) {f};
+
+		\node[align=center,rounded corners,below of=f] (outsup) {~};
+		\node[align=center,rounded corners,right of=outsup] (out) {$z_1, z_2...z_l$};
+
+		\draw[rounded corners,->] (lfsr.east) -- (5,0) -- (5,1) -- (-5,1) -- (-5,0) -- (lfsr.west);
+		\draw[rounded corners,double=white, line width=1 pt,->] (lfsr.south) -- (f.north);
+		\draw[rounded corners,->] (f.south) -- (outsup.center) -- (out.west);
+		\end{tikzpicture}
+		\caption{Общая схема фильтрующего генератора}
+		\label{fig:filtering_gen}
+	\end{figure}
+	
+	Линейная рекуррентная последовательность (ЛРП):
+	$$
+	x_{n+i} = x_i + \sum_{j=1}^{n-1} c_j x_{j+1}, ~i = 1,2,...
 	$$
 
-	\seminary{Семинар 5/6}
-	\paragraph{Летучка}
+	Преобразование ЛРСОС $\delta$ (функция переходов состояний)
+	$$
+	\delta(\vecx) = \left( x_2, x_3, ..., x_n, x_1 + \sum_{j=2}^{n} c_{j-1} x_j \right),
+	$$ где: \begin{itemize}
+	\item[--] $\vecx = (x_1, x_2,...,x_n) \in \ZZ_2^n$,
+	\item[--] $\delta: ~ \ZZ_2^n \rightarrow \ZZ_2^n$,
+	\item[--] $c_1, ..., c_{n-1} \in \ZZ_2$ --- коэффициенты обратной связи.
+	\end{itemize}
+	Преобразованию соответствует сопровождающая $(n \times n)$-матрица
+	$$
+	\mx{a} = \begin{pmatrix}
+	0&1&0&0&...&0 \\
+	0&0&1&0&...&0 \\
+	...&...&...&...&...&... \\
+	0&0&0&0&...&1 \\
+	1&c_1&c_2&c_3&...&c_{n-1}
+	\end{pmatrix} = \begin{pmatrix}
+	\vec0^{\downarrow} & \mx{E}_{n-1} \\
+	1 & \vec{c}
+	\end{pmatrix}.
+	$$
+	ЛРСОС(ЛРС) с точки зрения автоматной модели --- автономный автомат $\mathbb{A} = (\ZZ_2^n, \ZZ_2, \delta, f)$:
+	\begin{itemize}
+	\item $\ZZ_2^n$ --- множество состояний (все заполнения ЛРСОС);
+	\item $\delta: \ZZ_2^n \rightarrow \ZZ_2^n$ --- функция переходов;
+	\item $f: \ZZ_2^n \rightarrow \ZZ_2$ --- функция выходов;
+	\item $x^{(0)} \in \ZZ_2^n$ --- начальное состояние.
+	\end{itemize}
+
+	Фильтрующая функция задана многочленом Жегалкина ($\deg f > 1$):$$
+	f(x_1,...,x_n) = b_0 + \sum_{r\in \{1,...,n\}} \sum_{1 \le i_1 < ... < i+r \le n} b_{i_1, ..., i_r} x_{i_1} ... x_{i_r}.
+	$$
+	j-й знак гаммы$$
+	z_j = f\left(\delta^{j-1}(x)\right) = f\left(\mx{a}^{j-1}x\right), ~ j = 1,2,...
+	$$
+
+	\theorem{Максимальный период ЛРС длины $n$ над $\FF_q$ равен $q^n - 1$}
+	
+	\property{Если ЛРС максимального периода и f --- сбалансированная функция, то период выходной последовательности фильтрующего генератора также максимален и равен $q^n - 1$}\\
+
+	Фильтрующая функция должна обеспечивать:\begin{itemize}
+	\item хорошие статистические свойства $t$-грамм гаммы;
+	\item большую линейную сложность.
+	\end{itemize}
+	
+	Линейная сложность периодической последовательности --- степень её минимального многочлена.
+	Она же --- минимальная длина линейного регистра сдвига с обратной связью, порождающего данную последовательность
+	
+
+	\seminary{Семинар 5-6}
+	\paragraph{Летучка} Найти вес функции и определить является ли она бент-функцией.
 	\begin{enumerate}
 		\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
 		\item $f(x_1,...,x_6) = x_1 x_4 x_5 + x_2 x_3 x_5$
@@ -562,6 +809,7 @@ $$
 		g(x_4 x_9 x_{10} x_3 x_5 x_6 x_7 x_8) &= x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8 & \Rightarrow & \weight{g}= 2^7 \cdot 2^2 = 2^9 \\
 	\end{aligned}
 	$$
+	%TODO: закончить семинар 5-6
 
 	\pagebreak
 
@@ -751,7 +999,7 @@ $$
 
 	
 	\seminary{Семинар 6}
-	
+	\section{Линейная структура булевой функции}
 	$$
 	\begin{aligned}
 		f(x_1, ..., x_n), ~ a \not = 0 \in \ZZ_2^n
