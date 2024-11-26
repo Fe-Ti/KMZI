@@ -53,6 +53,7 @@
 }
 
 \newcounter{theorem}
+\newcounter{lemme}
 \newcounter{definition}
 \newcounter{statement}
 \newcounter{property}
@@ -81,7 +82,10 @@
 
 \newcommand{\corollary}[1]{\stepcounter{corollary}\paragraph{Следствие \arabic{corollary}} #1}
 
-\newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема \arabic{section}.\arabic{theorem}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+\newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема
+    \arabic{section}.\arabic{theorem}}
+  \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+\newcommand{\lemme}[2][]{\stepcounter{lemme}\setcounter{corollary}{0}\paragraph{Лемма \arabic{section}.\arabic{lemme}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
 
 \newcommand{\property}[1]{\stepcounter{property}\paragraph{Свойство \arabic{section}.\arabic{property}}\textit{#1}}
 
@@ -308,12 +312,12 @@
 	$$
 } 
 \proof
-\begin{equation}	
+\[
 \begin{aligned}
 	\frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \omega_{\vec{\alpha}}(\vec{\gamma}) \overline{\omega_{\vec{\beta}}(\vec{\gamma})} &= \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left({\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\gamma}} }\right) \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\beta}, \vec{\gamma}} }\right) = \\
 	& = \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha} - \vec{\beta}, \vec{\gamma}} }\right)  \label{eq:charproof1}
 \end{aligned}
-\end{equation}
+\]
 
 Если $\vec{\alpha} = \vec{\beta}$, то $\angles{\vec{\alpha}-\vec{\beta}, \vec{\gamma}} = 0$ и выражение \refeq{eq:charproof1} равно 1.
 
@@ -622,7 +626,18 @@ $$
 	
 	\proof
 	$$
-	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha, \vec\beta}} = \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n (-1)^{f(0)}. ~~~ \blacksquare
+        \begin{aligned}
+	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) &=
+          \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)}
+          (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} =
+          \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)}
+          \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha,
+                                                       \vec\beta}}\\
+                                                &= \sum_{\vec{\beta} \in V_n(2)}
+          (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n
+          (-1)^{f(0)}.
+        \end{aligned}
+        ~~~ \blacksquare
 	$$
 	
 	\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
@@ -1295,8 +1310,419 @@ $$
         \end{itemize}
 
 	\lection{Лекция 5}
-	
-	\lection{Лекция 6}
+	\section{Автокорреляция и взаимная корреляция}
+        Автокорреляция и взаимная автокорреляция:
+        \begin{itemize}
+          \item применяются для исследования свойств криптографических отображений
+          \item с помощью них характеризуются различные свойства двоичных функций
+          \item выявляются ``нетривиальные'' связи
+        \end{itemize}
+
+        Пусть $f, g \in \mathbb{F}_2(n)$, \[ \mathbb{F}_2(n) = \{ f | f: V_n(2) \rightarrow \{ 0, 1 \} \}. \]
+
+        \definition Функция $\delta_{f,g}: V_n(2) \rightarrow
+        \mathbb{Z}$, \[ \delta_{f,g}(\epsilon) = \sum_{\beta \in
+            V_n(2)} (-1)^{f(\beta) \oplus g(\beta \oplus \epsilon)},
+          \forall \epsilon \in V_n(2) \]
+        называется \textit{функцией взаимной корреляции} или
+        \textit{взаимной корреляцией} (cross-correlation) двоичных
+        функций $f, g$.
+        \definition Функция $\delta_f : V_n(2) \rightarrow
+        \mathbb{Z}$, \[ \delta_{f}(\epsilon) = \delta_{f, f}(\epsilon)
+          = \sum_{\beta \in
+            V_n(2)} (-1)^{f(\beta) \oplus f(\beta \oplus \epsilon)},
+          \forall \epsilon \in V_n(2) \]
+        называется \textit{функцией автокорреляции} или
+        \textit{автокорреляцией} (auto-correlation) двоичной функции
+        $f$.
+
+        \subsection{Коэффициенты Уолша-Адамара 2-го рода}
+        Коэффициентами Уолша-Адамара 2-го рода функции $f \in
+        \mathbb{F}_2(n)$ называется: \[ w_f(\alpha) = \sum_{\beta \in
+            V_n(2)} (-1)^{f(\beta) \oplus (\alpha, \beta)},
+          \alpha \in V_n(2) \]
+        \textit{Обратное преобразование}
+        \[ \sigma_f(x) = (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
+          w_f(\alpha)\omega_{\alpha} \]
+        где
+        \begin{itemize}
+          \item $\langle \alpha, \beta \rangle$ -- скалярное произведение
+            $\alpha, \beta \in V_n(2)$,
+            \item $\omega_{\alpha}(\beta) = (-1)^{\langle \alpha,
+                \beta \rangle}$,
+              т.е. \[ (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
+          w_f(\alpha)(-1)^{\langle \alpha,
+            \beta \rangle} \]
+        \end{itemize}
+
+        \subsection{Взаимная корреляция}
+        Пусть $f, g \in \mathbb{F}_2(n), \epsilon \in V_n(2)$. Тогда:
+        \begin{enumerate}
+          \item $\delta_{f, g}(\epsilon) = \delta_{g, f}(\epsilon)$,
+          \item $\delta_f(\epsilon) = w_{d_{\epsilon}f}(0_n)$, где
+            $d_{\epsilon}f$ -- производная функции $f$ по направлению
+            $\epsilon$,
+          \item $d_{\epsilon}f(x) = f(x \oplus \epsilon) \oplus f(x)$
+        \end{enumerate}
+
+        \textbf{Замечание}
+
+        \begin{itemize}
+        \item Не каждый набор из $2^n$ целых чисел $(y_1, ...,
+          y_{2^n}) \in \mathbb{Z}^{2^n}$ может быть набором значений
+          автокорреляции некоторой двоичной функции
+        \item Для заданного набора $(y_1, ..., y_{2^n}) \in
+          \mathbb{Z}^{2^n}$ установить язвляется ли он набором
+          значений автокорреляции двоичной функции может оказаться
+          сложно.
+        \end{itemize}
+
+        \subsection{Матричная форма преобразования Уолша-Адамара}
+        \textbf{Свойства}
+
+        \begin{itemize}
+        \item ассоциативности \[ (a \otimes b) \otimes d = a \otimes (b \otimes
+            d) \]
+        \item левой и правой дистрибутивности
+          \[
+            \begin{aligned}
+              (a + b) \otimes d = a \otimes d + b \otimes d,\\
+              d \otimes (a + b) = d \otimes a + d \otimes b
+            \end{aligned}
+          \]
+        \end{itemize}
+
+        \subsection{Матрица Адамара}
+        Пусть $n \in \mathbb{N}$
+
+        \definition \textit{Матрицей Адамара типа Сильвестра}
+        называется квадратная ($2^n \times 2^n$)-матрица $H_n$,
+        заданная условием \[ H_1 = \begin{pmatrix}
+          1 & 1 \\
+          1 & -1
+        \end{pmatrix} \]
+        \[ H_n = H_1 \otimes H_{n-1} при n \ge 2 \],
+        \begin{itemize}
+        \item $\otimes$ -- тензорное произведение матриц
+        \item ``Важное'' свойство матрицы Адамара: \[ H_n = H_n^t =
+            2^nH_n^{-1} \]
+        \end{itemize}
+        Отсюда вытекает: \[ H_n H_n^t = H_n H_n = 2^n E_n \]
+        где $E_n$ -- единичная $(2^n \times 2^n)$-матрица.
+
+        \begin{itemize}
+        \item элементы матрицы $H_n = [[h_{\alpha, beta}]]$ заданы
+          равенством \[ h_{\alpha, beta} = (-1)^{\langle \alpha,
+              \beta \rangle} для \alpha, beta \in V_n(2), \]
+          -- вектору $\alpha = (\alpha_1, ..., \alpha_n)$
+          соответствует число $\alpha_1 2^{n-1} + \alpha_2 2^{n-2} +
+          ... + \alpha_n$.
+        \item $H_n$ -- матрица значений характеров элементарной
+          2-абелевой группы
+        \end{itemize}
+
+        \subsection{Совершенно некоррелированные функции}
+
+        \definition Функции $f, g \in \mathbb{F}_2(n)$ называются:
+        \begin{itemize}
+        \item совершенно некоррелированными (perfectly uncorrelated),
+          если \[ \delta_{f, g}(\epsilon) = 0 \forall \epsilon \in
+            V_n(2). \]
+        \item некоррелированными порядка $k, k \in \{ 0, ..., n \}$
+          (uncorrelated of degree $k$), если \[ \delta_{f, g}(\epsilon) = 0 \forall \epsilon \in
+            V_n(2), \|\epsilon\| \le k. \]
+        \end{itemize}
+
+        \subsection{Теорема о взаимной корреляции}
+        \theorem[о взаимной корреляции]{Пусть $f, g \in
+          \mathbb{F}_2(n)$. Тогда \[ (\delta_{f, g}(0), ...,
+            \delta_{f, g}(2^n - 1))H_n = (w_f(0)w_g(0), ..., w_f(2^n -
+            1)w_g(2^n - 1)) \]
+        }
+        \proof
+        \[ \sum_{\alpha \in V_n(2)} \delta_{f, g}(\alpha)(-1)^{\langle
+            \alpha, \beta \rangle} = \sum_{\alpha \in V_n(2)}
+          \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta) \oplus g(\Theta \oplus
+            \alpha)} (-1)^{\langle \alpha, \beta \rangle} =
+          \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
+            V_n(2)} (-1)^{g(\Theta \oplus \alpha) \oplus \langle \alpha,
+            \beta \rangle} \]
+        Сделаем замену $\tau = \Theta \oplus \alpha$
+        \[ \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
+            V_n(2)} (-1)^{g(\tau) \oplus \langle \tau \oplus \Theta,
+            \beta \rangle} = \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)
+            \oplus \langle \tau \oplus \Theta,
+            \beta \rangle} \sum_{\alpha \in
+            V_n(2)} (-1)^{g(\tau) \oplus \langle \tau,
+            \beta \rangle} = w_f(\beta) w_g(\beta) \] $\blacksquare$
+
+        \textbf{Следствие 2} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
+          (\delta_f(0), ..., \delta_f(2^n - 1)) H_n = (w_f(0)^2, ...,
+          w_f(2^n - 1)^2) \]
+        \proof следует из теоремы при $f = g$ $\blacksquare$
+
+        \textbf{Следствие 3} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
+          2^n(\delta_{f, g}(0), ..., \delta_{f, g}(2^n - 1)) =
+          (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1)) H_n \]
+        \proof следует из теоремы и равенства $H_n H_n = 2^n E_n$
+        $\blacksquare$
+
+        Из следствия вытекает равенство Парсеваля, \[ \sum_{\alpha \in
+            V_n(2)} w_f^2(\alpha) = 2^n \delta_f(0) = 2^{2n} \]
+
+        \paragraph{Задача}
+        Пусть $h \in \mathbb{F}_2(n+m)$. \[ h(x, y) = f(x) \oplus g(y),
+          x \in V_n(2), y \in V_m(2) \] для некоторых $f \in
+        \mathbb{F}_2(m)$. Тогда \[ \delta_h(\alpha, \beta) =
+          \delta_f(\alpha)\delta_g(\beta) \forall \alpha \in V_n(2),
+          \beta \in V_m(2) \].
+
+        \subsection{Теорема о свёртке}
+        \textbf{Следствие 4 (теорема о свёртке)}. Пусть $f,g,h \in
+        \mathbb{F}_2(n)$, \[ h(x) = f(x) \oplus g(x) \forall x \in
+          V_n(2) \]
+        Тогда \[ w_h(\beta) = 2^{-n} \sum_{\alpha \in V_n(2)}
+          w_f(\alpha) w_f(\alpha \oplus \beta) \forall \beta \in
+          V_n(2)\]
+        \proof Зафиксируем произвольное $\beta \in V_n(2)$ и положим \[
+          g_{\beta}(x) = g(x) \oplus \langle \beta, x \rangle \]
+        Тогда \[w_{g_{\beta}}(\alpha) = w_g(\alpha \oplus
+          \beta). \] \[w_h(\alpha) = \delta_{f, g_{\beta}}(0) \]
+        для всех $\alpha \in V_n(2)$
+
+        Из следствия 3 вытекает \[ w_h(\alpha) = 2^{-n} \sum_{\alpha
+            \in V_n(2)} w_f(\alpha)w_{g_{\beta}}(\alpha) = 2^{-n}
+          \sum_{\alpha in V_n(2)} w_f(\alpha) w_g(\alpha \oplus
+          \beta) \]
+
+        \subsection{Коэффициенты Уолша-Адамара и криптографические
+          свойства}
+        -- Многие важные криптографические свойства функции $f$
+        зависят от числа ненулевых коэффициентов Уолша-Адамара
+
+        Для $f \in \mathbb{F}_2(n)$ положим
+        \[
+          \begin{aligned}
+            W_f^{(0)} = \{ \beta \in V_n(2) | w_f(\beta) = 0 \},\\
+            W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0 \},\\
+            \delta_f^{(1)} = \{ beta \in V_n(2) | \delta_f(\beta) \ne
+            0 \}.
+          \end{aligned}
+        \]
+
+        \definition Функции $f, g \in \mathbb{F}_2(n)$ имеют
+        \textit{непересекающиеся спектры}, если \[ W_f^{(1)} \cap
+          W_g^{(1)} = \varnothing \]
+
+        \statement{Функции $f, g \in \mathbb{F}_2(n)$ имеют
+          непересекающиеся спектры $\Leftrightarrow$ $f, g$ совершенно
+          некоррелированные}
+
+        \lemme{Пусть $f, g \in \mathbb{F}_2(n)$. Тогда \[ \sum_{\alpha
+              \in V_n(2)} \delta_{f, g}^2(\alpha) \le 2^{3n} \]}
+
+        \proof Положим
+        \[
+          \begin{aligned}
+            \delta_{f, g} = (\delta_{f, g}(0), ..., \delta_{f, g}(2^n
+            - 1)),\\
+            W_{f, g} = (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1))
+          \end{aligned}
+        \]
+
+        Применяя теорему о взаимной корреляции, имеем \[ \langle W_{f,
+            g}, W_{f, g} \rangle = \langle \delta_{f, g} H_n,
+          \delta_{f, g} H_n \rangle = \langle \delta_{f, g} H_n H_n^T,
+          \delta_{f, g} \rangle = 2^n \langle \delta_{f, g},
+          \delta_{f, g} \rangle. \]
+        \[ 2^n \sum_{\alpha \in V_n(2)} \delta_{f, g}^2(\alpha) =
+          \sum_{\alpha \in V_n(2)} w_f(\alpha) w_g(\alpha) \le
+          (\sum_{\alpha \in V_n(2)} w_f^2(\alpha))(\sum_{\alpha \in
+            V_n(2)} w_g^2(\alpha)) = 2^{2n} * 2^{2n} \]
+        Отсюда следует неравенство $\blacksquare$
+
+        \statement{Для каждой $f \in \mathbb{F}_2(n)$ справедливо
+          неравенство \[ |\delta_f^{(1)}| * |W_f^{(1)}| \ge 2^n \]
+          где \[ W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0
+            \} \] }
+
+        \textbf{Замечания}
+        \begin{itemize}
+        \item для некоторых приложений нужно большое число ненулевых
+          коэффициентов Уолша-Адамара
+        \item для других приложений нужно большое число нулей функции
+          автокорреляции
+        \end{itemize}
+        $\implies$
+        \begin{itemize}
+        \item из неравенства следует, что одновременно обеспечить оба
+          требования невозможно
+        \item если параметр ``хороший'', то другой ``плохой''. Нельзя
+          сделать обе характеристики хорошими
+        \end{itemize}
+
+        \subsection{Энтропия}
+
+        Пусть $\xi$ -- дискретная случайная величина, заданная на
+        конечном множестве $X = \{x_1, ..., x_n\}$
+        \begin{itemize}
+        \item $\mathbb{R}^+ = \{x \in \mathbb{R} | x > 0\}$,
+        \item $\alpha \in \mathbb{R}^+$
+        \end{itemize}
+        \definition Мерой (логарифмической) неопределённости события
+        $\{\xi = x\}$ при $x \in X$ называется \[ I(\xi = x) =
+          -\log_{\alpha} P\{\xi = x\} \]
+
+        \begin{itemize}
+        \item основание логарифма $\alpha \in \mathbb{R}^+$
+          -- зависит от выбора шкалы измерения информации (двоичной,
+          натуральной и т.д.)
+        \item $I$ является случайной величиной, принимающей значение
+          $I(\xi = x)$ с вероятностью $P\{\xi = x\}$
+        \end{itemize}
+        \begin{itemize}
+        \item Пусть $\eta$ -- случайная величина, заданная на
+          множестве $Y$,
+        \item $P\{\xi = x, \eta = y\}$ -- совместное распределение
+          пары $(\xi, \eta)$ случайных величин на $X \times Y, (x, y)
+          \in X \times Y$.
+          \[ \sum_{y \in Y} P\{\xi = x, \eta = y\} = P\{\xi = x\} \]
+          \[ \sum_{x \in X} P\{\xi = x, \eta = y\} = P\{\eta = y\} \]
+        \end{itemize}
+
+        \definition Случайные величины $\xi, \eta$ называются
+        независимыми, если \[ P\{\xi = x, \eta = y\} = P\{\xi =
+          x,\}P\{\eta = y\} \] для каждой $(x, y) \in X \times Y$
+
+        \subsection{Условная энтропия}
+        \begin{itemize}
+        \item Условная энтропия случайной величины $\eta$ при условии
+          выполнения события $\{ \xi = x \}$: \[
+            \begin{aligned}
+              H(\eta | \xi = x) &= -
+            \sum_{y \in Y} P\{\eta = y | \xi = x \} \log_a P\{\eta = y
+                                  | \xi = x \} \\
+                                &= - \sum_{x \in X} \sum_{y \in Y} P\{ \xi =
+              x, \eta = y \} \log_a P\{ \eta = y \}
+            \end{aligned}
+              \] %TODO: INCOMPLETE
+        \end{itemize}
+        \subsection{Взаимная информация}
+        \definition Взаимная информация $I(\xi, \eta)$ случайных
+        величин $\xi, \eta$ задаётся: \[ I(\xi, \eta) = \sum_{x \in X}
+          \sum_{y \in Y} P\{ \xi = x, \eta = y \} \log_a \frac{P\{\eta
+            = y, \xi = x\}}{P\{\eta = y\}P\{\xi = x\}} \]
+
+        \lemme{$I(\xi, \eta) = 0 \Leftrightarrow \xi, \eta$
+          независимые случайные величины}
+
+        \section{Корреляционная имунность и устойчивость двоичных
+          функций}
+
+        \begin{itemize}
+        \item \textit{Корреляционная имунность} -- мера
+          противодействия корреляционному методу анализа
+        \item Отсутствие какой-нибудь информации о некоторых значениях
+          функции от ``некоторого'' подмножества её аргументов.
+          \begin{itemize}
+          \item если такая информация есть -- то её можно применять для
+          нахождения ключа
+          \item подход зависит от выбранной вероятностной модели
+          \end{itemize}
+        \end{itemize}
+
+        \subsection{Корреляционная иммунность}
+        \begin{itemize}
+        \item $\mathbb{F}_2(n) = \{f | f: V_n(2) \rightarrow \{0,
+          1\}\}$
+        \item Пусть $f: V_n(2) \rightarrow \{0, 1\}$. $\xi_1, ...,
+          \xi_n$ -- независимые двоичные одинаково распределённые
+          случайные величины, \[ P\{\xi_i = 0\} = P\{\xi_i = 1\} =
+            \frac{1}{2}, i = 1, ..., n \]
+        \item Двоичная случайная величина \[ \theta = f(\xi_1, ...,
+            \xi_n) \] имеет распределение \[ P\{\theta = 1\} = \|f\| *
+            2^{-n}, P\{\theta = 0\} = 1 - \|f\| * 2^{-n} \]
+        \end{itemize}
+
+        \definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
+        называется корреляционно-иммунной порядка $m \in \{1, ..,
+        n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
+        i_1 < i_2 < ... < i_m \le m$ справедливо условие \[
+          I(\xi^{(i_1, i_2, ..., i_m)}, \theta) = 0 \], где $\xi^{(i)}
+        = \xi^{(i_1, i_2, ..., i_m)} = (\xi_{i_1}, ..., \xi_{i_m})$
+
+        \definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
+        называется корреляционно-иммунной порядка $m \in \{1, ..,
+        n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
+        i_1 < i_2 < ... < i_m \le m$ случайные величины $\xi_{i_1}, ...,
+        \xi_{i_m}$ и [DATA EXPUNGED] % TODO: ??
+
+        \subsection{Критерий корреляционной иммунности}
+
+        $Cor_n^{(m)}$
+
+        \statement Функция $f \in \mathbb{F}_2(n)$ является
+        корреляционно-иммунной порядка $m \in \{1, ..., n - 1 \}
+        \Leftrightarrow$ для каждого набора \[ i = (i_1, i_2, ...,
+          i_m) \in I_n^{(m)} и вектора \alpha = (\alpha_1, \alpha_2,
+          ..., \alpha_m) \in V_m(2)\]
+        справедливо \[ \|f_{i_1, ..., i_m}^{(\alpha_1, ...,
+            \alpha_m)}\| = 2^{-m} * \|f\| \]
+        \[ I_n^{(m)} = \{(i_1, ..., i_m) \in \{1, ..., n\}^m | 1 \le
+          i_1 < i_2 < ... < i_m \le n \]
+        -- $I_n^{(m)}$ -- множество всех строго упорядоченных наборов
+        из $m$ элементов из множества n
+
+        \proof (Необходимость)\\
+        Пусть $f \in Cor_n^{(m)}$. Из леммы следует что для каждого
+        набора $i \in I_n^{(m)}$ заданы случайные величины \[
+          \xi^{(i)} = (\xi_{i_1}, ..., \xi_{i_m}) и \theta = f(\xi_1, ...,
+          \xi_n) \]
+        Значит для каждых $\alpha \in V_m(2), \beta \in \{ 0, 1 \}$
+        имеем \[ P\{\xi^{(i)} = \alpha|\theta = \beta\} = \frac{
+            P\{\xi^{(i)} = \alpha, \theta = \beta\}}{ P\{\theta =
+            \beta\}} = P\{ \xi^{(i)} = \alpha \} \]
+
+        Випишем вероятности для $\beta = 1$.
+
+        \[
+          \begin{aligned}
+            P\{\theta = 1\} = 2^{-n}\|f\|,\\
+            P\{\xi^{(i)} = \alpha\} = 2^{-m}
+          \end{aligned}
+        \]
+
+        \proof (Достаточность)\\
+        Пусть на всех $i \in I_n^{(m)}$ и $\alpha \in V_m(2)$
+        выполняется \[ \|f_i^{(\alpha)}\| = 2^{-m}\|f\| \]
+        Проведя рассуждения в обратном порядке докажем равенство при
+        $\theta = 1$
+        \[
+          \begin{aligned}
+            P\{\xi^{(i)} = \alpha | \theta = 0\} &= \frac{ P\{\xi^{(i)}
+            = \alpha, \theta = 0\}}{ P\{\theta = 0\}} = \frac{
+            P\{\xi^{(i)} = \alpha\}}{1 - P\{\theta = 1\}} - \frac{
+            p\{\xi^{(i)} = \alpha, \theta = 1\}}{1 - P\{\theta = 1\}}
+            \\
+            &= \frac{2^{-m} - 2^{-n} \|f_i^{(\alpha)}\|}{1 - 2^{-n}\|f\|}
+          = \frac{2^{-m} - 2^{-n-m} \|f\|}{1 - 2^{-n}\|f\|} = 2^{-m} =
+            P\{\xi^{(i)} = \alpha\}
+          \end{aligned}
+        \]
+        $\implies$
+        [DATA EXPUNGED]
+        % TODO: implies what? didn't have time to even take a pic
+
+        \subsection{Корреляционная иммунность и коэффициенты
+          Уолша-Адамара}
+        -- Характеризация двоичной корреляционно-иммунной функции
+        через коэффициенты Уолша-Адамара.
+
+        Для $\alpha \in V_n(2), \alpha = (\alpha_1, \alpha_2, ...,
+        \alpha_n)$ положим \[ supp(\alpha) = \{j \in \{1, ..., n\} |
+          \alpha_j = 1 \} \]
+
+        \lection{Лекция 6}
 	
 	\lection{Лекция 7}
 	
