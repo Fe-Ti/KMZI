@@ -109,6 +109,7 @@
 \newcommand{\vecx}{\vec{x}}
 \newcommand{\vecy}{\vec{y}}
 \newcommand{\hamming}{\chi}
+\newcommand{\rank}{\text{rank }}
 	
 
 \newcommand{\refeq}[1]{(\ref{#1})}
@@ -883,9 +884,19 @@ $$
 
 	$L = \langle z_1(x), ..., z_l(x) \rangle$ -- линейное пространство на выходе фильтрующего генератора \[ dim L \le l ~~~\blacksquare \]
 	\proof (Достаточность)
-	Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ dim L \ge l \]. Значит, $l = dim L ~~~\blacksquare$
-	\paragraph{Задача} Доказать для каждого $x \in \mathbb{F}_q^n$ равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), j = 2,3,... \]
-	\paragraph{Задача} Найти линейную сложность фильтрующего генератора над $\mathbb{F}_2$.
+	Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ dim L \ge l. \]
+	Значит, $l = dim L ~~~\blacksquare$
+	
+	\property{$\dim L$ равна такому наибольшему числу $l \in L$ что
+	\begin{itemize}
+	\item первые $l$ функций $z_1, ..., z_l$ линейно независимы;
+	\item $z_{l+1}$ --- линейная комбинация $z_1, ..., z_l$.
+	\end{itemize}
+	}
+	
+	\paragraph{Задача} Доказать для каждого $x \in \mathbb{F}_q^n$ равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), ~~ j = 2,3,... \]
+	
+	\subsubsection{Задача о нахождении линейной сложности ФГ} Найти линейную сложность фильтрующего генератора над $\mathbb{F}_2$.
 	
 	$$
 	n = 3, ~ \delta: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~ f: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~~
@@ -911,7 +922,6 @@ $$
 	\paragraph{Этап 2}
 	Находим все функции \[ z_j(x) = f(\delta^{j-1}(x)) \] на периоде фильтрующего генератора, применяя равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), j = 2,3,... \]
 	Получаем
-	
 	$$
 	\begin{aligned}
 		z_1 &= f(x) & &= x_1x_2 + x_1x_3 + x_2x_3,\\
@@ -936,7 +946,7 @@ $$
 	\end{aligned}
 	$$
 	
-	Требуется найти $l = rank M$. $i$-я строка $M$ есть коэффициенты многочлена Жегалкина функции $z_i(x), i = 1, ..., 6$
+	Требуется найти $l = \rank M$. $i$-я строка $M$ есть коэффициенты многочлена Жегалкина функции $z_i(x), i = 1, ..., 6$
 	
 	$$
 	\begin{pmatrix}
@@ -946,7 +956,15 @@ $$
 		1 & 1 & 0 & 1 & 1 & 0 \\
 		1 & 1 & 1 & 1 & 0 & 0 \\
 		1 & 0 & 0 & 1 & 0 & 1 \\
-	\end{pmatrix} \sim
+	\end{pmatrix}
+	\begin{matrix}
+		\rightarrow & z_1 \\
+		\rightarrow & z_2 \\
+		\rightarrow & z_3 \\
+		\rightarrow & z_4 \\
+		\rightarrow & z_5 \\
+		\rightarrow & z_6 \\
+	\end{matrix} \sim
 	\begin{pmatrix}
 		1 & 1 & 1 & 1 & 0 & 0 \\
 		1 & 1 & 0 & 1 & 1 & 0 \\
@@ -964,6 +982,8 @@ $$
 		0 & 0 & 0 & 0 & 0 & 1 \\
 	\end{pmatrix}
 	$$
+	
+	Получаем $l = \rank M = 6$.
 	
 	\paragraph{Задача} Найти представление $z_7$ через $z_1, ..., z_6$
 
