@@ -110,7 +110,7 @@
 \newcommand{\vecy}{\vec{y}}
 \newcommand{\hamming}{\chi}
 \newcommand{\rank}{\text{rank }}
-
+\newcommand{\AI}{AI}
 
 \newcommand{\refeq}[1]{(\ref{#1})}
 
@@ -875,19 +875,19 @@ $$
 
 \lection{Лекция 3}
 \subsection{Фильтрующий генератор}
-\property{При $q = 2$ верхняя граница линейной сложности гаммы фильтрующего генератора равна \[ \sum_{i=0}^{deg f} \binom{n}{i} \]}
+\property{При $q = 2$ верхняя граница линейной сложности гаммы фильтрующего генератора равна \[ \sum_{i=0}^{\deg f} \binom{n}{i} \]}
 Получение точных нижних оценок -- часто связано со значительными математическими трудностями
 -- Rueppel R. A. Analysis and design of stream ciphers. Berlin: Springer, 1986
 \theorem{Линейная сложность совпадает с размерностью векторного пространства, порождённого множеством всех функций на выходе фильтрующего генератора.}
 \proof (Необходимость)
 Пусть $l$ -- линейная сложность. Тогда $\forall j > l$ функция \[ z_j = z_j(x) = f(\delta^{j-1}(x)) \] над $\mathbb{F}_q$ линейно выражается через первые $l$ функций $z_1, ..., z_l$
 
-$L = \langle z_1(x), ..., z_l(x) \rangle$ -- линейное пространство на выходе фильтрующего генератора \[ dim L \le l ~~~\blacksquare \]
+$L = \langle z_1(x), ..., z_l(x) \rangle$ -- линейное пространство на выходе фильтрующего генератора \[ \dim L \le l ~~~\blacksquare \]
 \proof (Достаточность)
-Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ dim L \ge l. \]
-Значит, $l = dim L ~~~\blacksquare$
+Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ \dim L \ge l. \]
+Значит, $l = \dim L ~~~\blacksquare$
 
-\property{$\dim L$ равна такому наибольшему числу $l \in L$ что
+\property{$\\dim L$ равна такому наибольшему числу $l \in L$ что
 \begin{itemize}
 \item первые $l$ функций $z_1, ..., z_l$ линейно независимы;
 \item $z_{l+1}$ --- линейная комбинация $z_1, ..., z_l$.
@@ -1197,15 +1197,15 @@ $Ann(f) \subseteq (1 + f)$.
 равновероятной, то \[|Ann(f)| = 2^{2^{n-1}}. \]
 
 \definition Порядком алгебраической иммунности функции $f \in
-\mathbb{F}_n$ называется число \[ Al(f) = min\{deg(g) | g \in
+\mathbb{F}_n$ называется число \[ \AI(f) = min\{\deg(g) | g \in
     \mathbb{F}_n, g \not\equiv 0, f g \equiv 0 \vee (f + 1)g
     \equiv 0 \} \]
 
 \paragraph{Задача} Пусть $f \in \mathbb{F}_n$ и $f g \equiv h$
-для некоторых $g, h \in \mathbb{F}_n$, \[ deg g \leq d, deg f
-    \leq d, g \not\equiv 0. \] Доказать, что $Al(f) \leq d$.
+для некоторых $g, h \in \mathbb{F}_n$, \[ \deg g \leq d, \deg f
+    \leq d, g \not\equiv 0. \] Доказать, что $\AI(f) \leq d$.
 
-\statement{Пусть $f \in \mathbb{F}_n$. Тогда $Al(f) \leq \lceil
+\statement{Пусть $f \in \mathbb{F}_n$. Тогда $\AI(f) \leq \lceil
 n/2 \rceil$.}
 \proof Из функций $f, f + 1$ выберем функцию, вес которой не
 более $2^{n-1}$. Без ограничения общности, пусть $||f|| \leq
@@ -1222,15 +1222,15 @@ n/2 \rceil$.}
     \frac{n}{2} \rceil} \binom{n}{i} > 2^{n-2} \geq ||f|| \]
 \proof На пересечении строки $y$ и столбца $h$ записывается
 $h(y)$. Так как столбцов больше чем строк \[ \sum_{i = 0}^{\lceil
-    \frac{n}{2} \rceil} \binom{n}{i} > ||f||, \], то
-существует их ненулевая линейная комбинация $g$, равная $0
+    \frac{n}{2} \rceil} \binom{n}{i} > ||f||, \] то
+существует их ненулевая линейная комбинация $g$, равная $0, ~
 \forall x \in V_n$, \[ g(x) = g(x_1, ..., x_n) = \sum_{i = 0}^{\lceil
     \frac{n}{2} \rceil} \sum_{\substack{J \subseteq \{1, ...,
         n\}\\i = |J|}}  c_J \prod_{j \in J} x_j = 0 \]
 
 \begin{itemize}
-    \item $deg(g) \leq \lceil \frac{n}{2} \rceil$
-    \item $g(x) = 0 \forall x \in {y \in V_n | f(y) = 1}$
+    \item $\deg(g) \leq \lceil \frac{n}{2} \rceil$
+    \item $g(x) = 0, ~ \forall x \in \{y \in V_n | f(y) = 1\}$
     \end{itemize}
 
 Пусть $\mathbb{A}_n$ -- множество всех аффинных функций от $n$
@@ -1238,21 +1238,20 @@ $h(y)$. Так как столбцов больше чем строк \[ \sum_{i
 
 \paragraph{Задача} Доказать что каждый ненулевой аннигилятор
 $g \in \mathbb{F}_n$ аффинной функции $a \in \mathbb{A}_n,
-deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
--- произвольная функция из $\mathbb{F}, deg(h) = deg(g) - 1$.
+\deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
+-- произвольная функция из $\mathbb{F}, \deg(h) = \deg(g) - 1$.
 
 \subsubsection{Алгоритм нахождения множества $Ann_r(f)$}
 \begin{itemize}
     \item $Ann_r(f) = \{ g \in \mathbb{F}_n | fg \equiv 0,
-    deg(g) \leq r \}$
+    \deg(g) \leq r \}$
     \item Из доказательства утверждения следует алгоритм
     нахождения множества $Ann_r(f)$
 \end{itemize}
 
-\paragraph{Алгоритм} (нахождение $Ann_r(f)$ методом
-неопределённых коэффициентов)
-
-\paragraph{Вход}: $f \in \mathbb{F}_n$
+%\paragraph{Алгоритм нахождения $Ann_r(f)$ методом неопределённых коэффициентов}
+\begin{figure}
+\paragraph{Вход:} $f \in \mathbb{F}_n$
 
 \begin{enumerate}
     \item Представим аннигилятор $g \in Ann_r(f)$ в виде
@@ -1272,18 +1271,19 @@ deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
     Решением её являются коэффициенты многочленов Жегалкина
     аннигиляторов из $Ann_r(f)$ и только они.
 \end{enumerate}
-\paragraph{Выход}: $Ann_r(f)$
+\paragraph{Выход:} $Ann_r(f)$
+\end{figure}
 
-\paragraph{Задача} Пусть $a \in \mathbb{A}_n, deg(a) =
+\paragraph{Задача} Пусть $a \in \mathbb{A}_n, \deg(a) =
 1$. Доказать что для каждого $t \in \mathbb{N}$ справедливо
-равенство \[ dim Ann_t(a) = \sum_{i=0}^{t-1} \binom{n-1}{i} \]
+равенство \[ \dim Ann_t(a) = \sum_{i=0}^{t-1} \binom{n-1}{i} \]
 
 \paragraph{Задача}
 \statement{Пусть  \[ f \in \mathbb{F}_n, a \in \mathbb{A}_n,
-    deg(a) = 1, d = Al(f). \]
-    Тогда \[ d - 1 \leq Al(f + a) \leq d + 1 \]}
+    \deg(a) = 1, d = \AI(f). \]
+    Тогда \[ d - 1 \leq \AI(f + a) \leq d + 1 \]}
 \proof Пусть $g \in Ann(f) \cup Ann(f + 1), d =
-deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } fg
+\deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } fg
     \not\equiv 0 \].
 Для каждого из них разбираем: \[ (a + 1)g \equiv 0 \textrm{ и }
     (a + 1)g \not\equiv 0 \]
@@ -1308,39 +1308,39 @@ deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } 
 \end{enumerate}
 
 \subsection{Свойства $Ann_r(f)$}
-\statement{Пусть $f_1, f_2 \in \mathbb{F}_n, d_i = Al(f_i), i
+\statement{Пусть $f_1, f_2 \in \mathbb{F}_n, d_i = \AI(f_i), i
     = 1,2,$ \[ g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1) f_1 +
-    x_{n+1}f_2. \] Тогда \[ Al(f) \leq min\{d_1, d_2\} +
+    x_{n+1}f_2. \] Тогда \[ \AI(f) \leq min\{d_1, d_2\} +
     1. \]}
 \paragraph{Вывод} Из подфункций с ``низкой'' алгебраической
 иммунностью нельзя получить функцию с ``высокой''
 алгебраической иммунностью.
 \proof Пусть $g \in Ann(f_1) \cup Ann(f_1 + 1)$ и $d_1 =
-deg(g)$. Если $gf_1 \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
+\deg(g)$. Если $gf_1 \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
     0. \]
 Если $g(f_1 + 1) \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
-    0. \] $\implies$ \[ Al(f_1) \leq d_1 + 1. \]
-Аналогично, $Al(f_2) \leq d_2 + 1 \implies$ \[ Al(f_2) \leq
+    0. \] $\implies$ \[ \AI(f_1) \leq d_1 + 1. \]
+Аналогично, $\AI(f_2) \leq d_2 + 1 \implies$ \[ \AI(f_2) \leq
     d_2 + 1 \]
 $\blacksquare$
 \paragraph{Следствие} Пусть $n$ чётно, $f_1, f_2 \in
 \mathbb{F}_n$, \[g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1)f_1
-    + x_{n+1}f_2, \\ Al(g) = 1 + \frac{n}{2}. \]
-Тогда $Al(f_i) = \frac{n}{2}, i = 1, 2.$
+    + x_{n+1}f_2, \\ \AI(g) = 1 + \frac{n}{2}. \]
+Тогда $\AI(f_i) = \frac{n}{2}, i = 1, 2.$
 \begin{itemize}
-    \item $Al(g) = 1 + \frac{n}{2}.$ (максимально возможная)
-    \item $Al(f_i) = \frac{n}{2}$ (тоже максимально возможная)
+    \item $\AI(g) = 1 + \frac{n}{2}.$ (максимально возможная)
+    \item $\AI(f_i) = \frac{n}{2}$ (тоже максимально возможная)
 \end{itemize}
 
 \statement{Пусть $f \in \mathbb{F}_n, d \in \{1, ..., n\}$ и
-    $d = Al(f)$. Тогда: \[ \sum_{i=0}^{d-1} \binom{n}{i} \leq
+    $d = \AI(f)$. Тогда: \[ \sum_{i=0}^{d-1} \binom{n}{i} \leq
     ||f|| \leq \sum_{i=0}^{n-d} \binom{n}{i} \]}
 \proof Для доказательства применим метод, используемый для
 доказательства
 \begin{itemize}
-    \item \textbf{Утв.} Пусть $f \in \mathbb{F}_n$. Тогда $Al(f)
+    \item \textbf{Утв.} Пусть $f \in \mathbb{F}_n$. Тогда $\AI(f)
         \leq \lceil \frac{n}{2} \rceil$.
-    \item Построим аннигилятор $g$ функции $f$, $deg(g) \leq d -
+    \item Построим аннигилятор $g$ функции $f$, $\deg(g) \leq d -
     1$.
     Строим таблицу. \[ supp(f) = \{y_1, y_2, ..., y_d\}, d =
         ||f||. \]
@@ -1353,12 +1353,12 @@ $\blacksquare$
     (мономов) -- $\sum_{i=0}^{d-1} \binom{n}{i}$
 \end{itemize}
 Если число столбцов $>$ числа строк, то существует их линейная
-зависимость $\implies$ существует аннигилятор $g, deg(g) \leq
+зависимость $\implies$ существует аннигилятор $g, \deg(g) \leq
 d - 1$\\
 -- Нижняя оценка доказана $\blacksquare$
 
 С другой стороны, у функции $f + 1$ не существует
-аннигиляторов \[ h \in Ann(f), deg(h) \leq d - 1. \]
+аннигиляторов \[ h \in Ann(f), \deg(h) \leq d - 1. \]
 $\implies$ \[ 2^n - ||f|| = ||f + 1|| \geq \sum_{i=0}^{d-1}
     \binom{n}{i} \]
 $\implies$ \[ ||f|| \leq 2^n - \sum_{i=0}^{d-1} \binom{n}{i} =
@@ -1367,10 +1367,10 @@ $\implies$ \[ ||f|| \leq 2^n - \sum_{i=0}^{d-1} \binom{n}{i} =
 $\blacksquare$
 
 \paragraph{Следствие} Если $n$ нечётно, $f \in \mathbb{F}_n,
-Al(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
+\AI(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
     функция}.
 \begin{itemize}
-    \item $Al(f) = \frac{n + 1}{2}$ (максимально возможное)
+    \item $\AI(f) = \frac{n + 1}{2}$ (максимально возможное)
 \end{itemize}
 
 \lection{Лекция 5}
@@ -1384,15 +1384,15 @@ Al(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
 
 Пусть $f, g \in \mathbb{F}_2(n)$, \[ \mathbb{F}_2(n) = \{ f | f: V_n(2) \rightarrow \{ 0, 1 \} \}. \]
 
-\definition Функция $\delta_{f,g}: V_n(2) \rightarrow
-\mathbb{Z}$, \[ \delta_{f,g}(\epsilon) = \sum_{\beta \in
+\definition Функция $\Delta_{f,g}: V_n(2) \rightarrow
+\mathbb{Z}$, \[ \Delta_{f,g}(\epsilon) = \sum_{\beta \in
     V_n(2)} (-1)^{f(\beta) \oplus g(\beta \oplus \epsilon)},
     \forall \epsilon \in V_n(2) \]
 называется \textit{функцией взаимной корреляции} или
 \textit{взаимной корреляцией} (cross-correlation) двоичных
 функций $f, g$.
-\definition Функция $\delta_f : V_n(2) \rightarrow
-\mathbb{Z}$, \[ \delta_{f}(\epsilon) = \delta_{f, f}(\epsilon)
+\definition Функция $\Delta_f : V_n(2) \rightarrow
+\mathbb{Z}$, \[ \Delta_{f}(\epsilon) = \Delta_{f, f}(\epsilon)
     = \sum_{\beta \in
     V_n(2)} (-1)^{f(\beta) \oplus f(\beta \oplus \epsilon)},
     \forall \epsilon \in V_n(2) \]
@@ -1406,7 +1406,7 @@ $f$.
     V_n(2)} (-1)^{f(\beta) \oplus (\alpha, \beta)},
     \alpha \in V_n(2) \]
 \textit{Обратное преобразование}
-\[ \sigma_f(x) = (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
+\[ \delta_f(x) = (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
     w_f(\alpha)\omega_{\alpha} \]
 где
 \begin{itemize}
@@ -1422,8 +1422,8 @@ $f$.
 \subsection{Взаимная корреляция}
 \statement{Пусть $f, g \in \mathbb{F}_2(n), \epsilon \in V_n(2)$. Тогда:
 \begin{enumerate}
-    \item $\delta_{f, g}(\epsilon) = \delta_{g, f}(\epsilon)$,
-    \item $\delta_f(\epsilon) = w_{d_{\epsilon}f}(0_n)$, где
+    \item $\Delta_{f, g}(\epsilon) = \Delta_{g, f}(\epsilon)$,
+    \item $\Delta_f(\epsilon) = w_{d_{\epsilon}f}(\vec0_n)$, где
     $d_{\epsilon}f$ -- производная функции $f$ по направлению
     $\epsilon$,
     \item $d_{\epsilon}f(x) = f(x \oplus \epsilon) \oplus f(x)$
