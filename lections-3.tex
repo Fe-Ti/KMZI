@@ -1,0 +1,664 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtext}
+\usepackage[english,russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{geometry}
+\geometry{left=3cm}
+\geometry{right=1.5cm}
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+\usepackage{tikz}
+\usepackage{titling}
+\usepackage{indentfirst}
+\setlength{\parindent}{1cm}
+\usepackage{soul}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fvextra}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{shapes.geometric, positioning, arrows}
+\usepackage{ifthen} % provides \isempty test
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+%\documentclass{beamer}
+%\usepackage{lmodern}
+%\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{wavy/.style={decorate, decoration=snake}}
+
+\onehalfspacing
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+\fvset{breaklines=true, breakafter=\space}
+
+\DeclareRobustCommand{\divby}{%
+  \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+}
+
+\newcounter{theorem}
+\newcounter{lemme}
+\newcounter{definition}
+\newcounter{statement}
+\newcounter{property}
+\newcounter{corollary}
+\newcommand{\lection}[1]{\pagebreak\section*{#1}
+  \addtocounter{section}{1}
+  \addcontentsline{toc}{section}{#1}
+  \setcounter{subsection}{0}
+  \setcounter{theorem}{0}
+  \setcounter{definition}{0}
+  \setcounter{statement}{0}
+  \setcounter{property}{0}
+%  \setcounter{corollary}{0}
+}
+
+\newcommand{\seminary}[1]{\pagebreak\section*{#1}
+  \addcontentsline{toc}{section}{#1}
+}
+
+\newcommand{\definition}{\stepcounter{definition}\paragraph{Определение \arabic{section}.\arabic{definition}}
+}
+
+\newcommand{\statement}[1]{\stepcounter{statement}\setcounter{corollary}{0}\paragraph{Утв. \arabic{section}.\arabic{statement}} #1}
+
+\newcommand{\proof}{\paragraph{Доказательство}}
+
+\newcommand{\corollary}[1]{\stepcounter{corollary}\paragraph{Следствие \arabic{corollary}} #1}
+
+\newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема
+    \arabic{section}.\arabic{theorem}}
+  \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+\newcommand{\lemme}[2][]{\stepcounter{lemme}\setcounter{corollary}{0}\paragraph{Лемма \arabic{section}.\arabic{lemme}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+
+\newcommand{\property}[1]{\stepcounter{property}\paragraph{Свойство \arabic{section}.\arabic{property}}\textit{#1}}
+
+\newcommand{\angles}[1]{\langle #1 \rangle}
+\newcommand{\nonlinty}[1]{n_{#1}}
+\newcommand{\iftext}{\text{если}}
+\newcommand{\xor}{\oplus}
+%\newcommand{\dist}[2]{d(#1,#2)}
+\newcommand{\weight}[1]{\|#1\|}
+\newcommand{\transp}[1]{#1^\top}
+\newcommand{\ind}[1]{\text{I}(#1)}
+\newcommand{\stack}[1]{\begin{matrix} #1 \end{matrix}}
+\newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\mx}[1]{\mathbf{#1}}
+
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\vecx}{\vec{x}}
+\newcommand{\vecy}{\vec{y}}
+\newcommand{\hamming}{\chi}
+  
+
+\newcommand{\refeq}[1]{(\ref{#1})}
+
+\fancypagestyle{titlepage}{
+  \fancyhf{
+    \begin{center}
+      \begin{tabularx}{\textwidth}[c]{c p{12cm}}
+        \raisebox{-1.1\totalheight}{\includegraphics[width=0.15\linewidth]{./logo/bauman_logo.png}}
+        &\begin{center}
+          \textbf{ Министерство науки и высшего образования Российской Федерации \\
+            Федеральное государственное бюджетное образовательное учреждение 
+            высшего образования \\
+            «Московский государственный технический университет
+            имени Н.Э. Баумана \\
+            (национальный исследовательский университет)» \\ (МГТУ им. Н.Э. Баумана)} \\
+          
+        \end{center}
+      \end{tabularx}
+  \end{center}}
+  \fancyfoot[C]{Москва 2024 г.}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\title{~\\~\\~\\~\\~\\~\\~\\~\\~\\Криптографические методы защиты информации}
+\author{Конспект лекций}
+\date{МГТУ им. Н.Э. Баумана}
+
+\begin{document}
+  \maketitle
+  \thispagestyle{titlepage}
+  \pagebreak
+  \tableofcontents
+  
+  \section*{Disclaimer}
+  \addcontentsline{toc}{section}{Disclaimer}
+  Конспект создан студентами для подготовки к экзамену ввиду отсутствия удобного формата лекций. Поэтому он может содержать ошибки, опечатки и многое другое, за что можно получить автомат с сапогами в придачу.
+  
+  \textit{(Тим Кравченко aka Fe-Ti)}
+  
+
+  \pagebreak
+  \lection{Лекция 1}
+  \section{Сложение случайных величин в кольце $\mathbb{Z}_m$}
+  Свойства (принципы) К. Шеннона:
+  \begin{itemize}
+  \item усложнение -- сложная зависимость между ключом и шифртекстом
+  \item перемешивание -- существенное усложнение взаимосвязи
+    статистических и аналитических характеристик знаков
+    шифртекста по сравнению с открытым текстом
+  \item рассеивания -- каждый знак открытого текста влияет на
+    большое число знаков шифртекста
+  \end{itemize}
+
+  В криптографии сложение в кольце $\mathbb{Z}_m$ используется при
+  синтезе:
+  \begin{itemize}
+  \item генераторов гаммы
+  \item (криптографических) генераторов псевдослучайных
+    последовательностей
+  \item блочных шифрсистем для обеспечения свойства усложнения
+  \end{itemize}
+
+  \subsection{Случайные величины на $\mathbb{Z}_m$}
+
+  Рассматриваем случайную величину $\xi$, принимающую значение
+  на $\mathbb{Z}_m$ с вероятностями \[ p_i^{(\xi) = P\{\xi =
+      t}, t \in \mathbb{Z}_m \]
+  Статистическое ``качество'' случайной величины $\xi$
+  характеризуется отклонением вероятности \[ P\{\xi = t\}
+    \textrm{от} \frac{1}{m} \] -- её близостью к равномерно
+  распределённой случайной величине
+
+  \subsection{Лемма мацуи}
+  \statement Пусть $n \ge 2, \xi_1, ..., \xi_n$ -- (попарно)
+  независимые случайные величинаы на $\mathbb{Z}_2$, \[ P\{\xi_i =
+    0\} = \frac{1 + \delta_j}{2}, -1 \le \delta_j \le 1, j = 1,
+    ..., n \]
+  Тогда для случайной величины \[ \eta_n = \xi_i + ... + \xi_n
+    mod 2 \] справедливо равенство \[ P\{\eta_n = 0\} = \frac{1
+      + \delta^{(n)}}{2} \] \[ \delta^{(n)} = \prod_{j = 1}^n
+    \delta_j \]
+  \proof с помощью формулы полной вероятности и индукции по $n$.
+
+  Для $n = 2$ имеем \[ P\{\eta_2 = 0\} = P\{\xi_1 = 0\}P\{\xi_2 = 0\} + P\{\xi_1 = 1\}P\{\xi_2 = 1\} \]
+  \[
+    \begin{aligned}
+      &P\{\eta_{n+1} = 0\} = P\{\xi_{n+1} = 0\}P\{\eta_n = 0\} +
+        P\{\xi_{n+1} = 1\}P\{\eta_n = 1\} = \\
+      &\frac{1 + \delta_1
+        ... \delta_{n}}{2} * \frac{1 + \delta_{n+1}}{2} + \frac{1
+        - \delta_1 ... \delta_{n}}{2} * \frac{1 - \delta_{n+1}}{2}
+        = \\
+      &\frac{1}{4}(1 + \delta_1 ... \delta_{n} + \delta_{n+1} +
+        \delta_1 ... \delta_{n + 1} + 1 - \delta_1 ... \delta_{n} -
+        \delta_{n+1} + \delta_1 ... \delta_{n+1}) = \\
+      &\frac{1}{4}(2 +
+        2 \delta_1 ... \delta_{n+1}) = \frac{1 + \delta_1
+        ... \delta_{n+1}}{2}
+    \end{aligned}
+  \]
+
+  Каждой случайной величине $\xi$ на $\mathbb{Z}_m$ поставим в
+  соответствие характеристический многочлен
+  \begin{itemize}
+  \item $f_{\xi}(x) = \sum_{i = 0}^{m - 1} x^i P\{\xi = i\}$
+  \item $f_{\xi}(x)$ рассматриваем как элемент кольца
+    $\mathbb{R}[x]/(x^m - 1)$. \[ \mathbb{R}[x]/(x^m - 1) =
+      \{f(x) \in \mathbb{R}[x] | deg(f) < m\}. \]
+  \end{itemize}
+  Если $g_1, g_2 \in \mathbb{R}[x]/(x^m - 1)$, то
+  \[ g = g_1 + g_2 mod x^m - 1, \]
+  \[ g' = g_1 * g_2 mod x^m - 1. \]
+
+  \theorem{Пусть $n \ge  2, \xi_1, ..., \xi_n$ -- назависимые
+    случайные величина на $\mathbb{Z}_m$, \[ \eta = \xi_1 + ... +
+      \xi_n mod m. \]
+    Тогда и только тогда $\eta$ имеет равномерное распределение,
+    когда для каждого $i \in \{1, ..., r\}$ существует такой $j
+    \in \{1, ..., n\}$, что \[ f_{\xi_i}(x) \equiv 0 (mod
+      h_i(x)). \]}
+
+  \section{Линейные преобразования в шифрсистемах. MDS-матрицы}
+  \definition{Свойство рассеивания -- каждый знак открытого текста влияет на}
+  большое число знаков шифртекста.
+  MDS-матрицы применяются для реализации свойства рассеивания
+  (преобразование L-слоя).
+  \begin{itemize}
+  \item блочные: AES, Кузнечик, FOX, Twofish, Khazad, SHARK,
+    Square, Clefia
+  \item функции хэширования: Стрибог, Whirlpool, ...
+  \item ???
+  \end{itemize}
+  \subsection{MDS-матрицы}
+  \begin{itemize}
+  \item $V_n(q)$ -- n-мерное векторное пространство над
+    $\mathbb{F}_q$
+  \item $h: V_n(q) \rightarrow V_m(q)$ -- линейное преобразование
+  \item $h = [[ h_{i, j} ]]$ -- $n \times m$-матрица над
+    $\mathbb{F}_q$ преобразования $h$
+  \end{itemize}
+  Полагаем \[ x^h = h(x) = xh = (y_1, ..., y_m) \] где \[ y_i =
+    \sum_{j=1}^n h_{j, i}x_j \textrm{при} i = 1, ..., m \]
+  \begin{itemize}
+  \item $x = (x_1, ..., x_n) \in V_n(q), (y_1, ..., y_m) \in
+    V_m(q)$
+  \item $h(x) \in V_m(q)$
+  \end{itemize}
+  \definition{Матрица h над $\mathbb{F}_q$ называется
+    MDS-матрицей, если \[ m + 1  = min\{||(\alpha_1, ...,
+      \alpha_n, \alpha_h)||: \alpha = (\alpha_1, ..., \alpha_n)
+      \in V_n(q) \ \{0_n\}\} \]} где
+  \begin{itemize}
+  \item $(\alpha_1, ..., \alpha_n, \alpha_h) = (\alpha_1, ...,
+    \alpha_n, \beta_1, ..., \beta_m) - (n + m)$ -- n-мерный вектор
+    над $\mathbb{F}_q$
+  \item $\alpha = (\alpha_1, .., \alpha_n) \in V_n(q) \ \{0_n\}$
+  \item $\alpha h = (\beta_1, ..., \beta_m)$
+  \end{itemize}
+  $\implies$ Минимальный вес ненулевых $(n + m)$-мерных векторов
+  над $\mathbb{F}_q$ равен $m + 1$
+
+  \textit{Эквивалентное определение}:
+  При изменении любых $r \in \{1, ..., n\}$ координат каждого
+  вектора $\alpha \in V_n(q) \ \{0_n\}$ у вектора $\alpha h$
+  изменяется не менее $m - r + 1$ координат $\implies$ реализация
+  хорошего рассеивания
+
+  \definition{(Разностным) показателем (коэффициентом) рассеивания
+    $\rho_h^{(dif)}$ матрицы $h$ порядка $n$ над $\mathbb{F}_q$
+    называется \[ \rho_h^{(dif)} = min\{||\alpha|| + ||\alpha h||
+      | \alpha \in V_n(q) \ \{0\}\} \]}
+  \definition{(Линейным) показателем (коэффициентом) рассеивания
+    $\rho_h^{(lin)}$ матрицы $h$ порядка $n$ над $\mathbb{F}_q$ 
+    называется \[ \rho_h^{(lin)} = min\{||\alpha|| + ||\alpha h^T||
+      | \alpha \in V_n(q) \ \{0\}\} \]}
+  \lemme Пусть $h$ -- матрица порядка $n$ над $\mathbb{F}_q$,
+  $p_1, p_2$ -- подстановочные матрицы порядка $n$. Тогда \[
+    \rho_h = \rho_{p_1 h p_2} \]
+
+  \textbf{Замечание}
+  \begin{itemize}
+  \item У матриц $h$ и $p_1 h p_2$ показатель рассеивания одинаков
+  \item Любая перестановка строк или столбцов матрицы $h$ не
+    изменяет показатель рассеивания
+  \end{itemize}
+
+  \subsection{Задачи}
+  \begin{itemize}
+  \item Доказать эквивалентность определений MDS-матриц
+  \item Существуют ли MDS-матрицы над $\mathbb{F}_2$
+  \item Доказать что MDS-матрица остаётся MDS-матрицей после
+    следующих преобразований:
+    \begin{itemize}
+    \item перестановка строк или столбцов
+    \item умножения строк или столбцов на любой ненулевой элемент
+      поля $\mathbb{F}_q$
+    \item транспонирование
+    \end{itemize}
+  \end{itemize}
+
+  \subsection{Классы MDS-матриц}
+  \begin{itemize}
+  \item Матрицы Коши
+  \item Матрицы Вандермонда
+  \item Циркулянтные матрицы
+  \item Матрицы Адамара
+  \item Степень сопровождающей матрицы многочлена (LFSR)
+  \end{itemize}
+
+  \subsubsection{Матрица Коши}
+  Пусть $\mathbb{F}$ -- поле, $\alpha_0, ..., \alpha_{n-1}, b_0,
+  ..., b_{n-1} \in \mathbb{F}$
+  \definition{$(n \times n)$-матрица $\nu = [[\nu_{i, j}]]$ с
+    элементами \[ \nu_{i, j} = (a_i + b_i)^{-1}, i, j \in \{0,
+      ..., n - 1\} \] называется матрицей Коши}
+  
+  \textbf{Задача}. Доказать что \[ det(\nu) = \frac{\prod_{0 \le i
+        < j \le n - 1}(a_j - a_i)(b_j - b_i)}{\prod_{0 \le i, j
+        \le n - 1}(a_i + b_j)} \]
+  \textbf{Задача}. Доказать что каждая квадратная подматрица
+  матрицы Коши является матрицей Коши
+
+
+  \subsubsection{Матрицы Вандермонда}
+  Пусть $\mathbb{F}$ -- поле, $a_0, ..., a_{n - 1} \in \mathbb{F}$
+
+  Матрица \[ \nu = van(a_0, ..., a_{n - 1}) =
+    \begin{pmatrix}
+      1 & a_0 & a_0^2 & ... & a_0^{n-1} \\
+      1 & a_1 & a_1^2 & ... & a_1^{n-1} \\
+      ... & ... & ... & ... & ... \\
+      1 & a_{n-1} & a_{n-1}^2 & ... & a_{n-1}^{n-1}
+    \end{pmatrix}
+  \]
+  называется матрицей Вандермонда
+
+  \textbf{Задачи}
+
+  \begin{itemize}
+  \item Доказать что \[ det(\nu) = \prod_{0 \le i < j \le n - 1} (a_i -
+      a_j) \]
+  \item $det(\nu) \ne 0$, если $a_0, ..., a_{n - 1}$ попарно
+    различны
+  \item если $\mathbb{F} = \mathbb{R}$, то каждая квадратная
+    подматрица матрицы Вандермонда является невырожденой
+  \item если $\mathbb{F} = \mathbb{F}_q$, то в конечном поле может
+    найтись вырожденная квадратная подматрица матрицы Вандермонда
+  \end{itemize}
+
+  \subsubsection{Циркулянтные матрицы}
+  \definition{$(n \times n)$-матрица $a = [[ a_{i, j} ]]$ над
+    полем $\mathbb{F}$ вида \[ a = circ(a_0, ..., a_{n - 1}) =
+      \begin{pmatrix}
+        a_0 & a_1 & ... & a_{n-1} \\
+        a_{n-1} & a_0 & ... & a_{n-2} \\
+        ... & ... & ... & ... \\
+        a_{1} & a_{2} & ... & a_{0}
+      \end{pmatrix}
+    \]
+    задаваемая первой строкой $(a_0, ..., a_{n-1})$, называется
+    циркулянтной}
+
+  \subsubsection{Связь MDS-матриц с MDS-кодами}
+  MDS (maximum distance separable code)
+  \begin{itemize}
+  \item МДР-коды (разделимые коды с максимальным расстоянием)
+  \item МДР-код имеет максимально возможное расстояние между
+    кодовыми словами (относительно метрики Хемминга)
+  \end{itemize}
+
+  Проблема построения МДР-кодом максимально возможной длины при
+  фиксированной размерности кода эквивалентна некоторым
+  интереснейшим не полностью решённым комбинаторным задачам.
+
+  Для кода \[ C = \{(\alpha_1, ..., \alpha_n, \alpha h) | \alpha =
+    (\alpha_1, ..., \alpha_n) \in V_n(q) \ \{0_n\}\} \]
+  над $\mathbb{F}_q$
+  \begin{itemize}
+  \item длины $n + m$
+  \item размерности $n$
+  \item с MDS-матрицей $h$
+  \end{itemize}
+  $\implies$ минимальное кодовое расстояние равно $m + 1$
+
+  \property{граница Синглетона} Пусть $C$ -- линейный $(n, k,
+  d)$-код над $\mathbb{F}_q$. Тогда \[ d \le n - k + 1 \]
+
+  Для МДР-кода \[ d = n - k + 1 \] -- достигается максимальное
+  расстояние между кодовыми словами
+
+  Каждый линейный код $C$ однозначно задаётся своей проверочной
+  $(n - k) \times b$-матрицей $H$, \[ H \alpha^T = 0_{n-k}
+    \forall \alpha \in C, rank(H) = n - k \]
+  \begin{itemize}
+  \item $\alpha = \alpha_1, ..., \alpha_k, \alpha_{k + 1}, ...,
+    \alpha_n$ -- кодовое слово, $\alpha \in C$
+    \begin{itemize}
+    \item $k$ -- число информационных символов
+    \item $n - k$ -- число проверочных символов
+    \end{itemize}
+  \item Порождающая матрица линейного кода $C$ -- $(k \times
+    n)$-матрица $G$, \[
+      \begin{aligned}
+        GH^T = 0, HG^T = 0 \\
+        rank(G) = k
+      \end{aligned}
+    \]
+  \end{itemize}
+
+  % TODO Замечание 1, замечание 2
+
+  \statement{Пусть $C$ -- линейный $(n, k, d)$-код над
+    $\mathbb{F}_q$ с проверочной матрицей $H$. Тогда и только
+    тогда $C$ -- МДР-код, когда каждые $n - k$ столбцов матрицы
+    $H$ линейно независимы.}
+  \proof Код $C$ содержит кодовое слово веса $j$ $\Leftrightarrow$
+  % TODO
+
+  \[ C^{\bot} = \{\beta \in V_n(q) | <\alpha, \beta> = 0 \forall
+    \alpha \in C\} \]
+
+  \statement{Пусть $C$ -- линейный $(n, k, d)$-код над $\mathbb{F}_q$
+    с проверочной матрицей $H, C$ -- МДР-код $\Leftrightarrow$ для
+    каждого набора $(i_i, ..., i_d), 1 \le i_1 < ... < i_d \le n$,
+    существует кодовое слово}
+  \begin{itemize}
+  \item $\alpha \in C, |\alpha| = d, \alpha_{i_1}, ..., \alpha_{i_d}
+    \in \mathbb{F}_q \ \{0\}$
+  \item $d = n - k + 1$
+  \item $\alpha$ -- кодовое слово минимального веса
+  \end{itemize}
+  $\implies$ Число кодовых слов МДР-кода $C$ веса $n - k + 1$ равно \[
+    (q - 1) \binom_n^{n - k + 1} \]
+
+  \statement{Пусть $C$ -- линейный $(n, k, d)$-код над $\mathbb{F}_q$
+    с порождающей матрицей $G = (E_k | A)$, где $A$ -- $k \times (n -
+    k)$-матрица. $C$ -- МДР-код $\Leftrightarrow \forall$  квадратная
+    подматрица матрицы $A$ невырождена
+  \begin{itemize}
+  \item квадратная подматрица матрицы $A$ образована любыми $i \in
+    \{1, ..., min\{k, n-k\}\}$ строками и столбцами
+  \item невырожденная -- определитель не равен 0 в $\mathbb{F}_q$
+  \end{itemize}
+
+  \theorem{Каждая квадратная подматрица MDS-матрицы невырождена}
+  \statement{Пусть $c = [[c_{i, j}]] - (n \times n)$- матрица над
+    полем $\mathbb{F}$ $\Leftrightarrow \forall ((n - 1)\times(n -
+    1))$- подматрица матрицы $c$ невырождена, когда все элементы
+    обратной матрицы $c^{-1} = \nu = [[\nu_{i,j}]]$ отличны от 0}
+  \begin{itemize}
+  \item $\nu_{i, j} \ne 0 \forall i, j \in \{0, ..., n - 1\}$
+  \end{itemize}
+  \proof следует из \[ \nu_{i, j} = Adj(c_{i, j}) * det(c)^{-1} \]
+  где $Adj(c_{i, j})$ -- определитель $((n - 1) \times (n -
+  1))$-подматрицы полученной вычёркиванием $i$-й строки и $j$-го
+  столбца матрицы $c$, $i, j \in \{0, ..., n - 1\} \blacksquare$
+
+  \lemme{Пусть $\mathbb{F}$ -- произвольное поле, $a_0, ..., a_{n-1},
+    b_0, ..., b_{n-1} \in \mathbb{F}$
+    \begin{itemize}
+    \item $a_0, ..., a_{n-1}$ попарно различны
+    \item $b_0, ..., b_{n-1}$ попарно различны
+    \item $a_i + b_j \ne 0 \forall i, j \in \{0, ..., n - 1\}$
+    \end{itemize}
+    то матрица Коши порядка $n$ -- MDS-матрица}
+  \lemme{Каждая строка (столбец) MDS-матрицы Коши порядка $n$ имеет
+    $n$ различных элементов}
+  % TODO proof
+  \lemme{Каждая циркулянтная матрица \[ a = circ(a_0, ..., a_{n -
+        1}) \] порядка $n$ над полем $\mathbb{F}$ представима в
+    виде \[ a = a_0 e + a_1 p + a_2 p^2 + ... + a_{n - 1} p^{n - 1} \]
+    \begin{itemize}
+    \item $p = circ(0, 1, 0, ..., 0)$
+    \item $e$ -- единичная матрица
+    \end{itemize}
+  }
+  \lemme{Пусть $a = circ(a_0, ..., a_{2^t - 1})$ -- циркулянтная
+    матрица порядка $2^t$ над полем $\mathbb{F}_{2^d}$. Тогда
+    \[ a^{2^t} = (\sum_{i = 0}^{2^t - 1} a_i^{2^t})e \]
+    \[ det(a) = \sum_{i = 0}^{2^t - 1} a_i^{2^t} \]
+  }
+
+  \subsection{Эффективная реализация MDS-матриц}
+  Большое число работ посвящено поиску эффективно реализуемых матриц с
+  хорошими рассеивающими свойствами
+
+  Ищут MDS-матрицы:
+  \begin{itemize}
+  \item с наибольшим числом единиц
+  \item с наименьшим числом различных элементов
+  \end{itemize}
+
+  $MDS_{n,m}(q)$ -- множество всех MDS-матриц размера $(n \times m)$
+  над $\mathbb{F}_q$
+
+  \definition Пусть $c = [[ c_{i, j} ]]$ -- MDS-матрица размера $n
+  \times m$ над $\mathbb{F}_{2^p}$
+  \begin{itemize}
+  \item $\nu_1(c) = |\{(i, j) \in \mathbb{Z}_n \times \mathbb{Z}_m |
+    c_{i, j} = 1 \}|$ -- $\nu_1(c)$ -- число единиц среди всех
+    элементов матрицы $c$
+  \item $\nu_1^{(n, m)} = max\{\nu_1(c) | c \in MDS_{n, m}(2^p)\}$
+  \end{itemize}
+
+  \textbf{Замечание}. Для синтеза эффективно реализуемых (программно
+  или аппаратно) MDS-матриц выбирают матрицы $c$:
+  \begin{itemize}
+  \item $\nu_1(c)$ как можно больше
+    \begin{itemize}
+    \item незначительно отличается от $\nu_1^{(n, m)}$
+    \end{itemize}
+  \item $u(c)$ как можно меньше
+    \begin{itemize}
+    \item незначительно отличается от $u_1^{(n, m)}$
+    \end{itemize}
+  \item элементы матрицы $c$ имеют минимальный вес Хемминга
+  \end{itemize}
+
+  \definition Пусть $f(x)$ -- многочлен над $\mathbb{F}, r =
+  deg(f(x))$. Возвратный многочлен $f^{\star}$ над $\mathbb{F}$ задан
+  условием: \[ f^{\star} = x^r f(x^{-1}) \]
+
+  \subsection{Атаки на основе инвариантных подпространств}
+  \textit{На примере \textbf{Khazad}}
+
+  Khazad XSL-шифрсистема:
+  \begin{itemize}
+  \item 128-битный ключ
+  \item длина блока -- 64 бита
+  \end{itemize}
+  \begin{itemize}
+  \item 64-битный блок представим в виде вектора \[ \alpha = ( \alpha_0, ..., \alpha_7) \in V_8(2^8) \]
+  \item $p(x) = x^8 + x^4 + x^3 + x^2 + 1 \in \mathbb{F}_2[x]$ -- неприводимый многочлен
+  \item $\mathbb{F}_{2^8} = \mathbb{F}_2[x] / (p(x))$
+
+    -- $\beta$ -- корень многочлена $p(x)$ в поле разложения
+  \item соответствие
+    \[ u_0 + u_1\beta + ... + u_7\beta^7 \in \mathbb{F}_{2^8} \Rightarrow \\
+      \Rightarrow u_0 + u_1 2 + ... + u_7 2^7 \in \{0, ..., 255\} \]
+  \item Нелинейное преобразование $\tilde{s}$ реализуется путём
+    применения к координатам вектора $\alpha$ подстановки $s \in
+    S(F_{2^8})$: \[ \tilde{s}: (\alpha_0, ..., \alpha_7) \Rightarrow
+      (\alpha_0^s, ..., \alpha_7^s) \]
+  \item Линейное преобразование осуществляется путём умножения
+    вектор-строки $\alpha$ на матрицу $h = [[h_{i, j}]] \in
+    GL_8(2^8)$, где \[ h =
+      \begin{pmatrix}
+        1  & 3  & 4  & 5  & 6  & 8  & 11 & 7 \\
+        3  & 1  & 5  & 4  & 8  & 6  & 7  & 11 \\
+        4  & 5  & 1  & 3  & 11 & 7  & 6  & 8 \\
+        5  & 4  & 3  & 1  & 7  & 11 & 8  & 6 \\
+        6  & 8  & 11 & 7  & 1  & 3  & 4  & 5 \\
+        8  & 6  & 7  & 11 & 3  & 1  & 5  & 4 \\
+        11 & 7  & 6  & 8  & 4  & 5  & 1  & 3 \\
+        7  & 11 & 8  & 6  & 5  & 4  & 3  & 1
+      \end{pmatrix}
+      \]
+  \item  Алгоритм развёртывания ключа -- зашифрования векторов $k_{--
+      1}, k_{-- 2} \in V_8(2^8)$ с помощью преобразования Фейстеля с
+    функцией усложнения
+  \item \hl{Missed it}
+  \item Вычисление раундовых ключей $k_0, ..., k_7$: \[ k_i = (k_{i -
+        1})^{g_{c_i}} + k_{i - 2} \]
+  \item Функция зашифрования за $r$ раундов: \[ f_{k_0, ..., k_r} =
+      \nu_{k_0}\tilde{s}h\nu_{k_1}\tilde{s}h ... \nu_{k_{r-
+          1}\tilde{s}h\nu_{k_r} \]
+  \end{itemize}
+
+  \subsubsection{Атаки на шифрсистему Khazad}
+  \begin{tabular}{c|c|c|c}
+    Вид атаки & Число раундов & Трудоёмкость & Объём материала \\
+    Интегральная атака [BarR 00] & 3 & 2^{16} & 2^9 \\
+    Запретные разности [NES] & 3 & 2^{64} & 2^{13} \\
+    Интегральная атака [BarR 00] & 4 & 2^{80} & 2^9 \\
+    Слайд атака (2^{64} слабых ключей) [Bir 03] & 5 & 2^{43} & 2^{38}
+    \\
+    Улучшенная интегральная атака [Mul 03] & 5 & 2^{91} & 2^{64}
+  \end{tabular}
+
+  
+  \subsubsection{Сохранение инвариантах подпространств}
+  
+  Наличие инвариантных подпространств у преобразования $\tilde{s}h$
+  является потенциальной слабостью шифрсистемы
+
+  \textbf{Замечание}. Из трёх преобразований в раунде только
+  преобразование наложения ключа $\nu_k$ может перевести $W$ в другой
+  смежный класс.
+  \lemme \[W_{\nu_k} = W \Leftrightarrow k \in W \]
+
+  Из вида алгоритма развёртывания ключа следует существование ровно
+  $|W|^2$ возможных значений для векторов $k_{-- 1}, k_{-- 2}$ таких,
+  что $k_1, k_2 \in W$. -- $k_i = (k_{i - 1})^{g_{c_i}} + k_{i - 2}$
+
+  \statement Для каждого $j \in \{0, ..., 7\}$ имеет место равенство:
+  \[ \sum_{i = 0}^{|W| - 1} \alpha_{i, j} = 0 \]
+  \proof Пусть \[ (W + c_3)^{\tilde{s}} = \{ (\delta_{i, 0}, ...,
+    \delta_{i, 7}) | i = 0, ..., |W| - 1 \} \]
+  Представим сумму в виде:
+  \[ \sum_{i = 0}^{|W| - 1} \alpha_{i, j} = \sum_{i = 0}^{|W| -
+      1}\sum{t = 0}^{7} \delta_{i, t} h_{t, j} = \\
+    \sum_{t = 0}^{7} h_{t, j} \sum_{t = 0}^{|W| - 1} \delta_{i, t} \]
+  Если \[ W \in \{U^{(1)}, ..., U^{(7)}, W^{(1)}, ..., W^{(7)}\}, \]
+  то каждый элемент $x \in \mathbb{F}_{2^8}$ встречается в любой
+  фиксированной координате $t \in \{0, ..., 7\}$ чётное число раз.
+
+  Так как характеристика поля $\mathbb{F}_{2^8}$ равна 2, равенство
+  доказано. $\blacksquare$
+
+  \subsection{Атака на 5-раундовый Khazad}
+  Пусть \[ B = \{\alpha^{f_{k_0, ..., k_5}} | \alpha \in W + c_2 \} \]
+
+  Пронумеруем элементы $B$, $\beta_i$ -- $i$-й элемент $B$,
+  \[ B = \{(\beta_{i, 0}, ..., \beta_{i, 7}) | i = 0, ..., |W| - 1
+    \} \]
+  \[ \beta_i = (\beta_{i, 0}, ..., \beta_{i, 7}) \in B \]
+
+  \textbf{Алгоритм}\\
+  \textbf{Вход}: множество $B = \{\alpha^{f_{k_0, ..., k_5}} | \alpha
+  \in W + c_2 \}$
+  \textbf{Выход}: множество возможных кандидатов для $k_5$.
+
+  Для $i = 0, ..., 7$ выполняем:
+  \begin{itemize}
+  \item Опробовать $k_{5, i} \in \mathbb{F}_{2^8}$
+  \item Для опробируемого $k_{5, i}$ проверить выполнение равенства
+    \[ \sum_{j = 0}^{|W| - 1}(\beta_{j, i} + k_{5, i})^{s^{-1}} = 0 \]
+  \item Если равенство не выполняется, то опробуемый вариант $k_{5,
+      i}$ является ложным
+  \end{itemize}
+  \begin{itemize}
+  \item Для случайной подстановки равенство будет выполняться с
+    вероятностью $2^{-8}$
+  \item Для каждого $i \in \{0, ..., 7\}$ в среднем будет оставаться
+    два вариата ключей $k_{5, i}$, один из которых является истинным
+  \item Значит трудоёмкость метода можно оценить 
+    \begin{itemize}
+    \item $8 * 2^8 * |W|$ операций применения подстановки $s^{-1}$
+    \item Объём необходимого материала равен $|W|$ блокам текста
+    \item Надёжность метода равна 1
+    \item Число слабых ключей равно $|W|^2$
+    \end{itemize}
+  \item Если $W \in \{W^{(1)}, ..., W^{(7)}\}$, то
+    \begin{itemize}
+    \item трудоёмкость равна $2^{43}$ операций
+    \item объём необходимого материала равен $2^{32}$ блоков текста
+    \item число слабых ключей равно $2^{64}$
+    \end{itemize}
+  \end{itemize}
+
+  
+\end{document}
