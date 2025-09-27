@@ -26,17 +26,22 @@ jobs:
       - uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-      - name: Compile document.tex
+      - name: Compile lections of 1st semester
         uses: dante-ev/latex-action@edge
         with:
           root_file: lections-1.tex
       # Runs a single command using the runners shell
-      - name: Compile document.tex
+      - name: Compile lections of 2nd semester
         uses: dante-ev/latex-action@edge
         with:
           root_file: lections-2.tex
       # Runs a single command using the runners shell
-      - name: Compile document.tex
+      - name: Compile lections of 3rd semester
+        uses: dante-ev/latex-action@edge
+        with:
+          root_file: lections-3.tex
+      # Runs a single command using the runners shell
+      - name: Compile home work of 1st semester
         uses: dante-ev/latex-action@edge
         with:
           root_file: hw-1.tex
