@@ -29,11 +29,11 @@
 \usepackage{hyperref}
 
 \hypersetup{
-	colorlinks,
-	citecolor=black,
-	filecolor=black,
-	linkcolor=black,
-	urlcolor=black
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
 }
 
 %\documentclass{beamer}
@@ -49,7 +49,7 @@
 \fvset{breaklines=true, breakafter=\space}
 
 \DeclareRobustCommand{\divby}{%
-	\mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+    \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
 }
 
 \newcounter{theorem}
@@ -59,18 +59,18 @@
 \newcounter{property}
 \newcounter{corollary}
 \newcommand{\lection}[1]{\pagebreak\section*{#1}
-	\addtocounter{section}{1}
-	\addcontentsline{toc}{section}{#1}
-	\setcounter{subsection}{0}
-	\setcounter{theorem}{0}
-	\setcounter{definition}{0}
-	\setcounter{statement}{0}
-	\setcounter{property}{0}
-%	\setcounter{corollary}{0}
+    \addtocounter{section}{1}
+    \addcontentsline{toc}{section}{#1}
+    \setcounter{subsection}{0}
+    \setcounter{theorem}{0}
+    \setcounter{definition}{0}
+    \setcounter{statement}{0}
+    \setcounter{property}{0}
+%   \setcounter{corollary}{0}
 }
 
 \newcommand{\seminary}[1]{\pagebreak\section*{#1}
-	\addcontentsline{toc}{section}{#1}
+    \addcontentsline{toc}{section}{#1}
 }
 
 \newcommand{\definition}{\stepcounter{definition}\paragraph{Определение \arabic{section}.\arabic{definition}}
@@ -84,10 +84,10 @@
 
 \newcommand{\theorem}[2][]{\stepcounter{theorem}\setcounter{corollary}{0}\paragraph{Теорема
     \arabic{section}.\arabic{theorem}}
-  \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
+    \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
 \newcommand{\lemme}[2][]{\stepcounter{lemme}\setcounter{corollary}{0}\paragraph{Лемма \arabic{section}.\arabic{lemme}} \ifthenelse{\equal{#1}{}}{}{(#1)} {\itshape #2 }}
 
-\newcommand{\property}[1]{\stepcounter{property}\paragraph{Свойство \arabic{section}.\arabic{property}}\textit{#1}}
+\newcommand{\property}[1]{\stepcounter{property}\setcounter{corollary}{0}\paragraph{Свойство \arabic{section}.\arabic{property}}\textit{#1}}
 
 \newcommand{\angles}[1]{\langle #1 \rangle}
 \newcommand{\nonlinty}[1]{n_{#1}}
@@ -109,28 +109,29 @@
 \newcommand{\vecx}{\vec{x}}
 \newcommand{\vecy}{\vec{y}}
 \newcommand{\hamming}{\chi}
-	
+\newcommand{\rank}{\text{rank }}
+\newcommand{\AI}{AI}
 
 \newcommand{\refeq}[1]{(\ref{#1})}
 
 \fancypagestyle{titlepage}{
-	\fancyhf{
-		\begin{center}
-			\begin{tabularx}{\textwidth}[c]{c p{12cm}}
-				\raisebox{-1.1\totalheight}{\includegraphics[width=0.15\linewidth]{./logo/bauman_logo.png}}
-				&\begin{center}
-					\textbf{ Министерство науки и высшего образования Российской Федерации \\
-						Федеральное государственное бюджетное образовательное учреждение 
-						высшего образования \\
-						«Московский государственный технический университет
-						имени Н.Э. Баумана \\
-						(национальный исследовательский университет)» \\ (МГТУ им. Н.Э. Баумана)} \\
-					
-				\end{center}
-			\end{tabularx}
-	\end{center}}
-	\fancyfoot[C]{Москва 2024 г.}
-	\renewcommand{\headrulewidth}{0pt}
+    \fancyhf{
+        \begin{center}
+            \begin{tabularx}{\textwidth}[c]{c p{12cm}}
+                \raisebox{-1.1\totalheight}{\includegraphics[width=0.15\linewidth]{./logo/bauman_logo.png}}
+                &\begin{center}
+                    \textbf{ Министерство науки и высшего образования Российской Федерации \\
+                        Федеральное государственное бюджетное образовательное учреждение
+                        высшего образования \\
+                        «Московский государственный технический университет
+                        имени Н.Э. Баумана \\
+                        (национальный исследовательский университет)» \\ (МГТУ им. Н.Э. Баумана)} \\
+
+                \end{center}
+            \end{tabularx}
+    \end{center}}
+    \fancyfoot[C]{Москва 2024 г.}
+    \renewcommand{\headrulewidth}{0pt}
 }
 
 \title{~\\~\\~\\~\\~\\~\\~\\~\\~\\Криптографические методы защиты информации}
@@ -138,184 +139,199 @@
 \date{МГТУ им. Н.Э. Баумана}
 
 \begin{document}
-	\maketitle
-	\thispagestyle{titlepage}
-	\pagebreak
-	\tableofcontents
-	
-	\section*{Disclaimer}
-	\addcontentsline{toc}{section}{Disclaimer}
-	Конспект создан студентами для подготовки к экзамену ввиду отсутствия удобного формата лекций. Поэтому он может содержать ошибки, опечатки и многое другое, за что можно получить автомат с сапогами в придачу.
-	
-	\textit{(Тим Кравченко aka Fe-Ti)}
-	
+\maketitle
+\thispagestyle{titlepage}
+\pagebreak
+\tableofcontents
 
-	\pagebreak
-	\lection{Лекция 1}
-	
-	\subsection{Псевдобулева функция}
-	Пусть $F$ --- произвольное поле, $p \ge 2$ --- простое число, $V_n(p) = GF(p)^n$ --- $n$-мерное пространство над полем $GF(p)$.
-	
-	\definition
-	Псевдобулевой функцией от $n$ переменных называется произвольное отображение $f: V_n(2) \rightarrow F$. \\
-	
-	Если $F = GF(2)$, то функция называется булевой (двоичной). $f: V_n(p) \rightarrow F$ --- обобщение псевдобулевой функции.
-	
-	Обозначим $F(p,n) = \{f ~| ~ f:V_n(p) \rightarrow F\}$ и зададим на нём операции сложения и умножения на элемент поля:
-	$$
-	\begin{aligned}
-		(f_1 + f_2) (x) &= f_1(x) + f_2 (x) \\
-		(r \cdot f) (x) &= rf(x), ~ r \in F.
-	\end{aligned}
-	$$
-	
-	\statement{Относительно заданных операций $F(p,n)$ является векторным пространством размерности $p^n$ над $F$.}
-	\proof
-	(Д/з: проверить, что это векторное пространство)
-	
-	$\left\{ h_\alpha (\vec{x}) = \left[ \begin{aligned}
-		1, ~ \iftext ~ \vec{x} = \vec{\alpha} \\
-		0, ~ \iftext ~ \vec{x} \ne \vec{\alpha}
-	\end{aligned} \right. ~\vline~ \vec{\alpha} \in GF(p)^n \right\}$ --- один из базисов пространства. Линейная независимость очевидна, и любая функция $f \in F(p,n)$:
-	$$
-	f(\vec{x}) = \sum_{\vec{\alpha} \in GF(p)^n} f(\vec{\alpha}) h_\alpha(\vec{x}). ~\blacksquare
-	$$
-	
-	\subsection{Скалярное произведение}
-	\definition 
-	Скалярным произведением векторов $\vec{\alpha} = (\alpha_1, ..., \alpha_n)$, $\vec{\beta} = (\beta_1, ..., \beta_n)$, $\vec{\alpha}, \vec{\beta} \in V_n(2)$ называется $$\angles{\vec{\alpha},\vec{\beta}} = \bigoplus_{i=1}^{n} \alpha_i \beta_i.$$
-	
-	\definition
-	Два вектора $\vec{\alpha}, \vec{\beta}$ ортогональны, если $\angles{\vec{\alpha}, \vec{\beta}} = 0$.
-	
-	\subsection{Аффинные функции}
-	\definition
-	$\mathcal{AL}_n = \{f \in \mathbb{F}_2 (n) ~|~ \deg f \le 1 \}$ --- множество аффинных функций.
-	
-	\definition
-	$\mathcal{L}_n = \{f \in \mathcal{AL}_n ~|~ f(\vec{0} = 0)\}$ --- множество всех линейных функций.
-	
-	$$f \in \mathcal{AL}_n ~\Leftrightarrow ~ f(\vec{x}) = \alpha_1 x_1 \oplus ... \oplus \alpha_n x_n \oplus \alpha_0 = \angles{\vec{x}, \vec{\alpha}} \oplus \alpha_0.$$
-	
-	\paragraph{Задача} Доказать:
-	$$
-	\begin{aligned}
-		|\mathcal{L}_n| &= 2^n \\
-		|\mathcal{AL}_n| &= 2^{n+1}
-	\end{aligned}
-	$$
-	
-	\subsection{Равновероятная функция}
-	Пусть $f = \vec{f} = (f(0), f(1), ..., f(2^n - 1))$ --- вектор столбец булевой функции $f(\vec{x})$, а $\weight{f} = \sum_{\vec{\alpha} \in V_n(2)} f(\vec{\alpha})$ --- вес этой функции.
-	
-	\definition
-	Функция $f \in F_2(n)$ называется равновероятной (сбалансированной, равновесной), если $\weight{f} = 2^{n-1}$.
-	
-	\paragraph{Задача} Доказать, что если $f \in \mathcal{AL}_n$, то $f$ является равновесной.
-	
-	\paragraph{Задача} Пусть $f \in \mathbb{F}_2(n), ~ g \in \mathbb{F}_{2}(n+1)$, $g(x_1,...,x_{n+1}) = f(x_1, ...,x_n)$, $x_{n+1}$ --- фиктивная переменная функции $g$. Доказать, что $\weight{g} = 2\cdot \weight{f}$.
-	
-	\paragraph{Задача} Пусть $f\in \mathbb{F}_2(n), ~ g \in \mathbb{F}_2(n+2)$: $g(x_1,~ ...,~ x_{n+2}) = f(x_1,~ ...,~ x_{n-1},~ x_{n+1} \oplus x_{n+2})$. Известен $\weight{f}$. Найти $\weight{g}$.
-	
-	\paragraph{Задача} Пусть $f\in \mathbb{F}_2(n), ~ g \in \mathbb{F}_2(n+1)$: $g(x_1,~ ...,~ x_{n+1}) = f(x_1,~ ...,~ x_{n}) \oplus x_{n+1}$. Доказать, что функция $g$ равновероятна.
-	
-	\paragraph{Задача} Пусть $f \in \mathbb{F}_2(n)$. Доказать:
-	$$ \weight{f} \equiv 1 ~ (\text{mod} 2) ~~ \Leftrightarrow ~~ \deg f = n.$$
+\section*{Disclaimer}
+\addcontentsline{toc}{section}{Disclaimer}
+Конспект создан студентами для подготовки к экзамену ввиду отсутствия удобного формата лекций. Поэтому он может содержать ошибки, опечатки и многое другое, за что можно получить автомат с сапогами в придачу.
 
-	\subsection{Производная булевой функции}
-	
-	\definition
-	Производной булевой функции $f \in \mathbb{F}_2(n)$ по направлению $\vec{\delta} \in V_n(2)$ называется булева функция
-	$$
-	d_{\vec{\delta}} f(\vec{x}) = f(\vec{x} \oplus \vec{\delta}) \oplus f(\vec{x}), ~~ \vec{x} \in V_n (2).
-	$$
-	
-	\definition
-	Производной булевой функции $f \in \mathbb{F}_2(n)$ по подпространству $L \le V_n(2)$ называется булева функция
-	$$
-	d_L f(\vec{x}) = \sum_{\vec{\delta} \in L} f(\vec{x}  \oplus \vec{\delta}), ~~ \vec{x} \in V_n (2).
-	$$
-	
-	\paragraph{Свойство} Пусть $\vec{\delta}_1, ..., \vec{\delta}_k$ --- базис подпространства $L \le V_n(2)$. Тогда $$d_L f = d_{\vec{\delta}_k} ... d_{\vec{\delta}_1} f.$$
-	
-	\paragraph{Доказать утверждения:}
-	\begin{itemize}
-		\item $\forall f \in \mathbb{F}_2(n), \forall L \le V_n(2), \forall \vec{\epsilon} \in L:$  $d_L f(\vec{x}) = d_L f (\vec{x} \oplus \vec{\epsilon}).$ 
-		
-		\item $\forall f,g \in \mathbb{F}_2(n),  \forall L \le V_n(2):$ $d_L(f\oplus g)(\vec{x}) = d_L f(\vec{x}) \oplus d_L g(\vec{x})$.
-		
-		\item $\forall f \in \mathbb{F}_2(n), \forall \vec{\epsilon}_2, \vec{\epsilon}_2 \in V_n(2):$ $d_{\vec{\epsilon}_2 \oplus \vec{\epsilon}_2} f(\vec{x}) = d_{\vec{\epsilon}_1} f(\vec{x}) \oplus d_{\vec{\epsilon}_1} f(\vec{x} \oplus \vec{\epsilon}_1).$
-		
-		\item $\forall \vec{\delta} \in V_n(2): d_{\vec{\delta}} f(\vec{x}) = 0 \Leftrightarrow f \text{ --- константа.}$
-		
-		\item $\forall \vec{\delta} \in V_n(2): d_{\vec{\delta}} f(\vec{x})  \text{ --- константа.} \Leftrightarrow f \text{ --- аффинная функция.}$
-	\end{itemize}
-	
-	\subsection{Гомоморфизмы (флешбэк)}
-	\definition Отображение $\phi: (G, \circ) \rightarrow (H, \diamond)$ называется гомоморфизмом, если $\forall x,y \in G: ~ \phi(x \circ y) = \phi(x) \diamond \phi(y)$.
-	
-	\definition Биективный гомоморфизм называется изоморфизмом.
-	
-	\subsection{Гомоморфизмы $(V_n(p), +)$ в мультипликативную группу поля$\mathbb{C}$}
-	
-	Стандартный базис $V_n(p)$:
-	$$
-		\vec{e}_j = (0,...,0,\underbrace{1}_{j\text{-я позиция}},0,...,0), j = 1, ..., n. \\
-	$$
-	
-	Базис пространства $F(p,n)$, разложение по которому часто используется на практике.
-	
-	\theorem{
-			Множество всех гомоморфизмов $\phi : (V_n(p), +) \rightarrow (\mathbb{C}, \cdot)$ состоит из $p^n$ различных гомоморфизмов $\omega_{\vec{\alpha}}$, $\vec{\alpha} = (\alpha_1, ... , \alpha_n) \in V_n(p)$, каждый из которых однозначно определяется своим действием на векторах стандартного базиса $\vec{e}_j, ~j = 1,...,n,$ условием
-			$$
-			\omega_{\vec{\alpha}}(\vec{e}_j) = \exp\left({\frac{2 \pi i}{p} \alpha_j}\right),
-			$$
-			где $i$ --- мнимая единица.
-		}
-	\proof Так как $\phi$ --- гомоморфизм, то для $\forall \vec{\gamma} = (\gamma_1, ..., \gamma_n) \in V_n(p)$ имеем:
-	$$
-	\phi(\vec{\gamma}) = \phi \left( \sum_{j=1}^{n} \gamma_j \vec{e}_j \right) = \prod_{j=1}^{n} \phi (\vec{e}_j)^{\gamma_j}.
-	$$
-	
-	$\Rightarrow$ каждый гомоморфизм определяется действием на векторах $\vec{e}_1,..., \vec{e}_n$.
-	
-	$\Rightarrow ~ \forall j \in {1,...,n}: ~ \phi(\underbrace{\vec{e}_j+...+\vec{e}_j}_p) = \phi(\vec{e}_j)^p = \phi(0) = 1.$
-	
-	$\Rightarrow$ $\phi(\vec{e}_j)$ --- корень степени $p$ из единицы и $\phi(\vec{e}_j) = \exp\left({\frac{2 \pi i}{p} k}\right)$ для некоторого $k \in {0, ..., p-1}.$
-	
-	$\Rightarrow$ $\phi$ есть один из $p^n$ гомоморфизмов вида $\omega_{\vec{\alpha}}$ определённых в условиях теоремы. $\blacksquare$
-	
-	\subsection{Аддитивные характеры}
-	Пусть $
-	\angles{\vec{\alpha}, \vec{\beta}} = \alpha_1 \beta_1 + ... + \alpha_n \beta_n,
-	$ где "<+"> в поле $GF(p)$.
-	
-	$$
-	\omega_{\vec{\alpha}}(\vec{\beta}) = \prod_{j=1}^{n} \left( \exp\left[{\frac{2 \pi i}{p} \alpha_j} \right]\right) ^{\beta_j} = \exp \left( \frac{2 \pi i}{p} (\alpha_1 \beta_1 + ... + \alpha_n \beta_n) \right) = \exp \left( \frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\beta}} \right)
-	$$
-	
-	Аддитивная группа поля $GF(p^n)$ может быть представлена как векторное пространство $(V_n(p), +)$.
-	
-	\definition
-	Гомоморфизмы $\omega_{\vec{\alpha}}$ называются аддитивными характерами поля $GF(p^n).$
-	
-	\subsubsection{Основное свойство характеров}
-	Обозначим комплексное сопряжение как $\omega_{\vec{\alpha}}(\vec{e}_j) = \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\beta}} }\right).$
-	
-	\definition $\ind{A} = \left\{ \begin{aligned}
-		&1, ~ \text{если условие А справедливо} \\
-		&0, ~ \text{если условие А несправедливо}
-	\end{aligned} \right.$ называется индикатором.
-	
-	\statement{$\forall \vec{\alpha}, \vec{\beta} \in V_n(p)$ справедливо равенство $$
-		\frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \omega_{\vec{\alpha}}(\vec{\gamma}) \overline{\omega_{\vec{\beta}}(\vec{\gamma})} = \ind{\vec{\alpha} = \vec{\beta}}.
-	$$
-} 
+\textit{(Тим Кравченко aka Fe-Ti)}
+
+
+\pagebreak
+\lection{Лекция 1}
+
+\paragraph{Задачи для разминки}
+\begin{itemize}
+\item Доказать, что $x \rightarrow (45^x \mod 257) \mod 256$ --- подстановка над $\ZZ_{2^8}$.
+\item XOR-ортоморфизм --- подстановка $\sigma: \begin{aligned}
+S &\rightarrow S \\
+a &\rightarrow \sigma(a)
+\end{aligned}$, если $\sigma: \begin{aligned}
+S &\rightarrow S \\
+a &\rightarrow \sigma(a)\xor a\end{aligned}$ ---подстановка. Являются ли следующие отображения XOR-ортоморфизмами:
+\begin{itemize}
+\item $w : x \rightarrow ROT^4(x\xor (x >> 4))$,
+\item $\pi : x\rightarrow (\mathtt{0xAA} \cdot x) \xor ROT^1(x)$?
+\end{itemize}
+\end{itemize}
+
+\subsection{Псевдобулева функция}
+Пусть $F$ --- произвольное поле, $p \ge 2$ --- простое число, $V_n(p) = GF(p)^n$ --- $n$-мерное пространство над полем $GF(p)$.
+
+\definition
+Псевдобулевой функцией от $n$ переменных называется произвольное отображение $f: V_n(2) \rightarrow F$. \\
+
+Если $F = GF(2)$, то функция называется булевой (двоичной). $f: V_n(p) \rightarrow F$ --- обобщение псевдобулевой функции.
+
+Обозначим $F(p,n) = \{f ~| ~ f:V_n(p) \rightarrow F\}$ и зададим на нём операции сложения и умножения на элемент поля:
+$$
+\begin{aligned}
+(f_1 + f_2) (x) &= f_1(x) + f_2 (x) \\
+(r \cdot f) (x) &= rf(x), ~ r \in F.
+\end{aligned}
+$$
+
+\statement{Относительно заданных операций $F(p,n)$ является векторным пространством размерности $p^n$ над $F$.}
+\proof
+(Д/з: проверить, что это векторное пространство)
+
+$\left\{ h_\alpha (\vec{x}) = \left[ \begin{aligned}
+1, ~ \iftext ~ \vec{x} = \vec{\alpha} \\
+0, ~ \iftext ~ \vec{x} \ne \vec{\alpha}
+\end{aligned} \right. ~\vline~ \vec{\alpha} \in GF(p)^n \right\}$ --- один из базисов пространства. Линейная независимость очевидна, и любая функция $f \in F(p,n)$:
+$$
+f(\vec{x}) = \sum_{\vec{\alpha} \in GF(p)^n} f(\vec{\alpha}) h_\alpha(\vec{x}). ~\blacksquare
+$$
+
+\subsection{Скалярное произведение}
+\definition
+Скалярным произведением векторов $\vec{\alpha} = (\alpha_1, ..., \alpha_n)$, $\vec{\beta} = (\beta_1, ..., \beta_n)$, $\vec{\alpha}, \vec{\beta} \in V_n(2)$ называется $$\angles{\vec{\alpha},\vec{\beta}} = \bigoplus_{i=1}^{n} \alpha_i \beta_i.$$
+
+\definition
+Два вектора $\vec{\alpha}, \vec{\beta}$ ортогональны, если $\angles{\vec{\alpha}, \vec{\beta}} = 0$.
+
+\subsection{Аффинные функции}
+\definition
+$\mathcal{AL}_n = \{f \in \mathbb{F}_2 (n) ~|~ \deg f \le 1 \}$ --- множество аффинных функций.
+
+\definition
+$\mathcal{L}_n = \{f \in \mathcal{AL}_n ~|~ f(\vec{0} = 0)\}$ --- множество всех линейных функций.
+
+$$f \in \mathcal{AL}_n ~\Leftrightarrow ~ f(\vec{x}) = \alpha_1 x_1 \oplus ... \oplus \alpha_n x_n \oplus \alpha_0 = \angles{\vec{x}, \vec{\alpha}} \oplus \alpha_0.$$
+
+\paragraph{Задача} Доказать:
+$$
+\begin{aligned}
+|\mathcal{L}_n| &= 2^n \\
+|\mathcal{AL}_n| &= 2^{n+1}
+\end{aligned}
+$$
+
+\subsection{Равновероятная функция}
+Пусть $f = \vec{f} = (f(0), f(1), ..., f(2^n - 1))$ --- вектор столбец булевой функции $f(\vec{x})$, а $\weight{f} = \sum_{\vec{\alpha} \in V_n(2)} f(\vec{\alpha})$ --- вес этой функции.
+
+\definition
+Функция $f \in F_2(n)$ называется равновероятной (сбалансированной, равновесной), если $\weight{f} = 2^{n-1}$.
+
+\paragraph{Задача} Доказать, что если $f \in \mathcal{AL}_n$, то $f$ является равновесной.
+
+\paragraph{Задача} Пусть $f \in \mathbb{F}_2(n), ~ g \in \mathbb{F}_{2}(n+1)$, $g(x_1,...,x_{n+1}) = f(x_1, ...,x_n)$, $x_{n+1}$ --- фиктивная переменная функции $g$. Доказать, что $\weight{g} = 2\cdot \weight{f}$.
+
+\paragraph{Задача} Пусть $f\in \mathbb{F}_2(n), ~ g \in \mathbb{F}_2(n+2)$: $g(x_1,~ ...,~ x_{n+2}) = f(x_1,~ ...,~ x_{n-1},~ x_{n+1} \oplus x_{n+2})$. Известен $\weight{f}$. Найти $\weight{g}$.
+
+\paragraph{Задача} Пусть $f\in \mathbb{F}_2(n), ~ g \in \mathbb{F}_2(n+1)$: $g(x_1,~ ...,~ x_{n+1}) = f(x_1,~ ...,~ x_{n}) \oplus x_{n+1}$. Доказать, что функция $g$ равновероятна.
+
+\paragraph{Задача} Пусть $f \in \mathbb{F}_2(n)$. Доказать:
+$$ \weight{f} \equiv 1 ~ (\text{mod} 2) ~~ \Leftrightarrow ~~ \deg f = n.$$
+
+\subsection{Производная булевой функции}
+
+\definition
+Производной булевой функции $f \in \mathbb{F}_2(n)$ по направлению $\vec{\delta} \in V_n(2)$ называется булева функция
+$$
+d_{\vec{\delta}} f(\vec{x}) = f(\vec{x} \oplus \vec{\delta}) \oplus f(\vec{x}), ~~ \vec{x} \in V_n (2).
+$$
+
+\definition
+Производной булевой функции $f \in \mathbb{F}_2(n)$ по подпространству $L \le V_n(2)$ называется булева функция
+$$
+d_L f(\vec{x}) = \sum_{\vec{\delta} \in L} f(\vec{x}  \oplus \vec{\delta}), ~~ \vec{x} \in V_n (2).
+$$
+
+\paragraph{Свойство} Пусть $\vec{\delta}_1, ..., \vec{\delta}_k$ --- базис подпространства $L \le V_n(2)$. Тогда $$d_L f = d_{\vec{\delta}_k} ... d_{\vec{\delta}_1} f.$$
+
+\paragraph{Доказать утверждения:}
+\begin{itemize}
+\item $\forall f \in \mathbb{F}_2(n), \forall L \le V_n(2), \forall \vec{\epsilon} \in L:$  $d_L f(\vec{x}) = d_L f (\vec{x} \oplus \vec{\epsilon}).$
+
+\item $\forall f,g \in \mathbb{F}_2(n),  \forall L \le V_n(2):$ $d_L(f\oplus g)(\vec{x}) = d_L f(\vec{x}) \oplus d_L g(\vec{x})$.
+
+\item $\forall f \in \mathbb{F}_2(n), \forall \vec{\epsilon}_2, \vec{\epsilon}_2 \in V_n(2):$ $d_{\vec{\epsilon}_2 \oplus \vec{\epsilon}_2} f(\vec{x}) = d_{\vec{\epsilon}_1} f(\vec{x}) \oplus d_{\vec{\epsilon}_1} f(\vec{x} \oplus \vec{\epsilon}_1).$
+
+\item $\forall \vec{\delta} \in V_n(2): d_{\vec{\delta}} f(\vec{x}) = 0 \Leftrightarrow f \text{ --- константа.}$
+
+\item $\forall \vec{\delta} \in V_n(2): d_{\vec{\delta}} f(\vec{x})  \text{ --- константа.} \Leftrightarrow f \text{ --- аффинная функция.}$
+\end{itemize}
+
+\subsection{Гомоморфизмы (флешбэк)}
+\definition Отображение $\phi: (G, \circ) \rightarrow (H, \diamond)$ называется гомоморфизмом, если $\forall x,y \in G: ~ \phi(x \circ y) = \phi(x) \diamond \phi(y)$.
+
+\definition Биективный гомоморфизм называется изоморфизмом.
+
+\subsection{Гомоморфизмы $(V_n(p), +)$ в мультипликативную группу поля$\mathbb{C}$}
+
+Стандартный базис $V_n(p)$:
+$$
+\vec{e}_j = (0,...,0,\underbrace{1}_{j\text{-я позиция}},0,...,0), j = 1, ..., n. \\
+$$
+
+Базис пространства $F(p,n)$, разложение по которому часто используется на практике.
+
+\theorem{
+    Множество всех гомоморфизмов $\phi : (V_n(p), +) \rightarrow (\mathbb{C}, \cdot)$ состоит из $p^n$ различных гомоморфизмов $\omega_{\vec{\alpha}}$, $\vec{\alpha} = (\alpha_1, ... , \alpha_n) \in V_n(p)$, каждый из которых однозначно определяется своим действием на векторах стандартного базиса $\vec{e}_j, ~j = 1,...,n,$ условием
+    $$
+    \omega_{\vec{\alpha}}(\vec{e}_j) = \exp\left({\frac{2 \pi i}{p} \alpha_j}\right),
+    $$
+    где $i$ --- мнимая единица.
+}
+\proof Так как $\phi$ --- гомоморфизм, то для $\forall \vec{\gamma} = (\gamma_1, ..., \gamma_n) \in V_n(p)$ имеем:
+$$
+\phi(\vec{\gamma}) = \phi \left( \sum_{j=1}^{n} \gamma_j \vec{e}_j \right) = \prod_{j=1}^{n} \phi (\vec{e}_j)^{\gamma_j}.
+$$
+
+$\Rightarrow$ каждый гомоморфизм определяется действием на векторах $\vec{e}_1,..., \vec{e}_n$.
+
+$\Rightarrow ~ \forall j \in {1,...,n}: ~ \phi(\underbrace{\vec{e}_j+...+\vec{e}_j}_p) = \phi(\vec{e}_j)^p = \phi(0) = 1.$
+
+$\Rightarrow$ $\phi(\vec{e}_j)$ --- корень степени $p$ из единицы и $\phi(\vec{e}_j) = \exp\left({\frac{2 \pi i}{p} k}\right)$ для некоторого $k \in {0, ..., p-1}.$
+
+$\Rightarrow$ $\phi$ есть один из $p^n$ гомоморфизмов вида $\omega_{\vec{\alpha}}$ определённых в условиях теоремы. $\blacksquare$
+
+\subsection{Аддитивные характеры}
+Пусть $
+\angles{\vec{\alpha}, \vec{\beta}} = \alpha_1 \beta_1 + ... + \alpha_n \beta_n,
+$ где "<+"> в поле $GF(p)$.
+
+$$
+\omega_{\vec{\alpha}}(\vec{\beta}) = \prod_{j=1}^{n} \left( \exp\left[{\frac{2 \pi i}{p} \alpha_j} \right]\right) ^{\beta_j} = \exp \left( \frac{2 \pi i}{p} (\alpha_1 \beta_1 + ... + \alpha_n \beta_n) \right) = \exp \left( \frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\beta}} \right)
+$$
+
+Аддитивная группа поля $GF(p^n)$ может быть представлена как векторное пространство $(V_n(p), +)$.
+
+\definition
+Гомоморфизмы $\omega_{\vec{\alpha}}$ называются аддитивными характерами поля $GF(p^n).$
+
+\subsubsection{Основное свойство характеров}
+Обозначим комплексное сопряжение как $\omega_{\vec{\alpha}}(\vec{e}_j) = \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\beta}} }\right).$
+
+\definition $\ind{A} = \left\{ \begin{aligned}
+&1, ~ \text{если условие А справедливо} \\
+&0, ~ \text{если условие А несправедливо}
+\end{aligned} \right.$ называется индикатором.
+
+\statement{$\forall \vec{\alpha}, \vec{\beta} \in V_n(p)$ справедливо равенство $$
+\frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \omega_{\vec{\alpha}}(\vec{\gamma}) \overline{\omega_{\vec{\beta}}(\vec{\gamma})} = \ind{\vec{\alpha} = \vec{\beta}}.
+$$
+}
 \proof
 \[
 \begin{aligned}
-	\frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \omega_{\vec{\alpha}}(\vec{\gamma}) \overline{\omega_{\vec{\beta}}(\vec{\gamma})} &= \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left({\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\gamma}} }\right) \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\beta}, \vec{\gamma}} }\right) = \\
-	& = \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha} - \vec{\beta}, \vec{\gamma}} }\right)  \label{eq:charproof1}
+\frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \omega_{\vec{\alpha}}(\vec{\gamma}) \overline{\omega_{\vec{\beta}}(\vec{\gamma})} &= \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left({\frac{2 \pi i}{p} \angles{\vec{\alpha}, \vec{\gamma}} }\right) \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\beta}, \vec{\gamma}} }\right) = \\
+& = \frac{1}{p^n} \sum_{\vec{\gamma} \in V_n(p)} \exp\left(-{\frac{2 \pi i}{p} \angles{\vec{\alpha} - \vec{\beta}, \vec{\gamma}} }\right)  \label{eq:charproof1}
 \end{aligned}
 \]
 
@@ -330,1402 +346,1465 @@ $$
 \exp \left(\frac{2 \pi i}{p} \angles{\vec{\alpha} - \vec{\beta}, \vec{\gamma}}\right) = p^{n-1} \sum_{k=0}^{p-1} \exp \left(\frac{2 \pi i}{p}k \right) = p^{n-1} \frac{\exp \left( \frac{2 \pi i}{p} p\right) - 1}{\exp \left( \frac{2 \pi i}{p} \right) - 1}. ~ \blacksquare
 $$
 
-	\subsubsection{Базис пространства}
-	Обозначим пространство $\mathbb{C}(p,n) = \{f ~|~ V_n(p) \rightarrow \mathbb{C}\}$.
-	
-	\theorem{$\{\omega_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n (p)\}$ --- базис пространства $\mathbb{C}(p,n)$.}
-	\proof
-	Так как число характеров равно размерности $\mathbb{C}(p,n)$, достаточно показать линейную независимость характеров.
-	
-	Предположим, что они зависимы. Тогда для некоторого набора $\{c_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n(p)\}$ справедливо равенство
-	$$
-	\sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) = 0.
-	$$
-	
-	Для каждого $\vec{\beta} \in V_n(p)$ умножим обе части равенства на $\overline{\omega_{\vec{\beta}}}$ и просуммируем по всем $\vec{x} \in V_n(p)$
-	$$
-	\sum_{\vec{x} \in V_n(p)} \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} = 0.
-	$$
-	
-	Поменяв порядок суммирования, имеем:
-	$$
-	\sum_{\vec{x} \in V_n(p)} \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} = 
-	\sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \sum_{\vec{x} \in V_n(p)} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} =
-	p^n \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \ind{\vec{\alpha} = \vec{\beta}} = p^n c_{\vec{\beta}} = 0.
-	$$
-	Следовательно $c_{\vec{\alpha}} = 0$ для каждого $\vec{\alpha} \in V_n(p)$ и система линейно независима. $\blacksquare$
-	
-	
-	\subsection{Преобразования Фурье}
-	\definition
-	Разложение произвольной функции $f \in \mathbb{C}(p,n)$ по базису характеров $\{\omega_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n(p)\}$:
-	$$
-	f(\vec{x}) = \frac{1}{p^n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f(\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{x})
-	$$
-	называется разложением в ряд Фурье.
-	
-	\definition
-	Комплексное число $\tilde{w}_f(\vec{\alpha})$ называется коэффициентом Фурье, соответствующему набору $\vec{\alpha}$.
-	
-	\definition
-	Отображение $\mathbb{C}(p,n) \rightarrow \mathbb{C}^n$, ставящее каждой функции в соответствие набор её коэффициентов Фурье (спектр Фурье), называется преобразованием Фурье. Также есть другие названия: преобразование Уолша-Адамара первого рода, преобразование Уолша (type I Walsh transform).
-	
-	\statement{Пусть $\vec{\gamma} \in V_n (p)$. Тогда
-	$$
-	\tilde{w}_f(\vec{\gamma}) = \sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})}
-	$$}
-	
-	\proof
-	$$\sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\beta} \in V_n(p)} p^{-n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \ind{\vec{\alpha} = \vec{\gamma}} = \tilde{w}_f(\vec{\gamma}). ~\blacksquare$$
-	
-	\paragraph{Замечание} Далее $p = 2$.
-	
-	$$
-	\omega_{\vec{\alpha}} (\vec{\beta}) = (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}}
-	$$
-	$$
-	\Rightarrow ~~ \tilde{w}_f(\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
-	$$
-	
-	\hrule
-	\paragraph{Замечание} В литературе иногда встречается и без коэффициента нормировки
-	$$
-	\tilde{w}_f (\vec{\alpha}) = 2^{-n} \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
-	$$
-	В таком случае:
-	$$
-	f(\vec{x}) = \sum_{\vec{\alpha} \in V_n(2)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}.
-	$$ \hrule ~\\
-	
-	Соотношение ортогональности:
-	$$
-	\sum_{\vec{\gamma} \in V_n(2)} \omega_{\vec{\alpha}} (\vec{\gamma}) \omega_{\vec{\beta}} (\vec{\gamma}) = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
-	$$
-	$$
-	\sum_{\vec{\gamma} \in V_n(2)} (-1)^{\angles{\vec{\alpha} \oplus \vec{\beta}, \vec{\gamma}}} = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
-	$$
-	
-	\pagebreak
-	
-	\seminary{Семинар 1-4}
-	\subsection{Коэффициенты Уолша-Адамара и иже с ними}
-	
-	\definition
-	Пусть $f : \ZZ_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
-	
-	
-	Обозначим скалярное произведение как $\angles{a,b}$, \hl{(TODO: Проверить обозначение) коэффициент Уолша-Адамара 1-го рода $w_f$}, матрицу Адамара как $H$.
-	
-	\statement{$$
-		H \cdot \transp{H} = nE
-		$$}
-	
-	\statement{
-		$$
-		\begin{aligned}
-			f &:~ \ZZ_2^n \rightarrow \ZZ_2 \\
-			\hat{F}_f (u) &= \sum_{x \in \ZZ_2^n} (-1)^{\angles{u,x} \oplus f(x)}
-		\end{aligned}
-		$$}
-	
-%	\seminary{Семинар 2}
-	\subsection{Теорема Руппеля}
-	
-	$$
-	P\{f(x) = \angles{u,x}\} = \frac{2^n - d(f(x), \angles{u,x})}{2^n} = 1 - \frac{d(f(x), \angles{u,x})}{2^n} = 1 - \frac{2^n - \hat{F}_f (u)}{2^{n+1}} =
-	$$
-	$$
-	= \frac{1}{2} + \frac{\hat{F}_f (u)}{2^{n+1}} =
-	\vline \begin{matrix}
-		\text{Обозначим} \\
-		\frac{\hat{F}_f(u)}{2^n} = \hat{S}_f(u)
-	\end{matrix} \vline
-	=  \frac{1}{2} + \frac{\hat{S}_f (u)}{2}
-	$$
-	
-	$$
-	P\{f(x) = \angles{u, x} \oplus 1\} = \frac{1}{2} - \frac{\hat{S}_f (u)}{2}
-	$$
-	
-	
-	\definition
-	Линейный статистический аналог булевой функции $f(x)$ --- это такая линейная функция $\angles{u,x}$, что расстояние $d(f(x), \angles{u,x})$ является минимальным.
+\subsubsection{Базис пространства}
+Обозначим пространство $\mathbb{C}(p,n) = \{f ~|~ V_n(p) \rightarrow \mathbb{C}\}$.
 
-	\theorem[Руппеля]{Пусть $u : |\hat{F}_f (n)|$ --- $\max$, тогда $\angles{u,x}\oplus c$ --- линейный статаналог для $f(x)$. Причём 
-	$$
-	\left\{
-	\begin{aligned}
-		c & = 0, \text{ если } \hat{F}_f (u) > 0, \\
-		c & = 1, \text{ если } \hat{F}_f (u) < 0.
-	\end{aligned}
-	\right.
-	$$}
+\theorem{$\{\omega_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n (p)\}$ --- базис пространства $\mathbb{C}(p,n)$.}
+\proof
+Так как число характеров равно размерности $\mathbb{C}(p,n)$, достаточно показать линейную независимость характеров.
+
+Предположим, что они зависимы. Тогда для некоторого набора $\{c_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n(p)\}$ справедливо равенство
+$$
+\sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) = 0.
+$$
+
+Для каждого $\vec{\beta} \in V_n(p)$ умножим обе части равенства на $\overline{\omega_{\vec{\beta}}}$ и просуммируем по всем $\vec{x} \in V_n(p)$
+$$
+\sum_{\vec{x} \in V_n(p)} \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} = 0.
+$$
+
+Поменяв порядок суммирования, имеем:
+$$
+\sum_{\vec{x} \in V_n(p)} \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} =
+\sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \sum_{\vec{x} \in V_n(p)} \omega_{\vec{\alpha}} (\vec{x}) \overline{\omega_{\vec{\beta}}(\vec{x})} =
+p^n \sum_{\vec{\alpha} \in V_n(p)} c_{\vec{\alpha}} \ind{\vec{\alpha} = \vec{\beta}} = p^n c_{\vec{\beta}} = 0.
+$$
+Следовательно $c_{\vec{\alpha}} = 0$ для каждого $\vec{\alpha} \in V_n(p)$ и система линейно независима. $\blacksquare$
 
 
-%	\seminary{Семинар 3}
-%	\hl{Семинар про бент-функции}
-	
-%	\seminary{Семинар 4}
-	\subsection{Преобразование Мёбиуса}
-	\paragraph{Пример и утверждение}
-	$f = 10011101$
-	$$
-	f(\vec{x}= [x_1, x_2, x_3]) = a_0 \xor a_1 x_1 \xor a_2 x_2 \xor a_3 x_3 \xor a_{12} x_1 x_2 \xor a_{13} x_1 x_3 \xor a_{23} x_2 x_3 \xor a_{123} x_1 x_2 x_3
-	$$
-	$$\begin{aligned}
-		a_0 &= 1 = f(000) \\
-		a_3 &= 0 \xor a_0 = f(001) \xor a_0 = f(001) \xor f(000) \\
-		a_2  = a_{010} &= f(010) \xor f(000) \\
-		a_{23} =  a_{011} & = f(011) \xor f(010) \xor f(001) \xor f(000) \\
-		...\\
-		a_{23} x_2 x_3 &: ~~ x_2 x_3 \Rightarrow x_1^0 x_2^1 x_3^1 \Rightarrow \vec{\sigma} = (011) \\
-		\Rightarrow & a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha})
-	\end{aligned}
-	$$
-	\proof
-	\begin{enumerate}
-		\item База индукции: $a_0 \Rightarrow \vec{\sigma} = \vec{0} \Rightarrow x_1^0 ... x_n^0, ~ a_{\vec{\sigma}} = f(\vec{\sigma}) = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha}) $. Для $a_1 = a_{10...0} = f(10...0)\xor a_0$. Аналогично для $a_2,...,a_n$.
-	
-	\item Пусть для $\forall \vec{\sigma} \in V_n(2), \weight{\vec{\sigma}} = k: ~~ a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\sigma})$.
-	
-	\hl{На индукционном переходе мы застряли и взялись за другую задачу. Поэтому текст ниже должен расцениваться как потенциально неверный, ибо был дописан из собственных размышлений автора.}
-	
-	\item Тогда для $\vec{\nu} \in V_n(2), \weight{\vec{\nu}} = k+1$:
-	%Пусть $\vec{\mu}: ~ d(\nu, \mu) = 1, \weight{\mu} = k$, $i$ --- номер разряда, где $\mu_i = 0, ~ \nu_i = 1$.
-	$$
-	f(x_1, ..., x_n) = a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ... \xor a_{1...n} x_1 ... x_n
-	$$
-	
-	Выразим $a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}}$, которое соответствует вектору $\vec{\nu}$. Получим следующее:
-	$$
-	a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}} =  f(x_1, ..., x_n) \xor a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ...
-	$$
-	
-	Чтобы получить значение коэффициента подставим в $ x_{i_1} ... x_{i_{k+1}}$ единицы, а в остальные переменные нули. Тогда в правой части останутся конъюнкции содержавшие только $ x_{i_1} ... x_{i_{k+1}}$, коэффициент $a_0$ и функция от вектора $\vec{\nu}$.
-	$$
-	a_{i_1...i_{k+1}} =  f(x_1, ..., x_n) \xor (a_{i_2 ... i_{k+1}} \xor a_{i_1 i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_k}) \xor (a_{i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_{k-1}}) \xor ... \xor a_0
-	$$
-	
-	Заменим обозначения на бинарные вектора (как в примере выше) и свернём суммирование в скобках:
-	$$
-	a_{\vec{\nu}} = f(\vec{\nu}) \xor
-	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
-				\weight{\vec{\sigma}} = k}} } a_{\vec{\sigma}} \xor
-	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
-				\weight{\vec{\sigma}} = k-1}} } a_{\vec{\sigma}} \xor
-	...
-	\xor
-	\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
-				\weight{\vec{\sigma}} = 1}} } a_{\vec{\sigma}} \xor
-	a_{\vec{0}}
-	$$
-	
-	
+\subsection{Преобразования Фурье}
+\definition
+Разложение произвольной функции $f \in \mathbb{C}(p,n)$ по базису характеров $\{\omega_{\vec{\alpha}} ~|~ \vec{\alpha} \in V_n(p)\}$:
+$$
+f(\vec{x}) = \frac{1}{p^n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f(\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{x})
+$$
+называется разложением в ряд Фурье.
+
+\definition
+Комплексное число $\tilde{w}_f(\vec{\alpha})$ называется коэффициентом Фурье, соответствующему набору $\vec{\alpha}$.
+
+\definition
+Отображение $\mathbb{C}(p,n) \rightarrow \mathbb{C}^n$, ставящее каждой функции в соответствие набор её коэффициентов Фурье (спектр Фурье), называется преобразованием Фурье. Также есть другие названия: преобразование Уолша-Адамара первого рода, преобразование Уолша (type I Walsh transform).
+
+\statement{Пусть $\vec{\gamma} \in V_n (p)$. Тогда
+$$
+\tilde{w}_f(\vec{\gamma}) = \sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})}
+$$}
+
+\proof
+$$\sum_{\vec{\beta} \in V_n(p)} f(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\beta} \in V_n(p)} p^{-n} \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}(\vec{\beta}) \overline{\omega_{\vec{\gamma}}(\vec{\beta})} = \sum_{\vec{\alpha} \in V_n(p)} \tilde{w}_f (\vec{\alpha}) \ind{\vec{\alpha} = \vec{\gamma}} = \tilde{w}_f(\vec{\gamma}). ~\blacksquare$$
+
+\paragraph{Замечание} Далее $p = 2$.
+
+$$
+\omega_{\vec{\alpha}} (\vec{\beta}) = (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}}
+$$
+$$
+\Rightarrow ~~ \tilde{w}_f(\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
+$$
+
+\hrule
+\paragraph{Замечание} В литературе иногда встречается и без коэффициента нормировки
+$$
+\tilde{w}_f (\vec{\alpha}) = 2^{-n} \sum_{\vec{\beta} \in V_n(2)} f (\vec{\beta}) (-1) ^ {\angles{\vec{\alpha}, \vec{\beta}}} .
+$$
+В таком случае:
+$$
+f(\vec{x}) = \sum_{\vec{\alpha} \in V_n(2)} \tilde{w}_f (\vec{\alpha}) \omega_{\vec{\alpha}}.
+$$ \hrule ~\\
+
+Соотношение ортогональности:
+$$
+\sum_{\vec{\gamma} \in V_n(2)} \omega_{\vec{\alpha}} (\vec{\gamma}) \omega_{\vec{\beta}} (\vec{\gamma}) = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
+$$
+$$
+\sum_{\vec{\gamma} \in V_n(2)} (-1)^{\angles{\vec{\alpha} \oplus \vec{\beta}, \vec{\gamma}}} = 2^{2n} \ind{\vec{\alpha} = \vec{\beta}}
+$$
+
+\pagebreak
+
+\seminary{Семинар 1-4}
+\subsection{Коэффициенты Уолша-Адамара и иже с ними}
+
+\definition
+Пусть $f : \ZZ_2^n \rightarrow \mathbb{R}$, тогда $\hat{f} = (-1)^{f(x)}$ --- действительнозначный аналог булевой функции. \\
+
+
+Обозначим скалярное произведение как $\angles{a,b}$, матрицу Адамара как $H$, а коэффициенты\footnote{Они же появляются во второй лекции и имеют другие обозначения.} Уолша-Адамара второго рода как $\hat{F}_f (u)$.
+
+\statement{$$
+H \cdot \transp{H} = nE
+$$}
+
+\statement{
+$$
+\begin{aligned}
+%           f &:~ \ZZ_2^n \rightarrow \ZZ_2 \\
+    \hat{F}_f (u) &=\sum_{x \in \ZZ_2^n} (-1)^{\angles{u,x}} \hat{f}(x) = \sum_{x \in \ZZ_2^n} (-1)^{\angles{u,x}} (-1)^{f(x)} = \sum_{x \in \ZZ_2^n} (-1)^{\angles{u,x} \oplus f(x)}
+\end{aligned}
+$$}
+
+\statement{
+$$
+\sum_{u \in \ZZ_2^n} (-1)^{\angles{u,v}} = \left\{ \begin{aligned}
+&2^n, ~ v = 0; \\
+&0, ~ v \ne 0.
+\end{aligned}\right.
+$$
+}
+\proof
+\begin{enumerate}
+\item $v = 0 ~~\Rightarrow~~ \angles{u,v} = \angles{u,0} = 0 ~~\Rightarrow~~ \sum_{u \in \ZZ_2^n} (-1)^0 = 2^n$
+\item $$v \ne 0 ~~\Rightarrow~~ \sum_{\scriptsize\stack{u \in \ZZ_2^n \\ u': u_1 = 0}} (-1)^{\angles{u',v}} + \sum_{\scriptsize\stack{u \in \ZZ_2^n \\ u': u_1 = 1}} (-1)^{\angles{u',v}} = 2^\frac{n}{2} - 2^\frac{n}{2} = 0 ~~ \blacksquare$$
 \end{enumerate}
 
-	\pagebreak
-	\lection{Лекция 2}
-	\subsection{Преобразование Фурье (продолжение)}
-	
-	\paragraph{Задача}
-	$\weight{\vec{\alpha} \oplus \vec{\beta}} = \weight{\vec{\alpha}} + \weight{\vec{\beta}} - 2 \weight{\vec{\alpha} \cdot \vec{\beta}}$
-	
-	\statement{Пусть $f \in \mathbb{F}_2(n)$. Тогда $$\tilde{w}_f (\vec{\alpha}) = \left\{ \begin{aligned}
-			&\weight{f}, ~\iftext~ \vec{\alpha} = \vec{0} \\
-			&\weight{f(\vec{x}) \oplus \angles{\vec{\alpha}, \vec{x}}} - 2^{n-1}, ~\iftext~ \vec{\alpha} \ne \vec{0}
-		\end{aligned} \right.$$}
-	
-	\proof
-	Пусть 
-	$$
-	\begin{aligned}
-	\Omega_0 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 0\}, \\
-	\Omega_1 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 1\}.	
-	\end{aligned}
-	$$
-	
-	Тогда
-	$$
-	\tilde{w}_f (\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f(\vec{\beta}) (-1)^{\angles{\vec{\alpha}, \vec{\beta}}} = \left(\sum_{\vec{\beta} \in \Omega_0} 1 - \sum_{\vec{\beta} \in \Omega_1} \right)
-	$$
-	Необходимо найти мощности $\Omega_0, \Omega_1$. Из их определения
-	$$\begin{aligned}
-		|\Omega_0| &= \weight{f(\vec{x}) \cdot (\angles{\vec{\alpha},\vec{x}} \oplus 1)} = 
-		\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \oplus f(\vec{x})} = \\ 
-		& =\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}} + \weight{f(\vec{x})} - 2 \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \cdot f(\vec{x})} = \\
-		& = \weight{f(\vec{x})} - \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}},
-	\end{aligned}
-	$$
-	$$
-	|\Omega_1| = \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}.
-	$$
-	
-	Отсюда следует, что
-	$$
-	\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \underbrace{\weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}}_{=\weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}} - \weight{\angles{\vec\alpha, \vecx}}
-	$$
-	
-	Тогда возможны два случая:
-	\begin{itemize}
-	\item Если $\vec\alpha = \vec0 ~~\Rightarrow~~ \weight{\angles{\vec\alpha, \vecx}} = \vec0 ~~\Rightarrow~~ \tilde{w}_f(\vec\alpha) = \weight{f}$
-	\item Если $\vec\alpha \ne \vec0$, то из равновероятности $\angles{\vec\alpha, \vecx}$ 
-	$\tilde{w}_f(\vec\alpha) = \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}} - 2^{n-1}$. $\blacksquare$
-	\end{itemize}
-	
-	\subsection{Коэффициенты Уолша-Адамара}
-	\definition Лекционное обозначение действительнозначного аналога булевой функции
-	$$
-	\delta_f (x)= (-1)^{f(x)}, \text{ для } f:\ZZ_2^n \rightarrow \ZZ_2.
-	$$
-	
-	Коэффициенты Фурье для $\delta_f$ называются также коэффициентами Уолша-Адамара второго рода:
-	$$
-	w_f(\vec\alpha) = \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
-	$$
-	
-	\hrule
-	\paragraph{Замечание}
-	В литературе встречается и с коэффициентом нормировки
-	$$
-	w_f(\vec\alpha) = 2^{-n} \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
-	$$
-	$$
-	\Rightarrow ~~ \delta_f (\vecx) = \sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) \omega_{\vec\alpha}.
-	$$
-	\hrule
-	
-	\paragraph{Задача} Пусть $f, g \in \FF_2(n)$. Доказать:
-	\begin{itemize}
-	\item $\delta_{f \xor g} = \delta_f \delta_g$;
-	\item $2 \delta_{f g} = 1 + \delta_f + \delta_g - \delta_f \delta_g$.
-	\end{itemize}
-	Позсказка: $\delta_f(\vecx) = 1 - 2f(\vecx)$.
-
-	\statement{
-	Пусть $f \in \FF_2(n)$. Тогда
-	$$
-	w_f(\vec\alpha) = 2^n - 2 \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}
-	$$
-	}
-	\proof Д/З $~\cap\_\cap$
-
-	\corollary{
-	Пусть $f \in \FF_2(n)$. Тогда
-	\begin{itemize}
-	\item если $\vec\alpha \ne \vec0$ $w_f(\vec\alpha) = -2 \tilde{w}_f (\vec\alpha)$;
-	\item если $\vec\alpha = \vec0$ $w_f(\vec\alpha) = 2^n -2 \tilde{w}_f (\vec\alpha)$.
-	\end{itemize}
-	}
-	
-	\statement{
-	Пусть $f \in \FF_2(n)$. Тогда
-	$$
-	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = 2^n (-1)^{f(0)}.
-	$$
-	}
-	
-	\proof
-	$$
-        \begin{aligned}
-	\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) &=
-          \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)}
-          (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} =
-          \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)}
-          \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha,
-                                                       \vec\beta}}\\
-                                                &= \sum_{\vec{\beta} \in V_n(2)}
-          (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n
-          (-1)^{f(0)}.
-        \end{aligned}
-        ~~~ \blacksquare
-	$$
-	
-	\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
-	$$
-	\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}.
-	$$
-	}
-	
-	\theorem[Соотношение ортогональности]{
-	$$
-	\sum_{\vec{\alpha} \in V_n(2)} w_f(\vec\alpha) w_f (\vec\alpha \xor \vec\beta) = 2^{2n} \cdot \ind{\vec\beta = \vec0}.
-	$$
-	}
-	
-	\statement{
-	Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y\in V_m(2)$. Тогда
-	$$
-	\forall \vec\alpha \in V_n(2), \forall \vec\beta \in V_m(2): ~~ w_h(\vec\alpha, \vec\beta) = w_f (\vec\alpha) w_g (\vec\beta).
-	$$
-	}
-	
-	\subsection{Расстояние Хемминга}
-	\definition
-	Расстояние (Хемминга) $\hamming(f, g)$ между булевыми функциями $f,g \in \FF_2(n)$ есть $$
-	\hamming(f,g) = |\{\vec\alpha \in V_n(2): ~ f(\vec\alpha) \ne g(\vec\alpha)\}|,
-	$$$$\Downarrow$$$$
-	\hamming (f,g) = \weight{f\xor g}.
-	$$
-	
-	\definition Расстояние $\hamming (f,g)$ от функции $f \in \FF_2(n)$ до множества $C \subseteq \FF_2(n)$ определяется как$$
-	\hamming(f, C) = \min_{g \in C(n)} \hamming(f,g).
-	$$
-	
-	\subsection{Нелинейность}
-	\definition Нелинейностью $\nonlinty{f}$ называется наименьшее расстояние от функции $f \in \FF_2 (n)$ до множества всех аффинных функций $$
-	\nonlinty{f} = \hamming (f, \mathcal{AL}_n).
-	$$
-	
-	Из равенства
-	$$
-	wf_(\vec\alpha) = 2^n - 2 \weight{f(\vecx)\xor \angles{\vec\alpha, \vecx}}
-	$$$$\Downarrow$$$$
-	\nonlinty{f} = 2^{n-1} - \frac{1}{2} \max_{\vec\alpha \in V_n(2)} w_f (\vec\alpha).
-	$$
-	
-	\paragraph{Пример}
-	$
-	f\in \FF_2(3)
-	$ $$
-	f(x_1,x_2,x_3) = 1 \xor x_1 \xor x_2 \xor x_2 x_3 \xor x_1 x_2 x_3 ~~\Rightarrow~~ \vec{f} = (1101~0011).
-	$$
-	Коэффициенты Уолша-Адамара: $(-2,2,2,-2, -2,2,-6,-2)$.$$
-	\Rightarrow |w_f (6)| = 6 ~~ \Rightarrow ~~\text{ближайшая аффинная функция } g = 1 \xor x_1 \xor x_2.
-	$$
-	$$
-	\hamming (f,g) = 1.
-	$$
-	
-	\subsection{Бент-функции}
-	\theorem{Для каждой $f \in \FF_2 (n)$ справедливо неравенство
-	$$
-	\nonlinty{f} \le 2^{n-1} - 2^{\frac{n}{2} -1}.
-	$$}
-
-	\definition Функция $f \in \FF_2 (n)$ называется бент-функцией, если $$\forall \vec\alpha \in V_n(2): ~~w_f(\vec\alpha) \in \{-2^{\frac{n}{2}}, 2^{\frac{n}{2}}\}.
-	$$
-	
-	\statement{Очевидно, что если $f$ --- бент-функция, то:
-	\begin{itemize}
-	\item $\forall \vec\alpha \in V_n(2):~~ \left(w_f(\vec\alpha)\right)^2 = 2^n$
-	\item Бент-функции существуют только для чётных $n$.
-	\end{itemize}
-	}
-
-	\paragraph{Пример}
-	\begin{itemize}
-	\item $f(x_1, x_2) = x_1 x_2$;
-	\item $f(x_1,,x_4) = 1 \xor x_1 x_2 \xor x_1 x_3 \xor x_1 x_4 \xor x_2 x_3 \xor x_2 x_4 \xor x_3 x_4$.
-	\end{itemize}	
-	
-	\subsection{Построение бент-функции}
-	\theorem{Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y \in V_m(2)$. Тогда$$
-	h \text{ --- бент-функция} ~~ \Leftrightarrow ~~ f,g \text{ --- бент-функции}.
-	$$
-	}
-	\corollary{Функция $f \in \FF_2 (2k),~ k \ge 1,~ f(\vecx) = x_1 x_2 \xor x_3 x_4 \xor ... \xor x_{2k-1} x_{2k}$ является бент-функцией.}
-	
-	\theorem{Пусть $\pi \in S(V_n),~ g\in \FF_2 (n),~ \vecx,\vecy \in V_n(2)$.\\ Тогда функция $f \in \FF_2 (2n), ~ f(\vecx, \vecy) = \angles{\pi(\vecx), \vecy} \xor g(\vecx)$ есть бент-функция.
-	}
-	
-	\subsection{Фильтрующие генераторы}
-	На рисунке \ref{fig:filtering_gen} изображена общая схема фильтрующего генератора. ЛРСОС (он же LFSR, он же сдвиговый регистр с линейной обратной связью) выдаёт свои разряды на вход функции $f$.
-	\begin{figure}
-		\centering
-		\begin{tikzpicture}
-		[node distance = 2cm, on grid]
-		\node[draw,rounded corners, minimum width=5cm,align=center] (lfsr) at (0, 0) {ЛРСОС};
-		\node[isosceles triangle,isosceles triangle stretches,shape border rotate=270, minimum width=5cm,draw,rounded corners,below of=lfsr] (f) {f};
-
-		\node[align=center,rounded corners,below of=f] (outsup) {~};
-		\node[align=center,rounded corners,right of=outsup] (out) {$z_1, z_2...z_l$};
-
-		\draw[rounded corners,->] (lfsr.east) -- (5,0) -- (5,1) -- (-5,1) -- (-5,0) -- (lfsr.west);
-		\draw[rounded corners,double=white, line width=1 pt,->] (lfsr.south) -- (f.north);
-		\draw[rounded corners,->] (f.south) -- (outsup.center) -- (out.west);
-		\end{tikzpicture}
-		\caption{Общая схема фильтрующего генератора}
-		\label{fig:filtering_gen}
-	\end{figure}
-	
-	Линейная рекуррентная последовательность (ЛРП):
-	$$
-	x_{n+i} = x_i + \sum_{j=1}^{n-1} c_j x_{j+1}, ~i = 1,2,...
-	$$
-
-	Преобразование ЛРСОС $\delta$ (функция переходов состояний)
-	$$
-	\delta(\vecx) = \left( x_2, x_3, ..., x_n, x_1 + \sum_{j=2}^{n} c_{j-1} x_j \right),
-	$$ где: \begin{itemize}
-	\item[--] $\vecx = (x_1, x_2,...,x_n) \in \ZZ_2^n$,
-	\item[--] $\delta: ~ \ZZ_2^n \rightarrow \ZZ_2^n$,
-	\item[--] $c_1, ..., c_{n-1} \in \ZZ_2$ --- коэффициенты обратной связи.
-	\end{itemize}
-	Преобразованию соответствует сопровождающая $(n \times n)$-матрица
-	$$
-	\mx{a} = \begin{pmatrix}
-	0&1&0&0&...&0 \\
-	0&0&1&0&...&0 \\
-	...&...&...&...&...&... \\
-	0&0&0&0&...&1 \\
-	1&c_1&c_2&c_3&...&c_{n-1}
-	\end{pmatrix} = \begin{pmatrix}
-	\vec0^{\downarrow} & \mx{E}_{n-1} \\
-	1 & \vec{c}
-	\end{pmatrix}.
-	$$
-	ЛРСОС(ЛРС) с точки зрения автоматной модели --- автономный автомат $\mathbb{A} = (\ZZ_2^n, \ZZ_2, \delta, f)$:
-	\begin{itemize}
-	\item $\ZZ_2^n$ --- множество состояний (все заполнения ЛРСОС);
-	\item $\delta: \ZZ_2^n \rightarrow \ZZ_2^n$ --- функция переходов;
-	\item $f: \ZZ_2^n \rightarrow \ZZ_2$ --- функция выходов;
-	\item $x^{(0)} \in \ZZ_2^n$ --- начальное состояние.
-	\end{itemize}
-
-	Фильтрующая функция задана многочленом Жегалкина ($\deg f > 1$):$$
-	f(x_1,...,x_n) = b_0 + \sum_{r\in \{1,...,n\}} \sum_{1 \le i_1 < ... < i+r \le n} b_{i_1, ..., i_r} x_{i_1} ... x_{i_r}.
-	$$
-	j-й знак гаммы$$
-	z_j = f\left(\delta^{j-1}(x)\right) = f\left(\mx{a}^{j-1}x\right), ~ j = 1,2,...
-	$$
-
-	\theorem{Максимальный период ЛРС длины $n$ над $\FF_q$ равен $q^n - 1$}
-	
-	\property{Если ЛРС максимального периода и f --- сбалансированная функция, то период выходной последовательности фильтрующего генератора также максимален и равен $q^n - 1$}\\
-
-	Фильтрующая функция должна обеспечивать:\begin{itemize}
-	\item хорошие статистические свойства $t$-грамм гаммы;
-	\item большую линейную сложность.
-	\end{itemize}
-	
-	Линейная сложность периодической последовательности --- степень её минимального многочлена.
-	Она же --- минимальная длина линейного регистра сдвига с обратной связью, порождающего данную последовательность
-	
-
-	\seminary{Семинар 5-6}
-	\paragraph{Летучка} Найти вес функции и определить является ли она бент-функцией.
-	\begin{enumerate}
-		\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
-		\item $f(x_1,...,x_6) = x_1 x_4 x_5 + x_2 x_3 x_5$
-		\item $f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} + x_1 x_2 x_3 + x_1 x_2 x_5 x_6 x_7 x_8$
-	\end{enumerate}
-	
-	\paragraph{Решение варианта №3}
-	Вынесем $x_1, x_2$ за скобки, тогда
-	$$
-	f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} \xor x_1 x_2 x_3 \xor x_1 x_2 x_5 x_6 x_7 x_8 = 
-	x_1 x_2 (x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8)
-	$$
-
-	Тогда 
-	$$
-	\begin{aligned}
-		h(x_1 x_2) &= x_1 x_2 & \Rightarrow & \weight{h} = 1 \cdot 2^8 = 256\\ 
-		g(x_4 x_9 x_{10} x_3 x_5 x_6 x_7 x_8) &= x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8 & \Rightarrow & \weight{g}= 2^7 \cdot 2^2 = 2^9 \\
-	\end{aligned}
-	$$
-	%TODO: закончить семинар 5-6
-
-	\pagebreak
-
-	\lection{Лекция 3}
-	\subsection{Фильтрующий генератор}
-	\property{При $q = 2$ верхняя граница линейной сложности гаммы фильтрующего генератора равна \[ \sum_{i=0}^{deg f} \binom{n}{i} \]}
-	Получение точных нижних оценок -- часто связано со значительными математическими трудностями
-	-- Rueppel R. A. Analysis and design of stream ciphers. Berlin: Springer, 1986
-	\theorem{Линейная сложность совпадает с размерностью векторного пространства, порождённого множеством всех функций на выходе фильтрующего генератора.}
-	\proof (Необходимость)
-	Пусть $l$ -- линейная сложность. Тогда $\forall j > l$ функция \[ z_j = z_j(x) = f(\delta^{j-1}(x)) \] над $\mathbb{F}_q$ линейно выражается через первые $l$ функций $z_1, ..., z_l$
-
-	$L = \langle z_1(x), ..., z_l(x) \rangle$ -- линейное пространство на выходе фильтрующего генератора \[ dim L \le l ~~~\blacksquare \]
-	\proof (Достаточность)
-	Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ dim L \ge l \]. Значит, $l = dim L ~~~\blacksquare$
-	\paragraph{Задача} Доказать для каждого $x \in \mathbb{F}_q^n$ равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), j = 2,3,... \]
-	\paragraph{Задача} Найти линейную сложность фильтрующего генератора над $\mathbb{F}_2$.
-	
-	$$
-	n = 3, ~ \delta: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~ f: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~~
-	\begin{aligned}
-		\delta(x_1, x_2, x_3) &= (x_2, x_3, x_1 + x_2),\\
-		f(x_1, x_2, x_3) &= x_1x_2 + x_1x_3 + x_2x_3.
-	\end{aligned}
-	$$
-	
-	Функция обратной связи ЛРС \[ b(x_1, x_2, x_3) = x_1 + x_2. \]
-	\paragraph{Этап 1}
-	\begin{enumerate}
-	\item Найти характеристический многочлен ЛРС
-	\item Установить его примитивность
-	\item Найти период
-	\end{enumerate}
-	\paragraph{Решение}
-	\begin{enumerate}
-	\item Характеристический многочлен ЛРС -- $x^3 + x + 1$. Примитивен над $\mathbb{F}_2.$
-	\item ЛРС максимального периода $2^3 - 1 = 3$
-	\item $7$ -- простое $\implies$ период гаммы фильтрующего генератора равен $7$.
-	\end{enumerate}
-	\paragraph{Этап 2}
-	Находим все функции \[ z_j(x) = f(\delta^{j-1}(x)) \] на периоде фильтрующего генератора, применяя равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), j = 2,3,... \]
-	Получаем
-	
-	$$
-	\begin{aligned}
-		z_1 &= f(x) & &= x_1x_2 + x_1x_3 + x_2x_3,\\
-		z_2 &= z_1(\delta(x)) &= x_2x_3 + x_2(x_1 + x_2) &= x_1x_2 + x_1x_3 + x_2,\\
-		z_3 &= z_2(\delta(x)) &= x_2x_3 + x_2(x_1 + x_2) + x_3 &= x_1x_2 + x_2x_3 + x_2 + x_3,\\
-		z_4 &= z_3(\delta(x)) &= x_2x_3 + x_3(x_1 + x_2) + x_1 + x_2 + x_3 &= x_1x_3 + x_1 + x_2 + x_3,\\
-		z_5 &= z_4(\delta(x)) &= x_2x_3 + x_4(x_1 + x_2) + x_2 + x_3 + x_1 + x_2 &= x_1x_2 + x_1 + x_2 + x_3,\\
-		z_6 &= z_5(\delta(x)) & &= x_2x_3 + x_1 + x_3,\\
-		z_6 &= z_6(\delta(x)) & &= x_1x_3 + x_2x_3 + x_1.
-	\end{aligned}
-	$$
-	
-	Проверить: $z_8 = z_7(\delta(x)) = z_1$
-	\paragraph{Этап 3}
-	Найдём максимальное линейное независимое подмножество \[ {z_1, ..., z_l} \subseteq {z_1, ..., z_7}. \]
-	Используем общий вид квадратичной функции от 3-х переменных:
-	
-	$$
-	\begin{aligned}
-		\phi(0) &= 0,\\
-		\phi(x_1, x_2, x_3) &= c_1x_1 + c_2x_2 + c_3x_1x_2 + c_4x_3 + c_5x_1x_3 + c_6x_2x_3.
-	\end{aligned}
-	$$
-	
-	Требуется найти $l = rank M$. $i$-я строка $M$ есть коэффициенты многочлена Жегалкина функции $z_i(x), i = 1, ..., 6$
-	
-	$$
-	\begin{pmatrix}
-		0 & 0 & 1 & 0 & 1 & 1 \\
-		0 & 1 & 1 & 0 & 1 & 0 \\
-		0 & 1 & 1 & 1 & 0 & 1 \\
-		1 & 1 & 0 & 1 & 1 & 0 \\
-		1 & 1 & 1 & 1 & 0 & 0 \\
-		1 & 0 & 0 & 1 & 0 & 1 \\
-	\end{pmatrix} \sim
-	\begin{pmatrix}
-		1 & 1 & 1 & 1 & 0 & 0 \\
-		1 & 1 & 0 & 1 & 1 & 0 \\
-		1 & 0 & 0 & 1 & 0 & 1 \\
-		0 & 1 & 1 & 1 & 0 & 1 \\
-		0 & 1 & 1 & 0 & 1 & 0 \\
-		0 & 0 & 1 & 0 & 1 & 1 \\
-	\end{pmatrix} \sim
-	\begin{pmatrix}
-		1 & 1 & 1 & 1 & 0 & 0 \\
-		0 & 1 & 0 & 0 & 1 & 1 \\
-		0 & 0 & 1 & 0 & 1 & 0 \\
-		0 & 0 & 0 & 1 & 0 & 0 \\
-		0 & 0 & 0 & 0 & 1 & 1 \\
-		0 & 0 & 0 & 0 & 0 & 1 \\
-	\end{pmatrix}
-	$$
-	
-	\paragraph{Задача} Найти представление $z_7$ через $z_1, ..., z_6$
-
-	\subsection{Сильно равновероятные двоичные функции}
-	Условие сбалансированности двоичной функции: $f: V_n(2) \rightarrow \mathbb{F}_2$:
-	\begin{itemize}
-	\item $\forall \gamma \in \mathbb{F}_2$ уравнение \[ f(x_1, ..., x_n) = \gamma \] имеет ровно $2^{n-1}$ решений относительно $(x_1, ..., x_n) \in \mathbb{F}_2^n$
-	\end{itemize}
-
-	В ряде методов криптоанализа возникает система уравнений:
-
-	$$
-	\begin{aligned}
-		f(x_1, ..., x_n) &= \gamma_1,\\
-		f(x_2, ..., x_{n+1}) &= \gamma_2,\\
-			...\\
-		f(x_1, x_{i+1}, ..., x_{n+i-1}) &= \gamma_i,\\
-		...\\
-		f(x_m, x_{m+1}, ..., x_{n+m-1}) &= \gamma_m.
-	\end{aligned}
-	$$
-	
-	$m \ge 1$, $m$ -- число знаков гаммы
-
-	Выходная $m$-грамма $(\gamma_1, ..., \gamma_m) \in V_m(2)$ содержит в себе следующую информацию:
-	\begin{itemize}
-		\item о функции $f$
-		\item о входе $x_1, ..., x_n$\\ -- Данная информация может являться основой для разработки статистических методов криптоанализа.
-	\end{itemize}
-
-	\definition Функция $f$ называется
-	\begin{itemize}
-		\item $m$-равновероятной, если $\forall (\gamma_1, ..., \gamma_m) \in V_m(2)$ система уравнений (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] имеет ровно $2^{n-1}$ решений относительно неизвестных $x_1, ..., x_{n+m-1}$.
-		\item сильно равновероятной, если $f$ является $m$-равновероятной $\forall m \in \mathbb{N}$.\\ -- Сильная равновероятность $f$ означает равновероятность $\forall m \in \mathbb{N}$ выходной $m$-граммы $(\gamma_1, ..., \gamma_m)$, удовлетворяющей системе (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] и получаемой на случайном равновероятном и независимом входе $x_1, ..., x_{n+m-1}$.
-	\end{itemize}
-
-	\definition Вектор $(\gamma_1, ..., \gamma_m) \in V_m(2)$ называется запретом функции $f: V_n(2) \rightarrow \mathbb{F}_2$, если система (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] не имеет решений.
-
-	\theorem[Сумароков]{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ не имеет запретов $\Leftrightarrow$ она сильно равновероятна.}
-
-	\paragraph{Задачи}
-	\begin{itemize}
-		\item Если функция $f: V_n(2) \rightarrow \mathbb{F}_2$ представима в виде \[ f(x_1, ..., x_n) = g(x_1, ..., x_{n-1}) + x_n \] для некоторой функции $g: V_{n-1}(2) \rightarrow \mathbb{F}_2$, то $f$ сильно равновероятна.
-		\item Если функция $f: V_n(2) \rightarrow \mathbb{F}_2$ представима в виде \[ f(x_1, ..., x_n) = g(x_1, ..., x_{n-1}) + x_n \] для некоторой функции $g: V_{n-1}(2) \rightarrow \mathbb{F}_2$, то $\forall x_1, ..., x_{n-1} \exists ! x_n, ..., x_{n+m-1}$, при которых справедлива система (1).
-		\item Доказать следующие свойства:
-			\begin{itemize}
-			\item Функции \[ f(x_1, ..., x_n) и g(x_1, ..., x_n) = f(x_n, x_{n-1}, ..., x_1) \] одновременно имеют запреты или не имеют
-			\item Функции \[ f(x_1, ..., x_n) и g(x_1, ..., x_n) = f(x_1 \otimes 1, ..., x_n \otimes 1) \] одновременно имеют запреты или не имеют
-			\end{itemize}
-	\end{itemize}
-
-	\statement{Свойство сильной равновероятности инвариантно относительно действия группы $G$, порождённой следующими преобразованиями на $\mathbb{F}_n$:
-		\begin{itemize}
-		\item Инверсия функции
-		\item Инверсия всех переменных функции
-		\item Обратный порядок записи переменных
-		\end{itemize}
-	}
-
-	\proof На дом
-	\theorem{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ сильно равновероятна $\Leftrightarrow$ она $2^{n-1}$-равновероятна.}
-	\theorem{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ $m$-равновероятна $\Leftrightarrow$ \[ \langle f, b \rangle = b_1f(x_1, ..., x_n) + ... + b_mf(x_m, ..., x_{n+m-1}) \] сбалансирована на каждом ненулевом векторе $b = (b_1, ..., b_m) \in V_m(2)$.}
-
-	Построение сильно равновероятных функций из сильно равновероятных от меньшего числа переменных.
-	\theorem{Пусть $h: V_m(2) \rightarrow \mathbb{F}_2, g: V_{n-m+1}(2) \rightarrow \mathbb{F}_2$. Функция $f: V_n(2) \rightarrow \mathbb{F}_2$, \[ f(x_1, ..., x_n) = g(h(x_1, ..., x_m), h(x_2, ..., x_{m+1}), ..., h(x_{n-m+1}, ..., x_n)) \] сильно равновероятна $\Leftrightarrow$ равновероятна каждая из функций $h$, $g$.}
-	\paragraph{Пример}
-	Перебором вероятностей всех 4-грамм получено, что функция $f: V_3(2) \rightarrow \mathbb{F}_2$ не имеет запрета $\Leftrightarrow$ она линейна по крайней переменной.
-
-	Следующие двоичные функции не имеют запрета:
-
-	$$
-	\begin{aligned}
-		f_1(x_1, x_2, x_3, x_4) &= x_1 + x_3 + x_2x_4 + x_1x_2x_4,\\
-		f_2(x_1, x_2, x_3, x_4) &= x_2 + x_1x_3 + x_1x_3x_4,\\
-		f_3(x_1, x_2, x_3, x_4) &= x_2 + x_3 + x_1x_3 + x_3x_4 + x_1x_3x_4, \\
-		f_4(x_1, ..., x_5) &= x_1x_2 + x_2x_4 + x_4x_5 + x_3 + x_4 + x_5.
-	\end{aligned}
-	$$
-
-	\paragraph{Задачи}
-	\begin{enumerate}
-		\item Среди двоичных функций от 2-х переменных найти все сильно равновероятные.
-		\item Дана функция $f: V_3(2) \rightarrow \mathbb{F}_2$, \[ f(x_1, x_2, x_3) = x_1x_2 + x_2x_3 + x_1x_3 + 1 \]
-		\begin{itemize}
-			\item Найти вероятности всех её 2-грамм.
-			\item Является ли она 2-равновероятной?
-			\item Является ли она 3-равновероятной?
-			\item Является ли она сильно равновероятной?
-			\item Какие выходные последовательности для $f$ являются запретными: $(\gamma_1, ..., \gamma_5) \in {(1,1,1,1,1), (0,1,0,0,1), (1,0,1,1,0), (0,1,1,0,1), (1,0,0,1,0)}$ ?
-		\end{itemize}
-	\end{enumerate}
-
-	
-	\seminary{Семинар 6}
-	\section{Линейная структура булевой функции}
-	$$
-	\begin{aligned}
-		f(x_1, ..., x_n), ~ a \not = 0 \in \ZZ_2^n
-	\end{aligned}
-	$$
-	Доказать, что
-	$$
-	f(x) \xor f(x \xor a) = \partialfrac{f}{a}, ~ \deg \partialfrac{f}{a} \le \deg f -1
-	$$
-	
-	\proof
-	$$
-	\begin{aligned}
-		~& f &= \gamma_0 \xor \gamma_1 x_1 \xor ... \xor \gamma_{1...n}x_1 ... x_n \\
-		\xor &~&~ \\
-		~& f(x \xor a) &= \gamma_0 \xor \gamma_1(x_1 \xor a_1) \xor ... \xor \gamma_{1...n} (x_1 \xor a_1) ... (x_n\xor a_n)\\
-		\\
-		~&f \xor f(x \xor a)& \\
-	\end{aligned}
-	$$
-	
-	\paragraph{Пример}
-	$f(x_1, x_2, x_3) = x_1 x_2 \xor x_2 x_3 \xor x_3, ~~ \vec{a} = \overset{a_1}{1}\overset{a_2}{0}\overset{a_3}{0}$
-	
-	\definition Если для $f(x_1, ..., x_n), ~ \vec{a} \ne 0 \in \ZZ_2^n$ на $\forall \vec{x} \in \ZZ_2^n:~ \partialfrac{f}{\vec{a}} = \delta \in \ZZ_2^n$, то пара $(\vec{a}, \delta)$ называется линейной структурой булевой функции $f$.
-	
-	\definition $LS(n)$ --- все булевы функции от n переменных, у которых есть линейная структура, $L(n) \subseteq LS(n)$.
-	
-	
-	\statement{
-	Пусть $f(x_1, ..., x_n)$, тогда
-	
-	$$NL(f) \le 2^{n-1} - \frac{1}{2} 2^{\frac{n}{2}}, ~~ NL(f) = \min d(\angles{u, x}, f)$$
-	
-	$$NLS(f) = \min_{g \in LS(n)} d(f,g)$$
-	
-	$$NLS(f) \le 2^{n-2}, ~~ NLS(f) = 2^{n-2}~ \Leftrightarrow ~\forall a \in \ZZ_2^n,~ a \ne 0,~ \weight{\partialfrac{f}{a}} = 2^{n-1}$$
-	}
-	
-	\lection{Лекция 4}
-        \subsection{Алгебраическая иммунность}
-        % TODO: move to bibliography
-        -- Courtouis N. and Meier W. Algebraic attack on stream
-        ciphers with linear feedback //
-        LNCS. 2003. V. 2656. P. 345-359
-        -- Meier W., Pasalic E., and Carlet C. Algebraic attack and
-        decomposition of Boolean functions //
-        LNCS. 2004. V. 3027. P. 474-491
-
-        \subsection{Применение аннигиляторов}
-        \[ \mathbb{F}_n = { f | f: \mathbb{Z}_2^n \rightarrow
-            \mathbb{Z}_2 }. \]
-        - Для $g \in \mathbb{F}_n$ обозначим $g \equiv 0$, если $g(x)
-        = 0 \forall x \in \mathbb{Z}_2^n$. - $g \not\equiv 0$, если
-        $g(\alpha) = 1$ для некоторого $\alpha \in \mathbb{Z}_2^n$.
-
-        \definition Пусть $f: \mathbb{Z}_2^n \rightarrow
-        \mathbb{Z}_2$. Функция $g \in \mathbb{F}_n$ называется
-        \textit{аннигилятором} функции $f$, если \[ fg \equiv 0
-          \textrm{ и } g \not\equiv 0 \]
-        Равносильно: \[ f(x)g(x) = 0 \forall x \in \mathbb{Z}_2^n
-          \textrm{ и } g \not\equiv 0 \]
-
-        \begin{itemize}
-          \item $Ann(f) = \{ g \in \mathbb{F}_n | fg \equiv 0 \}$ --
-            \textit{множество всех аннигиляторов} функции $f$.
-          \item $supp(f) = \{ x \in \mathbb{Z}_2^n | f(x) = 1 \}$ --
-            \textit{носитель} функции $f$.
-        \end{itemize}
-
-        \paragraph{Пример} Пусть $f(x_1, x_2, x_3) = (01010011)$
-
-        Пусть $\mathfrak{F}_{2, n}$ -- кольцо многочленов из
-        $\mathbb{F}_2[x_1, ..., x_n]$, степень которых по каждой
-        переменной не превосходит 1.
-        \begin{itemize}
-          \item $\mathfrak{F}_{2, n}$ -- множество всех многочленов Жегалкина
-        над $\mathbb{Z}_2$
-        \[ \mathbb{F}_n \cong \mathfrak{F}_{2, n} \]
-
-          \item $||f||$ -- вес (Хемминга функции $f \in \mathbb{F}_n$. --
-            число единиц в её таблице инстинности
-          \end{itemize}
-
-        \theorem{Пусть $f \in \mathbb{F}_n \cong \mathfrak{F}_{2, n}.$
-        Тогда $Ann(f)$ -- главный идеал кольца $\mathfrak{F}_{2, n}$,
-        порождённый функцией $1 + f$: \[ Ann(f) = \{ (1 + f)g | g \in
-            \mathfrak{F}_{2, n} \} = (1 + f),\\
-          |Ann(f)| = 2^{2^n-||f||}
-        \]}
-        \proof Так как $(1 + f) \in Ann(f)$, то $Ann(f) \neq
-        \emptyset$. Пусть $r \in \mathfrak{F}_{2, n}, g \in Ann(f)$,
-        тогда \[ r * g \in Ann(f) \]
-
-        -- $Ann(f)$ -- идеал
-
-        Докажем $Ann(f) = (1 + f)$. Очевидно, что \[ Ann(f) \supseteq
-          (1 + f) \]
-
-        Покажем что $Ann(f) \subseteq (1 + f)$ (в обратную сторону).
-        Пусть $h \in Ann(f)$. \[ fh \equiv 0 \implies (f + 1)h \equiv
-          h \implies h \in (1 + f) \]
-        $Ann(f) \subseteq (1 + f)$.
-
-        Так как \[ Ann(f) \supseteq (1 + f), Ann(f) \subseteq (1 +
-          f), \] то $Ann(f) = (1 + f)$.
-
-        Докажем $|Ann(f)| = 2^{2^n - ||f||}$. \[ g \in Ann(f) \implies
-          \forall x \in supp(f) \implies x \notin supp(g) \]
-        Значения g на множестве $V_n \setminus supp(f)$ выбираются
-        произвольно.
-        Так как \[ |V_n \setminus supp(f)| = 2^n - ||f||, \] то \[
-          Ann(f) = 2^{2^n - ||f||}. \]
-
-        \paragraph{Задача} Если $f \in \mathbb{F}_n$ является
-        равновероятной, то \[|Ann(f)| = 2^{2^{n-1}}. \]
-
-        \definition Порядком алгебраической иммунности функции $f \in
-        \mathbb{F}_n$ называется число \[ Al(f) = min\{deg(g) | g \in
-            \mathbb{F}_n, g \not\equiv 0, f g \equiv 0 \vee (f + 1)g
-            \equiv 0 \} \]
-
-        \paragraph{Задача} Пусть $f \in \mathbb{F}_n$ и $f g \equiv h$
-        для некоторых $g, h \in \mathbb{F}_n$, \[ deg g \leq d, deg f
-          \leq d, g \not\equiv 0. \] Доказать, что $Al(f) \leq d$.
-
-        \statement{Пусть $f \in \mathbb{F}_n$. Тогда $Al(f) \leq \lceil
-        n/2 \rceil$.}
-        \proof Из функций $f, f + 1$ выберем функцию, вес которой не
-        более $2^{n-1}$. Без ограничения общности, пусть $||f|| \leq
-        2^{n-1}$.
-
-        Строим таблицу. \[ supp(f) = {y_1, y_2, ..., y_d}, d =
-          ||f||. \]
-        \begin{itemize}
-          \item каждая строка соответствует $y \in supp(f)$
-          \item столбцы -- всем мономам степеней $0, 1, ..., \lceil
-            \frac{n}{2} \rceil$.
-        \end{itemize}
-        Число всех таких мономов равно \[ \sum_{i = 0}^{\lceil
-            \frac{n}{2} \rceil} \binom{n}{i} > 2^{n-2} \geq ||f|| \]
-        \proof На пересечении строки $y$ и столбца $h$ записывается
-        $h(y)$. Так как столбцов больше чем строк \[ \sum_{i = 0}^{\lceil
-            \frac{n}{2} \rceil} \binom{n}{i} > ||f||, \], то
-        существует их ненулевая линейная комбинация $g$, равная $0
-        \forall x \in V_n$, \[ g(x) = g(x_1, ..., x_n) = \sum_{i = 0}^{\lceil
-            \frac{n}{2} \rceil} \sum_{\substack{J \subseteq \{1, ...,
-              n\}\\i = |J|}}  c_J \prod_{j \in J} x_j = 0 \]
-
-        \begin{itemize}
-          \item $deg(g) \leq \lceil \frac{n}{2} \rceil$
-          \item $g(x) = 0 \forall x \in {y \in V_n | f(y) = 1}$
-          \end{itemize}
-
-        Пусть $\mathbb{A}_n$ -- множество всех аффинных функций от $n$
-        переменных.
-
-        \paragraph{Задача} Доказать что каждый ненулевой аннигилятор
-        $g \in \mathbb{F}_n$ аффинной функции $a \in \mathbb{A}_n,
-        deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
-        -- произвольная функция из $\mathbb{F}, deg(h) = deg(g) - 1$.
-
-        \subsubsection{Алгоритм нахождения множества $Ann_r(f)$}
-        \begin{itemize}
-          \item $Ann_r(f) = \{ g \in \mathbb{F}_n | fg \equiv 0,
-            deg(g) \leq r \}$
-          \item Из доказательства утверждения следует алгоритм
-            нахождения множества $Ann_r(f)$
-        \end{itemize}
-
-        \paragraph{Алгоритм} (нахождение $Ann_r(f)$ методом
-        неопределённых коэффициентов)
-
-        \paragraph{Вход}: $f \in \mathbb{F}_n$
-
-        \begin{enumerate}
-          \item Представим аннигилятор $g \in Ann_r(f)$ в виде
-            многочлена Жегалкина с неопределёнными коэффициентами
-            $c_0, c_{i_1,i_2}, ..., c_{i_1,..., i_r}$:
-            \[ g(x_1, ..., x_n) = c_0 + \sum_{i=1}^n c_ix_i + \sum_{i
-                \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2} +
-              ... + \sum_{i
-                \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2}
-              ... x{i_r} \]
-          \item Выписываем СЛУ. Для всех $(x_1, ..., x_n) \in supp(f)$
-            полагаем $g(x_1, ..., x_n) = 0$
-
-            Получаем однородную систему из $||f||$ линейных уравнений
-            относительно \[ \sum_{i=0}^r \binom{n}{i} \]
-            неизвестных.\\
-            Решением её являются коэффициенты многочленов Жегалкина
-            аннигиляторов из $Ann_r(f)$ и только они.
-        \end{enumerate}
-        \paragraph{Выход}: $Ann_r(f)$
-
-        \paragraph{Задача} Пусть $a \in \mathbb{A}_n, deg(a) =
-        1$. Доказать что для каждого $t \in \mathbb{N}$ справедливо
-        равенство \[ dim Ann_t(a) = \sum_{i=0}^{t-1} \binom{n-1}{i} \]
-
-        \paragraph{Задача}
-        \statement{Пусть  \[ f \in \mathbb{F}_n, a \in \mathbb{A}_n,
-            deg(a) = 1, d = Al(f). \]
-          Тогда \[ d - 1 \leq Al(f + a) \leq d + 1 \]}
-        \proof Пусть $g \in Ann(f) \cup Ann(f + 1), d =
-        deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } fg
-          \not\equiv 0 \].
-        Для каждого из них разбираем: \[ (a + 1)g \equiv 0 \textrm{ и }
-          (a + 1)g \not\equiv 0 \]
-
-        \begin{enumerate}
-        \item Пусть $fg \equiv 0$
-          Рассмотрим два случая: \[ (a + 1)g \equiv 0 \textrm{ и } (a
-            + 1) \not\equiv 0.\]
-          Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
-          \implies$ \[ g \in Ann(f + a + 1). \]
-          Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
-            1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
-            Ann(f + a). \]
-        \item Пусть $fg \equiv 0$. Рассмотрим два случая:
-          \[ (a + 1)g \equiv 0 \textrm{ и } (a
-            + 1) \not\equiv 0. \]
-          Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
-          \implies$ \[ g \in Ann(f + a + 1). \]
-          Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
-            1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
-            Ann(f + a). \]
-        \end{enumerate}
-
-        \subsection{Свойства $Ann_r(f)$}
-        \statement{Пусть $f_1, f_2 \in \mathbb{F}_n, d_i = Al(f_i), i
-          = 1,2,$ \[ g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1) f_1 +
-            x_{n+1}f_2. \] Тогда \[ Al(f) \leq min\{d_1, d_2\} +
-            1. \]}
-        \paragraph{Вывод} Из подфункций с ``низкой'' алгебраической
-        иммунностью нельзя получить функцию с ``высокой''
-        алгебраической иммунностью.
-        \proof Пусть $g \in Ann(f_1) \cup Ann(f_1 + 1)$ и $d_1 =
-        deg(g)$. Если $gf_1 \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
-          0. \]
-        Если $g(f_1 + 1) \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
-          0. \] $\implies$ \[ Al(f_1) \leq d_1 + 1. \]
-        Аналогично, $Al(f_2) \leq d_2 + 1 \implies$ \[ Al(f_2) \leq
-          d_2 + 1 \]
-        $\blacksquare$
-        \paragraph{Следствие} Пусть $n$ чётно, $f_1, f_2 \in
-        \mathbb{F}_n$, \[g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1)f_1
-          + x_{n+1}f_2, \\ Al(g) = 1 + \frac{n}{2}. \]
-        Тогда $Al(f_i) = \frac{n}{2}, i = 1, 2.$
-        \begin{itemize}
-          \item $Al(g) = 1 + \frac{n}{2}.$ (максимально возможная)
-          \item $Al(f_i) = \frac{n}{2}$ (тоже максимально возможная)
-        \end{itemize}
-
-        \statement{Пусть $f \in \mathbb{F}_n, d \in \{1, ..., n\}$ и
-          $d = Al(f)$. Тогда: \[ \sum_{i=0}^{d-1} \binom{n}{i} \leq
-            ||f|| \leq \sum_{i=0}^{n-d} \binom{n}{i} \]}
-        \proof Для доказательства применим метод, используемый для
-        доказательства
-        \begin{itemize}
-          \item \textbf{Утв.} Пусть $f \in \mathbb{F}_n$. Тогда $Al(f)
-              \leq \lceil \frac{n}{2} \rceil$.
-          \item Построим аннигилятор $g$ функции $f$, $deg(g) \leq d -
-            1$.
-            Строим таблицу. \[ supp(f) = \{y_1, y_2, ..., y_d\}, d =
-              ||f||. \]
-          \item Каждая строка соответствует $y \in supp(f)$
-          \item Столбцы -- всем мономам степеней $0, 1, ..., \lceil
-            \frac{n}{2} \rceil$.
-          \item На пересечении строки $y$ и столбца $h$ записывается
-            $h(y)$.
-          \item Число строк в таблице равно $||f||$, число столбцов
-            (мономов) -- $\sum_{i=0}^{d-1} \binom{n}{i}$
-        \end{itemize}
-        Если число столбцов $>$ числа строк, то существует их линейная
-        зависимость $\implies$ существует аннигилятор $g, deg(g) \leq
-        d - 1$\\
-        -- Нижняя оценка доказана $\blacksquare$
-
-        С другой стороны, у функции $f + 1$ не существует
-        аннигиляторов \[ h \in Ann(f), deg(h) \leq d - 1. \]
-        $\implies$ \[ 2^n - ||f|| = ||f + 1|| \geq \sum_{i=0}^{d-1}
-          \binom{n}{i} \]
-        $\implies$ \[ ||f|| \leq 2^n - \sum_{i=0}^{d-1} \binom{n}{i} =
-          \sum_{i=d}^n \binom{n}{i} = \sum_{i=0}^{n-d} \binom{n}{i}
-        \]
-        $\blacksquare$
-
-        \paragraph{Следствие} Если $n$ нечётно, $f \in \mathbb{F}_n,
-        Al(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
-          функция}.
-        \begin{itemize}
-          \item $Al(f) = \frac{n + 1}{2}$ (максимально возможное)
-        \end{itemize}
-
-	\lection{Лекция 5}
-	\section{Автокорреляция и взаимная корреляция}
-        Автокорреляция и взаимная автокорреляция:
-        \begin{itemize}
-          \item применяются для исследования свойств криптографических отображений
-          \item с помощью них характеризуются различные свойства двоичных функций
-          \item выявляются ``нетривиальные'' связи
-        \end{itemize}
-
-        Пусть $f, g \in \mathbb{F}_2(n)$, \[ \mathbb{F}_2(n) = \{ f | f: V_n(2) \rightarrow \{ 0, 1 \} \}. \]
-
-        \definition Функция $\delta_{f,g}: V_n(2) \rightarrow
-        \mathbb{Z}$, \[ \delta_{f,g}(\epsilon) = \sum_{\beta \in
-            V_n(2)} (-1)^{f(\beta) \oplus g(\beta \oplus \epsilon)},
-          \forall \epsilon \in V_n(2) \]
-        называется \textit{функцией взаимной корреляции} или
-        \textit{взаимной корреляцией} (cross-correlation) двоичных
-        функций $f, g$.
-        \definition Функция $\delta_f : V_n(2) \rightarrow
-        \mathbb{Z}$, \[ \delta_{f}(\epsilon) = \delta_{f, f}(\epsilon)
-          = \sum_{\beta \in
-            V_n(2)} (-1)^{f(\beta) \oplus f(\beta \oplus \epsilon)},
-          \forall \epsilon \in V_n(2) \]
-        называется \textit{функцией автокорреляции} или
-        \textit{автокорреляцией} (auto-correlation) двоичной функции
-        $f$.
-
-        \subsection{Коэффициенты Уолша-Адамара 2-го рода}
-        Коэффициентами Уолша-Адамара 2-го рода функции $f \in
-        \mathbb{F}_2(n)$ называется: \[ w_f(\alpha) = \sum_{\beta \in
-            V_n(2)} (-1)^{f(\beta) \oplus (\alpha, \beta)},
-          \alpha \in V_n(2) \]
-        \textit{Обратное преобразование}
-        \[ \sigma_f(x) = (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
-          w_f(\alpha)\omega_{\alpha} \]
-        где
-        \begin{itemize}
-          \item $\langle \alpha, \beta \rangle$ -- скалярное произведение
-            $\alpha, \beta \in V_n(2)$,
-            \item $\omega_{\alpha}(\beta) = (-1)^{\langle \alpha,
-                \beta \rangle}$,
-              т.е. \[ (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
-          w_f(\alpha)(-1)^{\langle \alpha,
-            \beta \rangle} \]
-        \end{itemize}
-
-        \subsection{Взаимная корреляция}
-        Пусть $f, g \in \mathbb{F}_2(n), \epsilon \in V_n(2)$. Тогда:
-        \begin{enumerate}
-          \item $\delta_{f, g}(\epsilon) = \delta_{g, f}(\epsilon)$,
-          \item $\delta_f(\epsilon) = w_{d_{\epsilon}f}(0_n)$, где
-            $d_{\epsilon}f$ -- производная функции $f$ по направлению
-            $\epsilon$,
-          \item $d_{\epsilon}f(x) = f(x \oplus \epsilon) \oplus f(x)$
-        \end{enumerate}
-
-        \textbf{Замечание}
-
-        \begin{itemize}
-        \item Не каждый набор из $2^n$ целых чисел $(y_1, ...,
-          y_{2^n}) \in \mathbb{Z}^{2^n}$ может быть набором значений
-          автокорреляции некоторой двоичной функции
-        \item Для заданного набора $(y_1, ..., y_{2^n}) \in
-          \mathbb{Z}^{2^n}$ установить язвляется ли он набором
-          значений автокорреляции двоичной функции может оказаться
-          сложно.
-        \end{itemize}
-
-        \subsection{Матричная форма преобразования Уолша-Адамара}
-        \textbf{Свойства}
-
-        \begin{itemize}
-        \item ассоциативности \[ (a \otimes b) \otimes d = a \otimes (b \otimes
-            d) \]
-        \item левой и правой дистрибутивности
-          \[
-            \begin{aligned}
-              (a + b) \otimes d = a \otimes d + b \otimes d,\\
-              d \otimes (a + b) = d \otimes a + d \otimes b
-            \end{aligned}
-          \]
-        \end{itemize}
-
-        \subsection{Матрица Адамара}
-        Пусть $n \in \mathbb{N}$
-
-        \definition \textit{Матрицей Адамара типа Сильвестра}
-        называется квадратная ($2^n \times 2^n$)-матрица $H_n$,
-        заданная условием \[ H_1 = \begin{pmatrix}
-          1 & 1 \\
-          1 & -1
-        \end{pmatrix} \]
-        \[ H_n = H_1 \otimes H_{n-1} при n \ge 2 \],
-        \begin{itemize}
-        \item $\otimes$ -- тензорное произведение матриц
-        \item ``Важное'' свойство матрицы Адамара: \[ H_n = H_n^t =
-            2^nH_n^{-1} \]
-        \end{itemize}
-        Отсюда вытекает: \[ H_n H_n^t = H_n H_n = 2^n E_n \]
-        где $E_n$ -- единичная $(2^n \times 2^n)$-матрица.
-
-        \begin{itemize}
-        \item элементы матрицы $H_n = [[h_{\alpha, beta}]]$ заданы
-          равенством \[ h_{\alpha, beta} = (-1)^{\langle \alpha,
-              \beta \rangle} для \alpha, beta \in V_n(2), \]
-          -- вектору $\alpha = (\alpha_1, ..., \alpha_n)$
-          соответствует число $\alpha_1 2^{n-1} + \alpha_2 2^{n-2} +
-          ... + \alpha_n$.
-        \item $H_n$ -- матрица значений характеров элементарной
-          2-абелевой группы
-        \end{itemize}
-
-        \subsection{Совершенно некоррелированные функции}
-
-        \definition Функции $f, g \in \mathbb{F}_2(n)$ называются:
-        \begin{itemize}
-        \item совершенно некоррелированными (perfectly uncorrelated),
-          если \[ \delta_{f, g}(\epsilon) = 0 \forall \epsilon \in
-            V_n(2). \]
-        \item некоррелированными порядка $k, k \in \{ 0, ..., n \}$
-          (uncorrelated of degree $k$), если \[ \delta_{f, g}(\epsilon) = 0 \forall \epsilon \in
-            V_n(2), \|\epsilon\| \le k. \]
-        \end{itemize}
-
-        \subsection{Теорема о взаимной корреляции}
-        \theorem[о взаимной корреляции]{Пусть $f, g \in
-          \mathbb{F}_2(n)$. Тогда \[ (\delta_{f, g}(0), ...,
-            \delta_{f, g}(2^n - 1))H_n = (w_f(0)w_g(0), ..., w_f(2^n -
-            1)w_g(2^n - 1)) \]
-        }
-        \proof
-        \[ \sum_{\alpha \in V_n(2)} \delta_{f, g}(\alpha)(-1)^{\langle
-            \alpha, \beta \rangle} = \sum_{\alpha \in V_n(2)}
-          \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta) \oplus g(\Theta \oplus
-            \alpha)} (-1)^{\langle \alpha, \beta \rangle} =
-          \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
-            V_n(2)} (-1)^{g(\Theta \oplus \alpha) \oplus \langle \alpha,
-            \beta \rangle} \]
-        Сделаем замену $\tau = \Theta \oplus \alpha$
-        \[ \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
-            V_n(2)} (-1)^{g(\tau) \oplus \langle \tau \oplus \Theta,
-            \beta \rangle} = \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)
-            \oplus \langle \tau \oplus \Theta,
-            \beta \rangle} \sum_{\alpha \in
-            V_n(2)} (-1)^{g(\tau) \oplus \langle \tau,
-            \beta \rangle} = w_f(\beta) w_g(\beta) \] $\blacksquare$
-
-        \textbf{Следствие 2} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
-          (\delta_f(0), ..., \delta_f(2^n - 1)) H_n = (w_f(0)^2, ...,
-          w_f(2^n - 1)^2) \]
-        \proof следует из теоремы при $f = g$ $\blacksquare$
-
-        \textbf{Следствие 3} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
-          2^n(\delta_{f, g}(0), ..., \delta_{f, g}(2^n - 1)) =
-          (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1)) H_n \]
-        \proof следует из теоремы и равенства $H_n H_n = 2^n E_n$
-        $\blacksquare$
-
-        Из следствия вытекает равенство Парсеваля, \[ \sum_{\alpha \in
-            V_n(2)} w_f^2(\alpha) = 2^n \delta_f(0) = 2^{2n} \]
-
-        \paragraph{Задача}
-        Пусть $h \in \mathbb{F}_2(n+m)$. \[ h(x, y) = f(x) \oplus g(y),
-          x \in V_n(2), y \in V_m(2) \] для некоторых $f \in
-        \mathbb{F}_2(m)$. Тогда \[ \delta_h(\alpha, \beta) =
-          \delta_f(\alpha)\delta_g(\beta) \forall \alpha \in V_n(2),
-          \beta \in V_m(2) \].
-
-        \subsection{Теорема о свёртке}
-        \textbf{Следствие 4 (теорема о свёртке)}. Пусть $f,g,h \in
-        \mathbb{F}_2(n)$, \[ h(x) = f(x) \oplus g(x) \forall x \in
-          V_n(2) \]
-        Тогда \[ w_h(\beta) = 2^{-n} \sum_{\alpha \in V_n(2)}
-          w_f(\alpha) w_f(\alpha \oplus \beta) \forall \beta \in
-          V_n(2)\]
-        \proof Зафиксируем произвольное $\beta \in V_n(2)$ и положим \[
-          g_{\beta}(x) = g(x) \oplus \langle \beta, x \rangle \]
-        Тогда \[w_{g_{\beta}}(\alpha) = w_g(\alpha \oplus
-          \beta). \] \[w_h(\alpha) = \delta_{f, g_{\beta}}(0) \]
-        для всех $\alpha \in V_n(2)$
-
-        Из следствия 3 вытекает \[ w_h(\alpha) = 2^{-n} \sum_{\alpha
-            \in V_n(2)} w_f(\alpha)w_{g_{\beta}}(\alpha) = 2^{-n}
-          \sum_{\alpha in V_n(2)} w_f(\alpha) w_g(\alpha \oplus
-          \beta) \]
-
-        \subsection{Коэффициенты Уолша-Адамара и криптографические
-          свойства}
-        -- Многие важные криптографические свойства функции $f$
-        зависят от числа ненулевых коэффициентов Уолша-Адамара
-
-        Для $f \in \mathbb{F}_2(n)$ положим
-        \[
-          \begin{aligned}
-            W_f^{(0)} = \{ \beta \in V_n(2) | w_f(\beta) = 0 \},\\
-            W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0 \},\\
-            \delta_f^{(1)} = \{ beta \in V_n(2) | \delta_f(\beta) \ne
-            0 \}.
-          \end{aligned}
-        \]
-
-        \definition Функции $f, g \in \mathbb{F}_2(n)$ имеют
-        \textit{непересекающиеся спектры}, если \[ W_f^{(1)} \cap
-          W_g^{(1)} = \varnothing \]
-
-        \statement{Функции $f, g \in \mathbb{F}_2(n)$ имеют
-          непересекающиеся спектры $\Leftrightarrow$ $f, g$ совершенно
-          некоррелированные}
-
-        \lemme{Пусть $f, g \in \mathbb{F}_2(n)$. Тогда \[ \sum_{\alpha
-              \in V_n(2)} \delta_{f, g}^2(\alpha) \le 2^{3n} \]}
-
-        \proof Положим
-        \[
-          \begin{aligned}
-            \delta_{f, g} = (\delta_{f, g}(0), ..., \delta_{f, g}(2^n
-            - 1)),\\
-            W_{f, g} = (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1))
-          \end{aligned}
-        \]
-
-        Применяя теорему о взаимной корреляции, имеем \[ \langle W_{f,
-            g}, W_{f, g} \rangle = \langle \delta_{f, g} H_n,
-          \delta_{f, g} H_n \rangle = \langle \delta_{f, g} H_n H_n^T,
-          \delta_{f, g} \rangle = 2^n \langle \delta_{f, g},
-          \delta_{f, g} \rangle. \]
-        \[ 2^n \sum_{\alpha \in V_n(2)} \delta_{f, g}^2(\alpha) =
-          \sum_{\alpha \in V_n(2)} w_f(\alpha) w_g(\alpha) \le
-          (\sum_{\alpha \in V_n(2)} w_f^2(\alpha))(\sum_{\alpha \in
-            V_n(2)} w_g^2(\alpha)) = 2^{2n} * 2^{2n} \]
-        Отсюда следует неравенство $\blacksquare$
-
-        \statement{Для каждой $f \in \mathbb{F}_2(n)$ справедливо
-          неравенство \[ |\delta_f^{(1)}| * |W_f^{(1)}| \ge 2^n \]
-          где \[ W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0
-            \} \] }
-
-        \textbf{Замечания}
-        \begin{itemize}
-        \item для некоторых приложений нужно большое число ненулевых
-          коэффициентов Уолша-Адамара
-        \item для других приложений нужно большое число нулей функции
-          автокорреляции
-        \end{itemize}
-        $\implies$
-        \begin{itemize}
-        \item из неравенства следует, что одновременно обеспечить оба
-          требования невозможно
-        \item если параметр ``хороший'', то другой ``плохой''. Нельзя
-          сделать обе характеристики хорошими
-        \end{itemize}
-
-        \subsection{Энтропия}
-
-        Пусть $\xi$ -- дискретная случайная величина, заданная на
-        конечном множестве $X = \{x_1, ..., x_n\}$
-        \begin{itemize}
-        \item $\mathbb{R}^+ = \{x \in \mathbb{R} | x > 0\}$,
-        \item $\alpha \in \mathbb{R}^+$
-        \end{itemize}
-        \definition Мерой (логарифмической) неопределённости события
-        $\{\xi = x\}$ при $x \in X$ называется \[ I(\xi = x) =
-          -\log_{\alpha} P\{\xi = x\} \]
-
-        \begin{itemize}
-        \item основание логарифма $\alpha \in \mathbb{R}^+$
-          -- зависит от выбора шкалы измерения информации (двоичной,
-          натуральной и т.д.)
-        \item $I$ является случайной величиной, принимающей значение
-          $I(\xi = x)$ с вероятностью $P\{\xi = x\}$
-        \end{itemize}
-        \begin{itemize}
-        \item Пусть $\eta$ -- случайная величина, заданная на
-          множестве $Y$,
-        \item $P\{\xi = x, \eta = y\}$ -- совместное распределение
-          пары $(\xi, \eta)$ случайных величин на $X \times Y, (x, y)
-          \in X \times Y$.
-          \[ \sum_{y \in Y} P\{\xi = x, \eta = y\} = P\{\xi = x\} \]
-          \[ \sum_{x \in X} P\{\xi = x, \eta = y\} = P\{\eta = y\} \]
-        \end{itemize}
-
-        \definition Случайные величины $\xi, \eta$ называются
-        независимыми, если \[ P\{\xi = x, \eta = y\} = P\{\xi =
-          x,\}P\{\eta = y\} \] для каждой $(x, y) \in X \times Y$
-
-        \subsection{Условная энтропия}
-        \begin{itemize}
-        \item Условная энтропия случайной величины $\eta$ при условии
-          выполнения события $\{ \xi = x \}$: \[
-            \begin{aligned}
-              H(\eta | \xi = x) &= -
-            \sum_{y \in Y} P\{\eta = y | \xi = x \} \log_a P\{\eta = y
-                                  | \xi = x \} \\
-                                &= - \sum_{x \in X} \sum_{y \in Y} P\{ \xi =
-              x, \eta = y \} \log_a P\{ \eta = y \}
-            \end{aligned}
-              \] %TODO: INCOMPLETE
-        \end{itemize}
-        \subsection{Взаимная информация}
-        \definition Взаимная информация $I(\xi, \eta)$ случайных
-        величин $\xi, \eta$ задаётся: \[ I(\xi, \eta) = \sum_{x \in X}
-          \sum_{y \in Y} P\{ \xi = x, \eta = y \} \log_a \frac{P\{\eta
-            = y, \xi = x\}}{P\{\eta = y\}P\{\xi = x\}} \]
-
-        \lemme{$I(\xi, \eta) = 0 \Leftrightarrow \xi, \eta$
-          независимые случайные величины}
-
-        \section{Корреляционная имунность и устойчивость двоичных
-          функций}
-
-        \begin{itemize}
-        \item \textit{Корреляционная имунность} -- мера
-          противодействия корреляционному методу анализа
-        \item Отсутствие какой-нибудь информации о некоторых значениях
-          функции от ``некоторого'' подмножества её аргументов.
-          \begin{itemize}
-          \item если такая информация есть -- то её можно применять для
-          нахождения ключа
-          \item подход зависит от выбранной вероятностной модели
-          \end{itemize}
-        \end{itemize}
-
-        \subsection{Корреляционная иммунность}
-        \begin{itemize}
-        \item $\mathbb{F}_2(n) = \{f | f: V_n(2) \rightarrow \{0,
-          1\}\}$
-        \item Пусть $f: V_n(2) \rightarrow \{0, 1\}$. $\xi_1, ...,
-          \xi_n$ -- независимые двоичные одинаково распределённые
-          случайные величины, \[ P\{\xi_i = 0\} = P\{\xi_i = 1\} =
-            \frac{1}{2}, i = 1, ..., n \]
-        \item Двоичная случайная величина \[ \theta = f(\xi_1, ...,
-            \xi_n) \] имеет распределение \[ P\{\theta = 1\} = \|f\| *
-            2^{-n}, P\{\theta = 0\} = 1 - \|f\| * 2^{-n} \]
-        \end{itemize}
-
-        \definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
-        называется корреляционно-иммунной порядка $m \in \{1, ..,
-        n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
-        i_1 < i_2 < ... < i_m \le m$ справедливо условие \[
-          I(\xi^{(i_1, i_2, ..., i_m)}, \theta) = 0 \], где $\xi^{(i)}
-        = \xi^{(i_1, i_2, ..., i_m)} = (\xi_{i_1}, ..., \xi_{i_m})$
-
-        \definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
-        называется корреляционно-иммунной порядка $m \in \{1, ..,
-        n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
-        i_1 < i_2 < ... < i_m \le m$ случайные величины $\xi_{i_1}, ...,
-        \xi_{i_m}$ и [DATA EXPUNGED] % TODO: ??
-
-        \subsection{Критерий корреляционной иммунности}
-
-        $Cor_n^{(m)}$
-
-        \statement Функция $f \in \mathbb{F}_2(n)$ является
-        корреляционно-иммунной порядка $m \in \{1, ..., n - 1 \}
-        \Leftrightarrow$ для каждого набора \[ i = (i_1, i_2, ...,
-          i_m) \in I_n^{(m)} и вектора \alpha = (\alpha_1, \alpha_2,
-          ..., \alpha_m) \in V_m(2)\]
-        справедливо \[ \|f_{i_1, ..., i_m}^{(\alpha_1, ...,
-            \alpha_m)}\| = 2^{-m} * \|f\| \]
-        \[ I_n^{(m)} = \{(i_1, ..., i_m) \in \{1, ..., n\}^m | 1 \le
-          i_1 < i_2 < ... < i_m \le n \]
-        -- $I_n^{(m)}$ -- множество всех строго упорядоченных наборов
-        из $m$ элементов из множества n
-
-        \proof (Необходимость)\\
-        Пусть $f \in Cor_n^{(m)}$. Из леммы следует что для каждого
-        набора $i \in I_n^{(m)}$ заданы случайные величины \[
-          \xi^{(i)} = (\xi_{i_1}, ..., \xi_{i_m}) и \theta = f(\xi_1, ...,
-          \xi_n) \]
-        Значит для каждых $\alpha \in V_m(2), \beta \in \{ 0, 1 \}$
-        имеем \[ P\{\xi^{(i)} = \alpha|\theta = \beta\} = \frac{
-            P\{\xi^{(i)} = \alpha, \theta = \beta\}}{ P\{\theta =
-            \beta\}} = P\{ \xi^{(i)} = \alpha \} \]
-
-        Випишем вероятности для $\beta = 1$.
-
-        \[
-          \begin{aligned}
-            P\{\theta = 1\} = 2^{-n}\|f\|,\\
-            P\{\xi^{(i)} = \alpha\} = 2^{-m}
-          \end{aligned}
-        \]
-
-        \proof (Достаточность)\\
-        Пусть на всех $i \in I_n^{(m)}$ и $\alpha \in V_m(2)$
-        выполняется \[ \|f_i^{(\alpha)}\| = 2^{-m}\|f\| \]
-        Проведя рассуждения в обратном порядке докажем равенство при
-        $\theta = 1$
-        \[
-          \begin{aligned}
-            P\{\xi^{(i)} = \alpha | \theta = 0\} &= \frac{ P\{\xi^{(i)}
-            = \alpha, \theta = 0\}}{ P\{\theta = 0\}} = \frac{
-            P\{\xi^{(i)} = \alpha\}}{1 - P\{\theta = 1\}} - \frac{
-            p\{\xi^{(i)} = \alpha, \theta = 1\}}{1 - P\{\theta = 1\}}
-            \\
-            &= \frac{2^{-m} - 2^{-n} \|f_i^{(\alpha)}\|}{1 - 2^{-n}\|f\|}
-          = \frac{2^{-m} - 2^{-n-m} \|f\|}{1 - 2^{-n}\|f\|} = 2^{-m} =
-            P\{\xi^{(i)} = \alpha\}
-          \end{aligned}
-        \]
-        $\implies$
-        [DATA EXPUNGED]
-        % TODO: implies what? didn't have time to even take a pic
-
-        \subsection{Корреляционная иммунность и коэффициенты
-          Уолша-Адамара}
-        -- Характеризация двоичной корреляционно-иммунной функции
-        через коэффициенты Уолша-Адамара.
-
-        Для $\alpha \in V_n(2), \alpha = (\alpha_1, \alpha_2, ...,
-        \alpha_n)$ положим \[ supp(\alpha) = \{j \in \{1, ..., n\} |
-          \alpha_j = 1 \} \]
-
-        \lection{Лекция 6}
-	
-	\lection{Лекция 7}
-	
-	\lection{Лекция 8}
-	
+\statement{$$
+(-1)^{f(x)} = \frac{1}{2^n} \sum_{u \in \ZZ_2^n} \hat{F}_f(u) \cdot (-1)^{\angles{u,x}}
+$$}
+\proof
+$$\begin{aligned}
+\frac{1}{2^n} \sum_{u \in \ZZ_2^n} \hat{F}_f(u) \cdot (-1)^{\angles{u,x}} &=
+\frac{1}{2^n} \sum_{u \in \ZZ_2^n} \left[ \sum_{y \in \ZZ_2^n}(-1)^{\angles{y,u} \xor f(y)} \right] \cdot (-1)^{\angles{u,x}} = \\
+&= \frac{1}{2^n}  \sum_{y \in \ZZ_2^n} \sum_{u \in \ZZ_2^n} (-1)^{\angles{y,u}} \cdot (-1)^{f(y)} \cdot (-1)^{\angles{u,x}} = \\ &=
+\frac{1}{2^n}  \sum_{y \in \ZZ_2^n} \cdot (-1)^{f(y)} \sum_{u \in \ZZ_2^n} (-1)^{\angles{y,u}} \cdot (-1)^{\angles{u,x}} = \\
+&= \frac{1}{2^n}  \sum_{y \in \ZZ_2^n} \cdot (-1)^{f(y)} \sum_{u \in \ZZ_2^n} (-1)^{\angles{y,u} \xor \angles{u,x}} = \\ &=
+\frac{1}{2^n} \sum_{y \in \ZZ_2^n} \cdot (-1)^{f(y)} \sum_{u \in \ZZ_2^n} (-1)^{\angles{u, x \xor y}} = \\
+&= \frac{1}{2^n} \cdot (-1)^{f(x)} \cdot 2^n + \frac{1}{2^n}  \sum_{\scriptsize \stack{y \in \ZZ_2^n\\y\ne x}} (-1)^{f(y)} \underbrace{\sum_{u \in \ZZ_2^n} (-1)^{\angles{u, x \xor y}}}_{=0} = \\ &= (-1)^{f(x)}
+\end{aligned}
+$$
+
+%   \seminary{Семинар 2}
+\subsection{Теорема Руппеля}
+
+$$
+P\{f(x) = \angles{u,x}\} = \frac{2^n - d(f(x), \angles{u,x})}{2^n} = 1 - \frac{d(f(x), \angles{u,x})}{2^n} = 1 - \frac{2^n - \hat{F}_f (u)}{2^{n+1}} =
+$$
+$$
+= \frac{1}{2} + \frac{\hat{F}_f (u)}{2^{n+1}} =
+\vline \begin{matrix}
+\text{Обозначим} \\
+\frac{\hat{F}_f(u)}{2^n} = \hat{S}_f(u)
+\end{matrix} \vline
+=  \frac{1}{2} + \frac{\hat{S}_f (u)}{2}
+$$
+
+$$
+P\{f(x) = \angles{u, x} \oplus 1\} = \frac{1}{2} - \frac{\hat{S}_f (u)}{2}
+$$
+
+
+\definition
+Линейный статистический аналог булевой функции $f(x)$ --- это такая линейная функция $\angles{u,x}$, что расстояние $d(f(x), \angles{u,x})$ является минимальным.
+
+\theorem[Руппеля]{Пусть $u : |\hat{F}_f (n)|$ --- $\max$, тогда $\angles{u,x}\oplus c$ --- линейный статаналог для $f(x)$. Причём
+$$
+\left\{
+\begin{aligned}
+c & = 0, \text{ если } \hat{F}_f (u) > 0, \\
+c & = 1, \text{ если } \hat{F}_f (u) < 0.
+\end{aligned}
+\right.
+$$}
+
+
+%   \seminary{Семинар 3}
+%   \hl{Семинар про бент-функции}
+
+%   \seminary{Семинар 4}
+\subsection{Преобразование Мёбиуса}
+\paragraph{Пример и утверждение}
+$f = 10011101$
+$$
+f(\vec{x}= [x_1, x_2, x_3]) = a_0 \xor a_1 x_1 \xor a_2 x_2 \xor a_3 x_3 \xor a_{12} x_1 x_2 \xor a_{13} x_1 x_3 \xor a_{23} x_2 x_3 \xor a_{123} x_1 x_2 x_3
+$$
+$$\begin{aligned}
+a_0 &= 1 = f(000) \\
+a_3 &= 0 \xor a_0 = f(001) \xor a_0 = f(001) \xor f(000) \\
+a_2  = a_{010} &= f(010) \xor f(000) \\
+a_{23} =  a_{011} & = f(011) \xor f(010) \xor f(001) \xor f(000) \\
+...\\
+a_{23} x_2 x_3 &: ~~ x_2 x_3 \Rightarrow x_1^0 x_2^1 x_3^1 \Rightarrow \vec{\sigma} = (011) \\
+\Rightarrow & a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha})
+\end{aligned}
+$$
+\proof
+\begin{enumerate}
+\item База индукции: $a_0 \Rightarrow \vec{\sigma} = \vec{0} \Rightarrow x_1^0 ... x_n^0, ~ a_{\vec{\sigma}} = f(\vec{\sigma}) = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\alpha}) $. Для $a_1 = a_{10...0} = f(10...0)\xor a_0$. Аналогично для $a_2,...,a_n$.
+
+\item Пусть для $\forall \vec{\sigma} \in V_n(2), \weight{\vec{\sigma}} = k: ~~ a_{\vec{\sigma}} = \bigoplus_{\vec{\alpha} \le \vec{\sigma}} f(\vec{\sigma})$.
+
+\hl{На индукционном переходе мы застряли и взялись за другую задачу. Поэтому текст ниже должен расцениваться как потенциально неверный, ибо был дописан из собственных размышлений автора.}
+
+\item Тогда для $\vec{\nu} \in V_n(2), \weight{\vec{\nu}} = k+1$:
+%Пусть $\vec{\mu}: ~ d(\nu, \mu) = 1, \weight{\mu} = k$, $i$ --- номер разряда, где $\mu_i = 0, ~ \nu_i = 1$.
+$$
+f(x_1, ..., x_n) = a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ... \xor a_{1...n} x_1 ... x_n
+$$
+
+Выразим $a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}}$, которое соответствует вектору $\vec{\nu}$. Получим следующее:
+$$
+a_{i_1...i_{k+1}} x_{i_1} ... x_{i_{k+1}} =  f(x_1, ..., x_n) \xor a_0 \xor a_1 x_1 \xor ... \xor a_n x_n \xor a_{12} x_1 x_2 \xor ... \xor a_{n-1, n} x_{n-1} x_n \xor ...
+$$
+
+Чтобы получить значение коэффициента подставим в $ x_{i_1} ... x_{i_{k+1}}$ единицы, а в остальные переменные нули. Тогда в правой части останутся конъюнкции содержавшие только $ x_{i_1} ... x_{i_{k+1}}$, коэффициент $a_0$ и функция от вектора $\vec{\nu}$.
+$$
+a_{i_1...i_{k+1}} =  f(x_1, ..., x_n) \xor (a_{i_2 ... i_{k+1}} \xor a_{i_1 i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_k}) \xor (a_{i_3 ... i_{k+1}} \xor ... \xor a_{i_1 ... i_{k-1}}) \xor ... \xor a_0
+$$
+
+Заменим обозначения на бинарные вектора (как в примере выше) и свернём суммирование в скобках:
+$$
+a_{\vec{\nu}} = f(\vec{\nu}) \xor
+\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+        \weight{\vec{\sigma}} = k}} } a_{\vec{\sigma}} \xor
+\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+        \weight{\vec{\sigma}} = k-1}} } a_{\vec{\sigma}} \xor
+...
+\xor
+\bigoplus_{\vec{\sigma}: {\tiny \stack{\vec{\nu} > \vec{\sigma} \\
+        \weight{\vec{\sigma}} = 1}} } a_{\vec{\sigma}} \xor
+a_{\vec{0}}
+$$
+
+
+\end{enumerate}
+
+\pagebreak
+\lection{Лекция 2}
+\subsection{Преобразование Фурье (продолжение)}
+
+\paragraph{Задача}
+$\weight{\vec{\alpha} \oplus \vec{\beta}} = \weight{\vec{\alpha}} + \weight{\vec{\beta}} - 2 \weight{\vec{\alpha} \cdot \vec{\beta}}$
+
+\statement{Пусть $f \in \mathbb{F}_2(n)$. Тогда $$\tilde{w}_f (\vec{\alpha}) = \left\{ \begin{aligned}
+    &\weight{f}, ~\iftext~ \vec{\alpha} = \vec{0} \\
+    &\weight{f(\vec{x}) \oplus \angles{\vec{\alpha}, \vec{x}}} - 2^{n-1}, ~\iftext~ \vec{\alpha} \ne \vec{0}
+\end{aligned} \right.$$}
+
+\proof
+Пусть
+$$
+\begin{aligned}
+\Omega_0 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 0\}, \\
+\Omega_1 &= \{\vec{\beta} \in V_n(2) ~|~ f(\vec{\beta}) = 1 \text{ и } \angles{\vec{\alpha}, \vec{\beta}} = 1\}.
+\end{aligned}
+$$
+
+Тогда
+$$
+\tilde{w}_f (\vec{\alpha}) = \sum_{\vec{\beta} \in V_n(2)} f(\vec{\beta}) (-1)^{\angles{\vec{\alpha}, \vec{\beta}}} = \left(\sum_{\vec{\beta} \in \Omega_0} 1 - \sum_{\vec{\beta} \in \Omega_1} \right)
+$$
+Необходимо найти мощности $\Omega_0, \Omega_1$. Из их определения
+$$\begin{aligned}
+|\Omega_0| &= \weight{f(\vec{x}) \cdot (\angles{\vec{\alpha},\vec{x}} \oplus 1)} =
+\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \oplus f(\vec{x})} = \\
+& =\weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}} + \weight{f(\vec{x})} - 2 \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}} \cdot f(\vec{x})} = \\
+& = \weight{f(\vec{x})} - \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}},
+\end{aligned}
+$$
+$$
+|\Omega_1| = \weight{f(\vec{x}) \cdot \angles{\vec{\alpha}, \vec{x}}}.
+$$
+
+Отсюда следует, что
+$$
+\tilde{w}_f (\vec\alpha) = (\weight{f(\vecx)} - 2\weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}) = \underbrace{\weight{f(\vecx)} + \weight{\angles{\vec\alpha, \vecx}} - 2 \weight{f(\vecx) \cdot \angles{\vec\alpha, \vecx}}}_{=\weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}} - \weight{\angles{\vec\alpha, \vecx}}
+$$
+
+Тогда возможны два случая:
+\begin{itemize}
+\item Если $\vec\alpha = \vec0 ~~\Rightarrow~~ \weight{\angles{\vec\alpha, \vecx}} = \vec0 ~~\Rightarrow~~ \tilde{w}_f(\vec\alpha) = \weight{f}$
+\item Если $\vec\alpha \ne \vec0$, то из равновероятности $\angles{\vec\alpha, \vecx}$
+$\tilde{w}_f(\vec\alpha) = \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}} - 2^{n-1}$. $\blacksquare$
+\end{itemize}
+
+\subsection{Коэффициенты Уолша-Адамара}
+\definition Лекционное обозначение действительнозначного аналога булевой функции
+$$
+\delta_f (x)= (-1)^{f(x)}, \text{ для } f:\ZZ_2^n \rightarrow \ZZ_2.
+$$
+
+Коэффициенты Фурье для $\delta_f$ называются также коэффициентами Уолша-Адамара второго рода:
+$$
+w_f(\vec\alpha) = \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+$$
+
+\hrule
+\paragraph{Замечание}
+В литературе встречается и с коэффициентом нормировки
+$$
+w_f(\vec\alpha) = 2^{-n} \sum_{\vec\beta \in V_n(2)} (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}}.
+$$
+$$
+\Rightarrow ~~ \delta_f (\vecx) = \sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) \omega_{\vec\alpha}.
+$$
+\hrule
+
+\paragraph{Задача} Пусть $f, g \in \FF_2(n)$. Доказать:
+\begin{itemize}
+\item $\delta_{f \xor g} = \delta_f \delta_g$;
+\item $2 \delta_{f g} = 1 + \delta_f + \delta_g - \delta_f \delta_g$.
+\end{itemize}
+Позсказка: $\delta_f(\vecx) = 1 - 2f(\vecx)$.
+
+\statement{
+Пусть $f \in \FF_2(n)$. Тогда
+$$
+w_f(\vec\alpha) = 2^n - 2 \weight{f(\vecx) \xor \angles{\vec\alpha, \vecx}}
+$$
+}
+\proof Д/З $~\cap\_\cap$
+
+\corollary{
+    Пусть $f \in \FF_2(n)$. Тогда
+    \begin{itemize}
+    \item если $\vec\alpha \ne \vec0$ $w_f(\vec\alpha) = -2 \tilde{w}_f (\vec\alpha)$;
+    \item если $\vec\alpha = \vec0$ $w_f(\vec\alpha) = 2^n -2 \tilde{w}_f (\vec\alpha)$.
+    \end{itemize}
+}
+
+\statement{
+Пусть $f \in \FF_2(n)$. Тогда
+$$
+    \sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) = 2^n (-1)^{f(0)}.
+$$
+}
+
+\proof
+$$
+\begin{aligned}
+\sum_{\vec\alpha \in V_n(2)} w_f(\vec\alpha) &=
+    \sum_{\vec{\alpha} \in V_n(2)} \sum_{\vec{\beta} \in V_n(2)}
+    (-1)^{f(\vec\beta)\xor \angles{\vec\alpha, \vec\beta}} =
+    \sum_{\vec{\beta} \in V_n(2)} (-1)^{f(\vec\beta)}
+    \sum_{\vec{\alpha} \in V_n(2)} (-1)^{\angles{\vec\alpha,
+                                                 \vec\beta}}\\
+                                        &= \sum_{\vec{\beta} \in V_n(2)}
+    (-1)^{f(\vec\beta)} 2^n \ind{\vec\beta = \vec0} = 2^n
+    (-1)^{f(0)}.
+\end{aligned}
+~~~ \blacksquare
+$$
+
+\theorem[Равенство Парсеваля]{Пусть $f \in \FF_2(n)$. Тогда
+$$
+\sum_{\vec{\alpha} \in V_n(2)} \left(w_f(\vec{\alpha})\right)^2 = 2^{2n}.
+$$
+}
+
+\theorem[Соотношение ортогональности]{
+$$
+\sum_{\vec{\alpha} \in V_n(2)} w_f(\vec\alpha) w_f (\vec\alpha \xor \vec\beta) = 2^{2n} \cdot \ind{\vec\beta = \vec0}.
+$$
+}
+
+\statement{
+Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y\in V_m(2)$. Тогда
+$$
+\forall \vec\alpha \in V_n(2), \forall \vec\beta \in V_m(2): ~~ w_h(\vec\alpha, \vec\beta) = w_f (\vec\alpha) w_g (\vec\beta).
+$$
+}
+
+\subsection{Расстояние Хемминга}
+\definition
+Расстояние (Хемминга) $\hamming(f, g)$ между булевыми функциями $f,g \in \FF_2(n)$ есть $$
+\hamming(f,g) = |\{\vec\alpha \in V_n(2): ~ f(\vec\alpha) \ne g(\vec\alpha)\}|,
+$$$$\Downarrow$$$$
+\hamming (f,g) = \weight{f\xor g}.
+$$
+
+\definition Расстояние $\hamming (f,g)$ от функции $f \in \FF_2(n)$ до множества $C \subseteq \FF_2(n)$ определяется как$$
+\hamming(f, C) = \min_{g \in C(n)} \hamming(f,g).
+$$
+
+\subsection{Нелинейность}
+\definition Нелинейностью $\nonlinty{f}$ называется наименьшее расстояние от функции $f \in \FF_2 (n)$ до множества всех аффинных функций $$
+\nonlinty{f} = \hamming (f, \mathcal{AL}_n).
+$$
+
+Из равенства
+$$
+wf_(\vec\alpha) = 2^n - 2 \weight{f(\vecx)\xor \angles{\vec\alpha, \vecx}}
+$$$$\Downarrow$$$$
+\nonlinty{f} = 2^{n-1} - \frac{1}{2} \max_{\vec\alpha \in V_n(2)} w_f (\vec\alpha).
+$$
+
+\paragraph{Пример}
+$
+f\in \FF_2(3)
+$ $$
+f(x_1,x_2,x_3) = 1 \xor x_1 \xor x_2 \xor x_2 x_3 \xor x_1 x_2 x_3 ~~\Rightarrow~~ \vec{f} = (1101~0011).
+$$
+Коэффициенты Уолша-Адамара: $(-2,2,2,-2, -2,2,-6,-2)$.$$
+\Rightarrow |w_f (6)| = 6 ~~ \Rightarrow ~~\text{ближайшая аффинная функция } g = 1 \xor x_1 \xor x_2.
+$$
+$$
+\hamming (f,g) = 1.
+$$
+
+\subsection{Бент-функции}
+\theorem{Для каждой $f \in \FF_2 (n)$ справедливо неравенство
+$$
+\nonlinty{f} \le 2^{n-1} - 2^{\frac{n}{2} -1}.
+$$}
+
+\definition Функция $f \in \FF_2 (n)$ называется бент-функцией, если $$\forall \vec\alpha \in V_n(2): ~~w_f(\vec\alpha) \in \{-2^{\frac{n}{2}}, 2^{\frac{n}{2}}\}.
+$$
+
+\statement{Очевидно, что если $f$ --- бент-функция, то:
+\begin{itemize}
+\item $\forall \vec\alpha \in V_n(2):~~ \left(w_f(\vec\alpha)\right)^2 = 2^n$
+\item Бент-функции существуют только для чётных $n$.
+\end{itemize}
+}
+
+\paragraph{Пример}
+\begin{itemize}
+\item $f(x_1, x_2) = x_1 x_2$;
+\item $f(x_1,,x_4) = 1 \xor x_1 x_2 \xor x_1 x_3 \xor x_1 x_4 \xor x_2 x_3 \xor x_2 x_4 \xor x_3 x_4$.
+\end{itemize}
+
+\subsection{Построение бент-функции}
+\theorem{Пусть $h \in \FF_2 (n+m)$ такова, что $h(\vecx, \vecy) = f(\vecx) \xor g(\vecy)$ для некоторых $f \in \FF_2(n)$, $g \in \FF_2(m)$, $\vecx \in V_n(2), y \in V_m(2)$. Тогда$$
+h \text{ --- бент-функция} ~~ \Leftrightarrow ~~ f,g \text{ --- бент-функции}.
+$$
+}
+\corollary{Функция $f \in \FF_2 (2k),~ k \ge 1,~ f(\vecx) = x_1 x_2 \xor x_3 x_4 \xor ... \xor x_{2k-1} x_{2k}$ является бент-функцией.}
+
+\theorem{Пусть $\pi \in S(V_n),~ g\in \FF_2 (n),~ \vecx,\vecy \in V_n(2)$.\\ Тогда функция $f \in \FF_2 (2n), ~ f(\vecx, \vecy) = \angles{\pi(\vecx), \vecy} \xor g(\vecx)$ есть бент-функция.
+}
+
+\subsection{Фильтрующие генераторы}
+На рисунке \ref{fig:filtering_gen} изображена общая схема фильтрующего генератора. ЛРСОС (он же LFSR, он же сдвиговый регистр с линейной обратной связью) выдаёт свои разряды на вход функции $f$.
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[node distance = 2cm, on grid]
+\node[draw,rounded corners, minimum width=5cm,align=center] (lfsr) at (0, 0) {ЛРСОС};
+\node[isosceles triangle,isosceles triangle stretches,shape border rotate=270, minimum width=5cm,draw,rounded corners,below of=lfsr] (f) {f};
+
+\node[align=center,rounded corners,below of=f] (outsup) {~};
+\node[align=center,rounded corners,right of=outsup] (out) {$z_1, z_2...z_l$};
+
+\draw[rounded corners,->] (lfsr.east) -- (5,0) -- (5,1) -- (-5,1) -- (-5,0) -- (lfsr.west);
+\draw[rounded corners,double=white, line width=1 pt,->] (lfsr.south) -- (f.north);
+\draw[rounded corners,->] (f.south) -- (outsup.center) -- (out.west);
+\end{tikzpicture}
+\caption{Общая схема фильтрующего генератора}
+\label{fig:filtering_gen}
+\end{figure}
+
+Линейная рекуррентная последовательность (ЛРП):
+$$
+x_{n+i} = x_i + \sum_{j=1}^{n-1} c_j x_{j+1}, ~i = 1,2,...
+$$
+
+Преобразование ЛРСОС $\delta$ (функция переходов состояний)
+$$
+\delta(\vecx) = \left( x_2, x_3, ..., x_n, x_1 + \sum_{j=2}^{n} c_{j-1} x_j \right),
+$$ где: \begin{itemize}
+\item[--] $\vecx = (x_1, x_2,...,x_n) \in \ZZ_2^n$,
+\item[--] $\delta: ~ \ZZ_2^n \rightarrow \ZZ_2^n$,
+\item[--] $c_1, ..., c_{n-1} \in \ZZ_2$ --- коэффициенты обратной связи.
+\end{itemize}
+Преобразованию соответствует сопровождающая $(n \times n)$-матрица
+$$
+\mx{a} = \begin{pmatrix}
+0&1&0&0&...&0 \\
+0&0&1&0&...&0 \\
+...&...&...&...&...&... \\
+0&0&0&0&...&1 \\
+1&c_1&c_2&c_3&...&c_{n-1}
+\end{pmatrix} = \begin{pmatrix}
+\vec0^{\downarrow} & \mx{E}_{n-1} \\
+1 & \vec{c}
+\end{pmatrix}.
+$$
+ЛРСОС(ЛРС) с точки зрения автоматной модели --- автономный автомат $\mathbb{A} = (\ZZ_2^n, \ZZ_2, \delta, f)$:
+\begin{itemize}
+\item $\ZZ_2^n$ --- множество состояний (все заполнения ЛРСОС);
+\item $\delta: \ZZ_2^n \rightarrow \ZZ_2^n$ --- функция переходов;
+\item $f: \ZZ_2^n \rightarrow \ZZ_2$ --- функция выходов;
+\item $x^{(0)} \in \ZZ_2^n$ --- начальное состояние.
+\end{itemize}
+
+Фильтрующая функция задана многочленом Жегалкина ($\deg f > 1$):$$
+f(x_1,...,x_n) = b_0 + \sum_{r\in \{1,...,n\}} \sum_{1 \le i_1 < ... < i+r \le n} b_{i_1, ..., i_r} x_{i_1} ... x_{i_r}.
+$$
+j-й знак гаммы$$
+z_j = f\left(\delta^{j-1}(x)\right) = f\left(\mx{a}^{j-1}x\right), ~ j = 1,2,...
+$$
+
+\theorem{Максимальный период ЛРС длины $n$ над $\FF_q$ равен $q^n - 1$}
+
+\property{Если ЛРС максимального периода и f --- сбалансированная функция, то период выходной последовательности фильтрующего генератора также максимален и равен $q^n - 1$}\\
+
+Фильтрующая функция должна обеспечивать:\begin{itemize}
+\item хорошие статистические свойства $t$-грамм гаммы;
+\item большую линейную сложность.
+\end{itemize}
+
+Линейная сложность периодической последовательности --- степень её минимального многочлена.
+Она же --- минимальная длина линейного регистра сдвига с обратной связью, порождающего данную последовательность
+
+
+\seminary{Семинар 5-6}
+\paragraph{Летучка} Найти вес функции и определить является ли она бент-функцией.
+\begin{enumerate}
+\item $f(x_1,...,x_8) = x_1 x_3 x_4 + x_2 x_6 + x_5 + x_7 x_8$
+\item $f(x_1,...,x_6) = x_1 x_4 x_5 + x_2 x_3 x_5$
+\item $f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} + x_1 x_2 x_3 + x_1 x_2 x_5 x_6 x_7 x_8$
+\end{enumerate}
+
+\paragraph{Решение варианта №3}
+Вынесем $x_1, x_2$ за скобки, тогда
+$$
+f(x_1,...,x_10)= x_1 x_2 x_4 x_9 x_{10} \xor x_1 x_2 x_3 \xor x_1 x_2 x_5 x_6 x_7 x_8 =
+x_1 x_2 (x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8)
+$$
+
+Тогда
+$$
+\begin{aligned}
+h(x_1 x_2) &= x_1 x_2 & \Rightarrow & \weight{h} = 1 \cdot 2^8 = 256\\
+g(x_4 x_9 x_{10} x_3 x_5 x_6 x_7 x_8) &= x_4 x_9 x_{10} \xor x_3 \xor x_5 x_6 x_7 x_8 & \Rightarrow & \weight{g}= 2^7 \cdot 2^2 = 2^9 \\
+\end{aligned}
+$$
+%TODO: закончить семинар 5-6
+
+\pagebreak
+
+\lection{Лекция 3}
+\subsection{Фильтрующий генератор}
+\property{При $q = 2$ верхняя граница линейной сложности гаммы фильтрующего генератора равна \[ \sum_{i=0}^{\deg f} \binom{n}{i} \]}
+Получение точных нижних оценок -- часто связано со значительными математическими трудностями
+-- Rueppel R. A. Analysis and design of stream ciphers. Berlin: Springer, 1986
+\theorem{Линейная сложность совпадает с размерностью векторного пространства, порождённого множеством всех функций на выходе фильтрующего генератора.}
+\proof (Необходимость)
+Пусть $l$ -- линейная сложность. Тогда $\forall j > l$ функция \[ z_j = z_j(x) = f(\delta^{j-1}(x)) \] над $\mathbb{F}_q$ линейно выражается через первые $l$ функций $z_1, ..., z_l$
+
+$L = \langle z_1(x), ..., z_l(x) \rangle$ -- линейное пространство на выходе фильтрующего генератора \[ \dim L \le l ~~~\blacksquare \]
+\proof (Достаточность)
+Линейная сложность не может быть больше размерности пространства $L$, т.е. \[ \dim L \ge l. \]
+Значит, $l = \dim L ~~~\blacksquare$
+
+\property{$\\dim L$ равна такому наибольшему числу $l \in L$ что
+\begin{itemize}
+\item первые $l$ функций $z_1, ..., z_l$ линейно независимы;
+\item $z_{l+1}$ --- линейная комбинация $z_1, ..., z_l$.
+\end{itemize}
+}
+
+\paragraph{Задача} Доказать для каждого $x \in \mathbb{F}_q^n$ равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), ~~ j = 2,3,... \]
+
+\subsubsection{Задача о нахождении линейной сложности ФГ} Найти линейную сложность фильтрующего генератора над $\mathbb{F}_2$.
+
+$$
+n = 3, ~ \delta: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~ f: \mathbb{F}_2^3 \rightarrow \mathbb{F}_2^3, ~~
+\begin{aligned}
+\delta(x_1, x_2, x_3) &= (x_2, x_3, x_1 + x_2),\\
+f(x_1, x_2, x_3) &= x_1x_2 + x_1x_3 + x_2x_3.
+\end{aligned}
+$$
+
+Функция обратной связи ЛРС \[ b(x_1, x_2, x_3) = x_1 + x_2. \]
+\paragraph{Этап 1}
+\begin{enumerate}
+\item Найти характеристический многочлен ЛРС
+\item Установить его примитивность
+\item Найти период
+\end{enumerate}
+\paragraph{Решение}
+\begin{enumerate}
+\item Характеристический многочлен ЛРС -- $x^3 + x + 1$. Примитивен над $\mathbb{F}_2.$
+\item ЛРС максимального периода $2^3 - 1 = 3$
+\item $7$ -- простое $\implies$ период гаммы фильтрующего генератора равен $7$.
+\end{enumerate}
+\paragraph{Этап 2}
+Находим все функции \[ z_j(x) = f(\delta^{j-1}(x)) \] на периоде фильтрующего генератора, применяя равенство \[ z_j(x) = f(\delta^{j-1}(x)) = z_{j-1}(\delta(x)), j = 2,3,... \]
+Получаем
+$$
+\begin{aligned}
+z_1 &= f(x) & &= x_1x_2 + x_1x_3 + x_2x_3,\\
+z_2 &= z_1(\delta(x)) &= x_2x_3 + x_2(x_1 + x_2) &= x_1x_2 + x_1x_3 + x_2,\\
+z_3 &= z_2(\delta(x)) &= x_2x_3 + x_2(x_1 + x_2) + x_3 &= x_1x_2 + x_2x_3 + x_2 + x_3,\\
+z_4 &= z_3(\delta(x)) &= x_2x_3 + x_3(x_1 + x_2) + x_1 + x_2 + x_3 &= x_1x_3 + x_1 + x_2 + x_3,\\
+z_5 &= z_4(\delta(x)) &= x_2x_3 + x_4(x_1 + x_2) + x_2 + x_3 + x_1 + x_2 &= x_1x_2 + x_1 + x_2 + x_3,\\
+z_6 &= z_5(\delta(x)) & &= x_2x_3 + x_1 + x_3,\\
+z_6 &= z_6(\delta(x)) & &= x_1x_3 + x_2x_3 + x_1.
+\end{aligned}
+$$
+
+Проверить: $z_8 = z_7(\delta(x)) = z_1$
+\paragraph{Этап 3}
+Найдём максимальное линейное независимое подмножество \[ {z_1, ..., z_l} \subseteq {z_1, ..., z_7}. \]
+Используем общий вид квадратичной функции от 3-х переменных:
+
+$$
+\begin{aligned}
+\phi(0) &= 0,\\
+\phi(x_1, x_2, x_3) &= c_1x_1 + c_2x_2 + c_3x_1x_2 + c_4x_3 + c_5x_1x_3 + c_6x_2x_3.
+\end{aligned}
+$$
+
+Требуется найти $l = \rank M$. $i$-я строка $M$ есть коэффициенты многочлена Жегалкина функции $z_i(x), i = 1, ..., 6$
+
+$$
+\begin{pmatrix}
+0 & 0 & 1 & 0 & 1 & 1 \\
+0 & 1 & 1 & 0 & 1 & 0 \\
+0 & 1 & 1 & 1 & 0 & 1 \\
+1 & 1 & 0 & 1 & 1 & 0 \\
+1 & 1 & 1 & 1 & 0 & 0 \\
+1 & 0 & 0 & 1 & 0 & 1 \\
+\end{pmatrix}
+\begin{matrix}
+\rightarrow & z_1 \\
+\rightarrow & z_2 \\
+\rightarrow & z_3 \\
+\rightarrow & z_4 \\
+\rightarrow & z_5 \\
+\rightarrow & z_6 \\
+\end{matrix} \sim
+\begin{pmatrix}
+1 & 1 & 1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 1 & 0 & 1 \\
+0 & 1 & 1 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 1 & 1 \\
+\end{pmatrix} \sim
+\begin{pmatrix}
+1 & 1 & 1 & 1 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 \\
+0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+\end{pmatrix}
+$$
+
+Получаем $l = \rank M = 6$.
+
+\paragraph{Задача} Найти представление $z_7$ через $z_1, ..., z_6$
+
+\subsection{Сильно равновероятные двоичные функции}
+Условие сбалансированности двоичной функции: $f: V_n(2) \rightarrow \mathbb{F}_2$:
+\begin{itemize}
+\item $\forall \gamma \in \mathbb{F}_2$ уравнение \[ f(x_1, ..., x_n) = \gamma \] имеет ровно $2^{n-1}$ решений относительно $(x_1, ..., x_n) \in \mathbb{F}_2^n$
+\end{itemize}
+
+В ряде методов криптоанализа возникает система уравнений:
+
+$$
+\begin{aligned}
+f(x_1, ..., x_n) &= \gamma_1,\\
+f(x_2, ..., x_{n+1}) &= \gamma_2,\\
+    ...\\
+f(x_1, x_{i+1}, ..., x_{n+i-1}) &= \gamma_i,\\
+...\\
+f(x_m, x_{m+1}, ..., x_{n+m-1}) &= \gamma_m.
+\end{aligned}
+$$
+
+$m \ge 1$, $m$ -- число знаков гаммы
+
+Выходная $m$-грамма $(\gamma_1, ..., \gamma_m) \in V_m(2)$ содержит в себе следующую информацию:
+\begin{itemize}
+\item о функции $f$
+\item о входе $x_1, ..., x_n$\\ -- Данная информация может являться основой для разработки статистических методов криптоанализа.
+\end{itemize}
+
+\definition Функция $f$ называется
+\begin{itemize}
+\item $m$-равновероятной, если $\forall (\gamma_1, ..., \gamma_m) \in V_m(2)$ система уравнений (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] имеет ровно $2^{n-1}$ решений относительно неизвестных $x_1, ..., x_{n+m-1}$.
+\item сильно равновероятной, если $f$ является $m$-равновероятной $\forall m \in \mathbb{N}$.\\ -- Сильная равновероятность $f$ означает равновероятность $\forall m \in \mathbb{N}$ выходной $m$-граммы $(\gamma_1, ..., \gamma_m)$, удовлетворяющей системе (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] и получаемой на случайном равновероятном и независимом входе $x_1, ..., x_{n+m-1}$.
+\end{itemize}
+
+\definition Вектор $(\gamma_1, ..., \gamma_m) \in V_m(2)$ называется запретом функции $f: V_n(2) \rightarrow \mathbb{F}_2$, если система (1) \[ f(x_i, x_{i+1}, ..., x_{n+i-1}) = \gamma_i, i = 1, ..., m \] не имеет решений.
+
+\theorem[Сумароков]{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ не имеет запретов $\Leftrightarrow$ она сильно равновероятна.}
+
+\paragraph{Задачи}
+\begin{itemize}
+\item Если функция $f: V_n(2) \rightarrow \mathbb{F}_2$ представима в виде \[ f(x_1, ..., x_n) = g(x_1, ..., x_{n-1}) + x_n \] для некоторой функции $g: V_{n-1}(2) \rightarrow \mathbb{F}_2$, то $f$ сильно равновероятна.
+\item Если функция $f: V_n(2) \rightarrow \mathbb{F}_2$ представима в виде \[ f(x_1, ..., x_n) = g(x_1, ..., x_{n-1}) + x_n \] для некоторой функции $g: V_{n-1}(2) \rightarrow \mathbb{F}_2$, то $\forall x_1, ..., x_{n-1} \exists ! x_n, ..., x_{n+m-1}$, при которых справедлива система (1).
+\item Доказать следующие свойства:
+    \begin{itemize}
+    \item Функции \[ f(x_1, ..., x_n) и g(x_1, ..., x_n) = f(x_n, x_{n-1}, ..., x_1) \] одновременно имеют запреты или не имеют
+    \item Функции \[ f(x_1, ..., x_n) и g(x_1, ..., x_n) = f(x_1 \otimes 1, ..., x_n \otimes 1) \] одновременно имеют запреты или не имеют
+    \end{itemize}
+\end{itemize}
+
+\statement{Свойство сильной равновероятности инвариантно относительно действия группы $G$, порождённой следующими преобразованиями на $\mathbb{F}_n$:
+\begin{itemize}
+\item Инверсия функции
+\item Инверсия всех переменных функции
+\item Обратный порядок записи переменных
+\end{itemize}
+}
+
+\proof На дом
+\theorem{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ сильно равновероятна $\Leftrightarrow$ она $2^{n-1}$-равновероятна.}
+\theorem{Функция $f: V_n(2) \rightarrow \mathbb{F}_2$ $m$-равновероятна $\Leftrightarrow$ \[ \langle f, b \rangle = b_1f(x_1, ..., x_n) + ... + b_mf(x_m, ..., x_{n+m-1}) \] сбалансирована на каждом ненулевом векторе $b = (b_1, ..., b_m) \in V_m(2)$.}
+
+Построение сильно равновероятных функций из сильно равновероятных от меньшего числа переменных.
+\theorem{Пусть $h: V_m(2) \rightarrow \mathbb{F}_2, g: V_{n-m+1}(2) \rightarrow \mathbb{F}_2$. Функция $f: V_n(2) \rightarrow \mathbb{F}_2$, \[ f(x_1, ..., x_n) = g(h(x_1, ..., x_m), h(x_2, ..., x_{m+1}), ..., h(x_{n-m+1}, ..., x_n)) \] сильно равновероятна $\Leftrightarrow$ равновероятна каждая из функций $h$, $g$.}
+\paragraph{Пример}
+Перебором вероятностей всех 4-грамм получено, что функция $f: V_3(2) \rightarrow \mathbb{F}_2$ не имеет запрета $\Leftrightarrow$ она линейна по крайней переменной.
+
+Следующие двоичные функции не имеют запрета:
+
+$$
+\begin{aligned}
+f_1(x_1, x_2, x_3, x_4) &= x_1 + x_3 + x_2x_4 + x_1x_2x_4,\\
+f_2(x_1, x_2, x_3, x_4) &= x_2 + x_1x_3 + x_1x_3x_4,\\
+f_3(x_1, x_2, x_3, x_4) &= x_2 + x_3 + x_1x_3 + x_3x_4 + x_1x_3x_4, \\
+f_4(x_1, ..., x_5) &= x_1x_2 + x_2x_4 + x_4x_5 + x_3 + x_4 + x_5.
+\end{aligned}
+$$
+
+\paragraph{Задачи}
+\begin{enumerate}
+\item Среди двоичных функций от 2-х переменных найти все сильно равновероятные.
+\item Дана функция $f: V_3(2) \rightarrow \mathbb{F}_2$, \[ f(x_1, x_2, x_3) = x_1x_2 + x_2x_3 + x_1x_3 + 1 \]
+\begin{itemize}
+    \item Найти вероятности всех её 2-грамм.
+    \item Является ли она 2-равновероятной?
+    \item Является ли она 3-равновероятной?
+    \item Является ли она сильно равновероятной?
+    \item Какие выходные последовательности для $f$ являются запретными: $(\gamma_1, ..., \gamma_5) \in {(1,1,1,1,1), (0,1,0,0,1), (1,0,1,1,0), (0,1,1,0,1), (1,0,0,1,0)}$ ?
+\end{itemize}
+\end{enumerate}
+
+
+\seminary{Семинар 6}
+\subsection{Линейная структура булевой функции}
+$$
+\begin{aligned}
+f(x_1, ..., x_n), ~ a \not = 0 \in \ZZ_2^n
+\end{aligned}
+$$
+Доказать, что
+$$
+f(x) \xor f(x \xor a) = \partialfrac{f}{a}, ~ \deg \partialfrac{f}{a} \le \deg f -1
+$$
+
+\proof
+$$
+\begin{aligned}
+~& f &= \gamma_0 \xor \gamma_1 x_1 \xor ... \xor \gamma_{1...n}x_1 ... x_n \\
+\xor &~&~ \\
+~& f(x \xor a) &= \gamma_0 \xor \gamma_1(x_1 \xor a_1) \xor ... \xor \gamma_{1...n} (x_1 \xor a_1) ... (x_n\xor a_n)\\
+\\
+~&f \xor f(x \xor a)& \\
+\end{aligned}
+$$
+
+\paragraph{Пример}
+$f(x_1, x_2, x_3) = x_1 x_2 \xor x_2 x_3 \xor x_3, ~~ \vec{a} = \overset{a_1}{1}\overset{a_2}{0}\overset{a_3}{0}$
+
+\definition Если для $f(x_1, ..., x_n), ~ \vec{a} \ne 0 \in \ZZ_2^n$ на $\forall \vec{x} \in \ZZ_2^n:~ \partialfrac{f}{\vec{a}} = \delta \in \ZZ_2^n$, то пара $(\vec{a}, \delta)$ называется линейной структурой булевой функции $f$.
+
+\definition $LS(n)$ --- все булевы функции от n переменных, у которых есть линейная структура, $L(n) \subseteq LS(n)$.
+
+
+\statement{
+Пусть $f(x_1, ..., x_n)$, тогда
+
+$$NL(f) \le 2^{n-1} - \frac{1}{2} 2^{\frac{n}{2}}, ~~ NL(f) = \min d(\angles{u, x}, f)$$
+
+$$NLS(f) = \min_{g \in LS(n)} d(f,g)$$
+
+$$NLS(f) \le 2^{n-2}, ~~ NLS(f) = 2^{n-2}~ \Leftrightarrow ~\forall a \in \ZZ_2^n,~ a \ne 0,~ \weight{\partialfrac{f}{a}} = 2^{n-1}$$
+}
+
+\lection{Лекция 4}
+\subsection{Алгебраическая иммунность}
+% TODO: move to bibliography
+-- Courtouis N. and Meier W. Algebraic attack on stream
+ciphers with linear feedback //
+LNCS. 2003. V. 2656. P. 345-359
+-- Meier W., Pasalic E., and Carlet C. Algebraic attack and
+decomposition of Boolean functions //
+LNCS. 2004. V. 3027. P. 474-491
+
+\subsection{Применение аннигиляторов}
+\[ \mathbb{F}_n = { f | f: \mathbb{Z}_2^n \rightarrow
+    \mathbb{Z}_2 }. \]
+- Для $g \in \mathbb{F}_n$ обозначим $g \equiv 0$, если $g(x)
+= 0 \forall x \in \mathbb{Z}_2^n$. - $g \not\equiv 0$, если
+$g(\alpha) = 1$ для некоторого $\alpha \in \mathbb{Z}_2^n$.
+
+\definition Пусть $f: \mathbb{Z}_2^n \rightarrow
+\mathbb{Z}_2$. Функция $g \in \mathbb{F}_n$ называется
+\textit{аннигилятором} функции $f$, если \[ fg \equiv 0
+    \textrm{ и } g \not\equiv 0 \]
+Равносильно: \[ f(x)g(x) = 0 \forall x \in \mathbb{Z}_2^n
+    \textrm{ и } g \not\equiv 0 \]
+
+\begin{itemize}
+    \item $Ann(f) = \{ g \in \mathbb{F}_n | fg \equiv 0 \}$ --
+    \textit{множество всех аннигиляторов} функции $f$.
+    \item $supp(f) = \{ x \in \mathbb{Z}_2^n | f(x) = 1 \}$ --
+    \textit{носитель} функции $f$.
+\end{itemize}
+
+\paragraph{Пример} Пусть $f(x_1, x_2, x_3) = (01010011)$
+
+Пусть $\mathfrak{F}_{2, n}$ -- кольцо многочленов из
+$\mathbb{F}_2[x_1, ..., x_n]$, степень которых по каждой
+переменной не превосходит 1.
+\begin{itemize}
+    \item $\mathfrak{F}_{2, n}$ -- множество всех многочленов Жегалкина
+над $\mathbb{Z}_2$
+\[ \mathbb{F}_n \cong \mathfrak{F}_{2, n} \]
+
+    \item $||f||$ -- вес (Хемминга функции $f \in \mathbb{F}_n$. --
+    число единиц в её таблице инстинности
+    \end{itemize}
+
+\theorem{Пусть $f \in \mathbb{F}_n \cong \mathfrak{F}_{2, n}.$
+Тогда $Ann(f)$ -- главный идеал кольца $\mathfrak{F}_{2, n}$,
+порождённый функцией $1 + f$: \[ Ann(f) = \{ (1 + f)g | g \in
+    \mathfrak{F}_{2, n} \} = (1 + f),\\
+    |Ann(f)| = 2^{2^n-||f||}
+\]}
+\proof Так как $(1 + f) \in Ann(f)$, то $Ann(f) \neq
+\emptyset$. Пусть $r \in \mathfrak{F}_{2, n}, g \in Ann(f)$,
+тогда \[ r * g \in Ann(f) \]
+
+-- $Ann(f)$ -- идеал
+
+Докажем $Ann(f) = (1 + f)$. Очевидно, что \[ Ann(f) \supseteq
+    (1 + f) \]
+
+Покажем что $Ann(f) \subseteq (1 + f)$ (в обратную сторону).
+Пусть $h \in Ann(f)$. \[ fh \equiv 0 \implies (f + 1)h \equiv
+    h \implies h \in (1 + f) \]
+$Ann(f) \subseteq (1 + f)$.
+
+Так как \[ Ann(f) \supseteq (1 + f), Ann(f) \subseteq (1 +
+    f), \] то $Ann(f) = (1 + f)$.
+
+Докажем $|Ann(f)| = 2^{2^n - ||f||}$. \[ g \in Ann(f) \implies
+    \forall x \in supp(f) \implies x \notin supp(g) \]
+Значения g на множестве $V_n \setminus supp(f)$ выбираются
+произвольно.
+Так как \[ |V_n \setminus supp(f)| = 2^n - ||f||, \] то \[
+    Ann(f) = 2^{2^n - ||f||}. \]
+
+\paragraph{Задача} Если $f \in \mathbb{F}_n$ является
+равновероятной, то \[|Ann(f)| = 2^{2^{n-1}}. \]
+
+\definition Порядком алгебраической иммунности функции $f \in
+\mathbb{F}_n$ называется число \[ \AI(f) = min\{\deg(g) | g \in
+    \mathbb{F}_n, g \not\equiv 0, f g \equiv 0 \vee (f + 1)g
+    \equiv 0 \} \]
+
+\paragraph{Задача} Пусть $f \in \mathbb{F}_n$ и $f g \equiv h$
+для некоторых $g, h \in \mathbb{F}_n$, \[ \deg g \leq d, \deg f
+    \leq d, g \not\equiv 0. \] Доказать, что $\AI(f) \leq d$.
+
+\statement{Пусть $f \in \mathbb{F}_n$. Тогда $\AI(f) \leq \lceil
+n/2 \rceil$.}
+\proof Из функций $f, f + 1$ выберем функцию, вес которой не
+более $2^{n-1}$. Без ограничения общности, пусть $||f|| \leq
+2^{n-1}$.
+
+Строим таблицу. \[ supp(f) = {y_1, y_2, ..., y_d}, d =
+    ||f||. \]
+\begin{itemize}
+    \item каждая строка соответствует $y \in supp(f)$
+    \item столбцы -- всем мономам степеней $0, 1, ..., \lceil
+    \frac{n}{2} \rceil$.
+\end{itemize}
+Число всех таких мономов равно \[ \sum_{i = 0}^{\lceil
+    \frac{n}{2} \rceil} \binom{n}{i} > 2^{n-2} \geq ||f|| \]
+\proof На пересечении строки $y$ и столбца $h$ записывается
+$h(y)$. Так как столбцов больше чем строк \[ \sum_{i = 0}^{\lceil
+    \frac{n}{2} \rceil} \binom{n}{i} > ||f||, \] то
+существует их ненулевая линейная комбинация $g$, равная $0, ~
+\forall x \in V_n$, \[ g(x) = g(x_1, ..., x_n) = \sum_{i = 0}^{\lceil
+    \frac{n}{2} \rceil} \sum_{\substack{J \subseteq \{1, ...,
+        n\}\\i = |J|}}  c_J \prod_{j \in J} x_j = 0 \]
+
+\begin{itemize}
+    \item $\deg(g) \leq \lceil \frac{n}{2} \rceil$
+    \item $g(x) = 0, ~ \forall x \in \{y \in V_n | f(y) = 1\}$
+    \end{itemize}
+
+Пусть $\mathbb{A}_n$ -- множество всех аффинных функций от $n$
+переменных.
+
+\paragraph{Задача} Доказать что каждый ненулевой аннигилятор
+$g \in \mathbb{F}_n$ аффинной функции $a \in \mathbb{A}_n,
+\deg(a) = 1$ представим в виде \[ g \equiv h(1 + a), \] где $h$
+-- произвольная функция из $\mathbb{F}, \deg(h) = \deg(g) - 1$.
+
+\subsubsection{Алгоритм нахождения множества $Ann_r(f)$}
+\begin{itemize}
+    \item $Ann_r(f) = \{ g \in \mathbb{F}_n | fg \equiv 0,
+    \deg(g) \leq r \}$
+    \item Из доказательства утверждения следует алгоритм
+    нахождения множества $Ann_r(f)$
+\end{itemize}
+
+%\paragraph{Алгоритм нахождения $Ann_r(f)$ методом неопределённых коэффициентов}
+\begin{figure}
+\paragraph{Вход:} $f \in \mathbb{F}_n$
+
+\begin{enumerate}
+    \item Представим аннигилятор $g \in Ann_r(f)$ в виде
+    многочлена Жегалкина с неопределёнными коэффициентами
+    $c_0, c_{i_1,i_2}, ..., c_{i_1,..., i_r}$:
+    \[ g(x_1, ..., x_n) = c_0 + \sum_{i=1}^n c_ix_i + \sum_{i
+        \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2} +
+        ... + \sum_{i
+        \leq i_1 < i_2 \leq n} c_i, i_2 x_{i_1} x_{i_2}
+        ... x{i_r} \]
+    \item Выписываем СЛУ. Для всех $(x_1, ..., x_n) \in supp(f)$
+    полагаем $g(x_1, ..., x_n) = 0$
+
+    Получаем однородную систему из $||f||$ линейных уравнений
+    относительно \[ \sum_{i=0}^r \binom{n}{i} \]
+    неизвестных.\\
+    Решением её являются коэффициенты многочленов Жегалкина
+    аннигиляторов из $Ann_r(f)$ и только они.
+\end{enumerate}
+\paragraph{Выход:} $Ann_r(f)$
+\end{figure}
+
+\paragraph{Задача} Пусть $a \in \mathbb{A}_n, \deg(a) =
+1$. Доказать что для каждого $t \in \mathbb{N}$ справедливо
+равенство \[ \dim Ann_t(a) = \sum_{i=0}^{t-1} \binom{n-1}{i} \]
+
+\paragraph{Задача}
+\statement{Пусть  \[ f \in \mathbb{F}_n, a \in \mathbb{A}_n,
+    \deg(a) = 1, d = \AI(f). \]
+    Тогда \[ d - 1 \leq \AI(f + a) \leq d + 1 \]}
+\proof Пусть $g \in Ann(f) \cup Ann(f + 1), d =
+\deg(g)$. Рассмотрим два случая: \[ fg \equiv 0 \textrm{ и } fg
+    \not\equiv 0 \].
+Для каждого из них разбираем: \[ (a + 1)g \equiv 0 \textrm{ и }
+    (a + 1)g \not\equiv 0 \]
+
+\begin{enumerate}
+\item Пусть $fg \equiv 0$
+    Рассмотрим два случая: \[ (a + 1)g \equiv 0 \textrm{ и } (a
+    + 1) \not\equiv 0.\]
+    Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
+    \implies$ \[ g \in Ann(f + a + 1). \]
+    Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
+    1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
+    Ann(f + a). \]
+\item Пусть $fg \equiv 0$. Рассмотрим два случая:
+    \[ (a + 1)g \equiv 0 \textrm{ и } (a
+    + 1) \not\equiv 0. \]
+    Если $(a + 1)g \equiv 0$, то $(f + a + 1)g \equiv 0
+    \implies$ \[ g \in Ann(f + a + 1). \]
+    Если $(a + 1)g \not\equiv 0$, то из равенства \[ (f + a)(a +
+    1)g = f(a + 1)g \equiv 0 \] $\implies$ \[ (a + 1)g \in
+    Ann(f + a). \]
+\end{enumerate}
+
+\subsection{Свойства $Ann_r(f)$}
+\statement{Пусть $f_1, f_2 \in \mathbb{F}_n, d_i = \AI(f_i), i
+    = 1,2,$ \[ g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1) f_1 +
+    x_{n+1}f_2. \] Тогда \[ \AI(f) \leq min\{d_1, d_2\} +
+    1. \]}
+\paragraph{Вывод} Из подфункций с ``низкой'' алгебраической
+иммунностью нельзя получить функцию с ``высокой''
+алгебраической иммунностью.
+\proof Пусть $g \in Ann(f_1) \cup Ann(f_1 + 1)$ и $d_1 =
+\deg(g)$. Если $gf_1 \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
+    0. \]
+Если $g(f_1 + 1) \equiv 0$, то \[ (x_{n+1} + 1)gf_1 \equiv
+    0. \] $\implies$ \[ \AI(f_1) \leq d_1 + 1. \]
+Аналогично, $\AI(f_2) \leq d_2 + 1 \implies$ \[ \AI(f_2) \leq
+    d_2 + 1 \]
+$\blacksquare$
+\paragraph{Следствие} Пусть $n$ чётно, $f_1, f_2 \in
+\mathbb{F}_n$, \[g(x_1, ..., x_n, x_{n+1}) = (x_{n+1} + 1)f_1
+    + x_{n+1}f_2, \\ \AI(g) = 1 + \frac{n}{2}. \]
+Тогда $\AI(f_i) = \frac{n}{2}, i = 1, 2.$
+\begin{itemize}
+    \item $\AI(g) = 1 + \frac{n}{2}.$ (максимально возможная)
+    \item $\AI(f_i) = \frac{n}{2}$ (тоже максимально возможная)
+\end{itemize}
+
+\statement{Пусть $f \in \mathbb{F}_n, d \in \{1, ..., n\}$ и
+    $d = \AI(f)$. Тогда: \[ \sum_{i=0}^{d-1} \binom{n}{i} \leq
+    ||f|| \leq \sum_{i=0}^{n-d} \binom{n}{i} \]}
+\proof Для доказательства применим метод, используемый для
+доказательства
+\begin{itemize}
+    \item \textbf{Утв.} Пусть $f \in \mathbb{F}_n$. Тогда $\AI(f)
+        \leq \lceil \frac{n}{2} \rceil$.
+    \item Построим аннигилятор $g$ функции $f$, $\deg(g) \leq d -
+    1$.
+    Строим таблицу. \[ supp(f) = \{y_1, y_2, ..., y_d\}, d =
+        ||f||. \]
+    \item Каждая строка соответствует $y \in supp(f)$
+    \item Столбцы -- всем мономам степеней $0, 1, ..., \lceil
+    \frac{n}{2} \rceil$.
+    \item На пересечении строки $y$ и столбца $h$ записывается
+    $h(y)$.
+    \item Число строк в таблице равно $||f||$, число столбцов
+    (мономов) -- $\sum_{i=0}^{d-1} \binom{n}{i}$
+\end{itemize}
+Если число столбцов $>$ числа строк, то существует их линейная
+зависимость $\implies$ существует аннигилятор $g, \deg(g) \leq
+d - 1$\\
+-- Нижняя оценка доказана $\blacksquare$
+
+С другой стороны, у функции $f + 1$ не существует
+аннигиляторов \[ h \in Ann(f), \deg(h) \leq d - 1. \]
+$\implies$ \[ 2^n - ||f|| = ||f + 1|| \geq \sum_{i=0}^{d-1}
+    \binom{n}{i} \]
+$\implies$ \[ ||f|| \leq 2^n - \sum_{i=0}^{d-1} \binom{n}{i} =
+    \sum_{i=d}^n \binom{n}{i} = \sum_{i=0}^{n-d} \binom{n}{i}
+\]
+$\blacksquare$
+
+\paragraph{Следствие} Если $n$ нечётно, $f \in \mathbb{F}_n,
+\AI(f) = \frac{n + 1}{2}$, то $f$ -- \textit{равновероятная
+    функция}.
+\begin{itemize}
+    \item $\AI(f) = \frac{n + 1}{2}$ (максимально возможное)
+\end{itemize}
+
+\lection{Лекция 5}
+\subsection{Автокорреляция и взаимная корреляция}
+Автокорреляция и взаимная автокорреляция:
+\begin{itemize}
+    \item применяются для исследования свойств криптографических отображений
+    \item с помощью них характеризуются различные свойства двоичных функций
+    \item выявляются ``нетривиальные'' связи
+\end{itemize}
+
+Пусть $f, g \in \mathbb{F}_2(n)$, \[ \mathbb{F}_2(n) = \{ f | f: V_n(2) \rightarrow \{ 0, 1 \} \}. \]
+
+\definition Функция $\Delta_{f,g}: V_n(2) \rightarrow
+\mathbb{Z}$, \[ \Delta_{f,g}(\epsilon) = \sum_{\beta \in
+    V_n(2)} (-1)^{f(\beta) \oplus g(\beta \oplus \epsilon)},
+    \forall \epsilon \in V_n(2) \]
+называется \textit{функцией взаимной корреляции} или
+\textit{взаимной корреляцией} (cross-correlation) двоичных
+функций $f, g$.
+\definition Функция $\Delta_f : V_n(2) \rightarrow
+\mathbb{Z}$, \[ \Delta_{f}(\epsilon) = \Delta_{f, f}(\epsilon)
+    = \sum_{\beta \in
+    V_n(2)} (-1)^{f(\beta) \oplus f(\beta \oplus \epsilon)},
+    \forall \epsilon \in V_n(2) \]
+называется \textit{функцией автокорреляции} или
+\textit{автокорреляцией} (auto-correlation) двоичной функции
+$f$.
+
+\subsection{Коэффициенты Уолша-Адамара 2-го рода}
+Коэффициентами Уолша-Адамара 2-го рода функции $f \in
+\mathbb{F}_2(n)$ называется: \[ w_f(\alpha) = \sum_{\beta \in
+    V_n(2)} (-1)^{f(\beta) \oplus (\alpha, \beta)},
+    \alpha \in V_n(2) \]
+\textit{Обратное преобразование}
+\[ \delta_f(x) = (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
+    w_f(\alpha)\omega_{\alpha} \]
+где
+\begin{itemize}
+    \item $\langle \alpha, \beta \rangle$ -- скалярное произведение
+    $\alpha, \beta \in V_n(2)$,
+    \item $\omega_{\alpha}(\beta) = (-1)^{\langle \alpha,
+        \beta \rangle}$,
+        т.е. \[ (-1)^{f(x)} = 2^{-n} \sum_{\alpha \in V_n(2)}
+    w_f(\alpha)(-1)^{\langle \alpha,
+    \beta \rangle} \]
+\end{itemize}
+
+\subsection{Взаимная корреляция}
+\statement{Пусть $f, g \in \mathbb{F}_2(n), \epsilon \in V_n(2)$. Тогда:
+\begin{enumerate}
+    \item $\Delta_{f, g}(\epsilon) = \Delta_{g, f}(\epsilon)$,
+    \item $\Delta_f(\epsilon) = w_{d_{\epsilon}f}(\vec0_n)$, где
+    $d_{\epsilon}f$ -- производная функции $f$ по направлению
+    $\epsilon$,
+    \item $d_{\epsilon}f(x) = f(x \oplus \epsilon) \oplus f(x)$
+\end{enumerate}}
+
+\proof Д.З.
+
+\textbf{Замечание}
+
+\begin{itemize}
+\item Не каждый набор из $2^n$ целых чисел $(y_1, ...,
+    y_{2^n}) \in \mathbb{Z}^{2^n}$ может быть набором значений
+    автокорреляции некоторой двоичной функции
+\item Для заданного набора $(y_1, ..., y_{2^n}) \in
+    \mathbb{Z}^{2^n}$ установить язвляется ли он набором
+    значений автокорреляции двоичной функции может оказаться
+    сложно.
+\end{itemize}
+
+\subsection{Матричная форма преобразования Уолша-Адамара}
+\definition Тензорным (Кронекеровым) произведением матриц $A_{m\times n} = [a_{i,j}]$ и $B_{p\times q} = [b_{i,j}]$ называется матрица $C_{mp \times nq} = [c_{i, j}]$:
+$$
+C = \begin{pmatrix}
+a_{1,1} B   & \dots     & a_{n,1} B \\
+\vdots      & \ddots    & \vdots \\
+a_{1,m} B   & \dots     & a_{n,m} B
+\end{pmatrix}
+$$
+\textbf{Обозначение}$$C = A\otimes B$$
+
+\textbf{Свойства}
+
+\begin{itemize}
+\item ассоциативности \[ (a \otimes b) \otimes d = a \otimes (b \otimes
+    d) \]
+\item левой и правой дистрибутивности
+    \[
+    \begin{aligned}
+        (a + b) \otimes d = a \otimes d + b \otimes d,\\
+        d \otimes (a + b) = d \otimes a + d \otimes b
+    \end{aligned}
+    \]
+\item $\transp{(a \otimes b)} = \transp{a} \otimes \transp{b}$
+\item если $\exists a\cdot c, b\cdot d$ то \[
+(a \otimes b)\cdot(c \otimes d) = (a \cdot c)\otimes(b \cdot d)
+\]
+\item если $a$ и $b$ обратимы, то \[
+(a \otimes b)^{-1} = a^{-1} \otimes b^{-1}
+\]
+\end{itemize}
+
+\subsection{Матрица Адамара}
+Пусть $n \in \mathbb{N}$.
+
+\definition \textit{Матрицей Адамара типа Сильвестра}
+называется квадратная ($2^n \times 2^n$)-матрица $H_n$,
+заданная условием \[ H_1 = \begin{pmatrix}
+    1 & 1 \\
+    1 & -1
+\end{pmatrix} \]
+\[ H_n = H_1 \otimes H_{n-1} при n \ge 2, \]
+где $\otimes$ -- тензорное произведение матриц
+
+\property{\[ H_n = H_n^t = 2^nH_n^{-1} \]}
+
+\corollary{Отсюда вытекает \[ H_n H_n^t = H_n H_n = 2^n E_n, \]
+где $E_n$ -- единичная $(2^n \times 2^n)$-матрица.}
+
+
+\property{Элементы матрицы $H_n = [[h_{\vec\alpha, \vec\beta}]]$ заданы равенством \[ h_{\vec\alpha, \vec\beta} = (-1)^{\langle \vec\alpha, \vec\beta \rangle} \text{ для } \vec\alpha, \vec\beta \in V_n(2), \]}
+
+Вектору $\vec\alpha = (\alpha_1, ..., \alpha_n)$ соответствует число $\alpha_1 2^{n-1} + \alpha_2 2^{n-2} +... + \alpha_n$.
+
+\property{$H_n$ -- матрица значений характеров элементарной 2-абелевой группы}
+
+Тогда строка коэффициентов Уолша-Адамара есть \[
+\left( w_f(0), \dots, w_f(2^n - 1) \right) = \left( (-1)^{f(0)}, \dots, (-1)^{f(2^n - 1)} \right) H_n.
+\]
+
+\subsection{Совершенно некоррелированные функции}
+
+\definition Функции $f, g \in \mathbb{F}_2(n)$ называются:
+\begin{itemize}
+\item совершенно некоррелированными (perfectly uncorrelated),
+    если \[ \forall \epsilon \in
+    V_n(2) : ~\delta_{f, g}(\epsilon) = 0. \]
+\item некоррелированными порядка $k, k \in \{ 0, ..., n \}$
+    (uncorrelated of degree $k$), если \[ \forall \epsilon \in
+    V_n(2), \|\epsilon\| \le k:~ \delta_{f, g}(\epsilon) = 0. \]
+\end{itemize}
+
+\subsection{Теорема о взаимной корреляции}
+\theorem[о взаимной корреляции]{Пусть $f, g \in
+    \mathbb{F}_2(n)$. Тогда \[ (\delta_{f, g}(0), ...,
+    \delta_{f, g}(2^n - 1))H_n = (w_f(0)w_g(0), ..., w_f(2^n -
+    1)w_g(2^n - 1)) \]
+}
+\proof
+\[ \sum_{\alpha \in V_n(2)} \delta_{f, g}(\alpha)(-1)^{\langle
+    \alpha, \beta \rangle} = \sum_{\alpha \in V_n(2)}
+    \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta) \oplus g(\Theta \oplus
+    \alpha)} (-1)^{\langle \alpha, \beta \rangle} =
+    \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
+    V_n(2)} (-1)^{g(\Theta \oplus \alpha) \oplus \langle \alpha,
+    \beta \rangle} \]
+Сделаем замену $\tau = \Theta \oplus \alpha$
+\[ \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)} \sum_{\alpha \in
+    V_n(2)} (-1)^{g(\tau) \oplus \langle \tau \oplus \Theta,
+    \beta \rangle} = \sum_{\Theta \in V_n(2)} (-1)^{f(\Theta)
+    \oplus \langle \tau \oplus \Theta,
+    \beta \rangle} \sum_{\alpha \in
+    V_n(2)} (-1)^{g(\tau) \oplus \langle \tau,
+    \beta \rangle} = w_f(\beta) w_g(\beta) \] $\blacksquare$
+
+\textbf{Следствие 2} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
+    (\delta_f(0), ..., \delta_f(2^n - 1)) H_n = (w_f(0)^2, ...,
+    w_f(2^n - 1)^2) \]
+\proof следует из теоремы при $f = g$ $\blacksquare$
+
+\textbf{Следствие 3} Пусть $f \in \mathbb{F}_2(n)$. Тогда \[
+    2^n(\delta_{f, g}(0), ..., \delta_{f, g}(2^n - 1)) =
+    (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1)) H_n \]
+\proof следует из теоремы и равенства $H_n H_n = 2^n E_n$
+$\blacksquare$
+
+Из следствия вытекает равенство Парсеваля, \[ \sum_{\alpha \in
+    V_n(2)} w_f^2(\alpha) = 2^n \delta_f(0) = 2^{2n} \]
+
+\paragraph{Задача}
+Пусть $h \in \mathbb{F}_2(n+m)$. \[ h(x, y) = f(x) \oplus g(y),
+    x \in V_n(2), y \in V_m(2) \] для некоторых $f \in
+\mathbb{F}_2(m)$. Тогда \[ \delta_h(\alpha, \beta) =
+    \delta_f(\alpha)\delta_g(\beta) \forall \alpha \in V_n(2),
+    \beta \in V_m(2) \].
+
+\subsection{Теорема о свёртке}
+\textbf{Следствие 4 (теорема о свёртке)}. Пусть $f,g,h \in
+\mathbb{F}_2(n)$, \[ h(x) = f(x) \oplus g(x) \forall x \in
+    V_n(2) \]
+Тогда \[ w_h(\beta) = 2^{-n} \sum_{\alpha \in V_n(2)}
+    w_f(\alpha) w_f(\alpha \oplus \beta) \forall \beta \in
+    V_n(2)\]
+\proof Зафиксируем произвольное $\beta \in V_n(2)$ и положим \[
+    g_{\beta}(x) = g(x) \oplus \langle \beta, x \rangle \]
+Тогда \[w_{g_{\beta}}(\alpha) = w_g(\alpha \oplus
+    \beta). \] \[w_h(\alpha) = \delta_{f, g_{\beta}}(0) \]
+для всех $\alpha \in V_n(2)$
+
+Из следствия 3 вытекает \[ w_h(\alpha) = 2^{-n} \sum_{\alpha
+    \in V_n(2)} w_f(\alpha)w_{g_{\beta}}(\alpha) = 2^{-n}
+    \sum_{\alpha in V_n(2)} w_f(\alpha) w_g(\alpha \oplus
+    \beta) \]
+
+\subsection{Коэффициенты Уолша-Адамара и криптографические
+    свойства}
+-- Многие важные криптографические свойства функции $f$
+зависят от числа ненулевых коэффициентов Уолша-Адамара
+
+Для $f \in \mathbb{F}_2(n)$ положим
+\[
+    \begin{aligned}
+    W_f^{(0)} = \{ \beta \in V_n(2) | w_f(\beta) = 0 \},\\
+    W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0 \},\\
+    \delta_f^{(1)} = \{ beta \in V_n(2) | \delta_f(\beta) \ne
+    0 \}.
+    \end{aligned}
+\]
+
+\definition Функции $f, g \in \mathbb{F}_2(n)$ имеют
+\textit{непересекающиеся спектры}, если \[ W_f^{(1)} \cap
+    W_g^{(1)} = \varnothing \]
+
+\statement{Функции $f, g \in \mathbb{F}_2(n)$ имеют
+    непересекающиеся спектры $\Leftrightarrow$ $f, g$ совершенно
+    некоррелированные}
+
+\lemme{Пусть $f, g \in \mathbb{F}_2(n)$. Тогда \[ \sum_{\alpha
+        \in V_n(2)} \delta_{f, g}^2(\alpha) \le 2^{3n} \]}
+
+\proof Положим
+\[
+    \begin{aligned}
+    \delta_{f, g} = (\delta_{f, g}(0), ..., \delta_{f, g}(2^n
+    - 1)),\\
+    W_{f, g} = (w_f(0)w_g(0), ..., w_f(2^n - 1)w_g(2^n - 1))
+    \end{aligned}
+\]
+
+Применяя теорему о взаимной корреляции, имеем \[ \langle W_{f,
+    g}, W_{f, g} \rangle = \langle \delta_{f, g} H_n,
+    \delta_{f, g} H_n \rangle = \langle \delta_{f, g} H_n H_n^T,
+    \delta_{f, g} \rangle = 2^n \langle \delta_{f, g},
+    \delta_{f, g} \rangle. \]
+\[ 2^n \sum_{\alpha \in V_n(2)} \delta_{f, g}^2(\alpha) =
+    \sum_{\alpha \in V_n(2)} w_f(\alpha) w_g(\alpha) \le
+    (\sum_{\alpha \in V_n(2)} w_f^2(\alpha))(\sum_{\alpha \in
+    V_n(2)} w_g^2(\alpha)) = 2^{2n} * 2^{2n} \]
+Отсюда следует неравенство $\blacksquare$
+
+\statement{Для каждой $f \in \mathbb{F}_2(n)$ справедливо
+    неравенство \[ |\delta_f^{(1)}| * |W_f^{(1)}| \ge 2^n \]
+    где \[ W_f^{(1)} = \{ \beta \in V_n(2) | w_f(\beta) \ne 0
+    \} \] }
+
+\textbf{Замечания}
+\begin{itemize}
+\item для некоторых приложений нужно большое число ненулевых
+    коэффициентов Уолша-Адамара
+\item для других приложений нужно большое число нулей функции
+    автокорреляции
+\end{itemize}
+$\implies$
+\begin{itemize}
+\item из неравенства следует, что одновременно обеспечить оба
+    требования невозможно
+\item если параметр ``хороший'', то другой ``плохой''. Нельзя
+    сделать обе характеристики хорошими
+\end{itemize}
+
+\subsection{Энтропия}
+
+Пусть $\xi$ -- дискретная случайная величина, заданная на
+конечном множестве $X = \{x_1, ..., x_n\}$
+\begin{itemize}
+\item $\mathbb{R}^+ = \{x \in \mathbb{R} | x > 0\}$,
+\item $\alpha \in \mathbb{R}^+$
+\end{itemize}
+\definition Мерой (логарифмической) неопределённости события
+$\{\xi = x\}$ при $x \in X$ называется \[ I(\xi = x) =
+    -\log_{\alpha} P\{\xi = x\} \]
+
+\begin{itemize}
+\item основание логарифма $\alpha \in \mathbb{R}^+$
+    -- зависит от выбора шкалы измерения информации (двоичной,
+    натуральной и т.д.)
+\item $I$ является случайной величиной, принимающей значение
+    $I(\xi = x)$ с вероятностью $P\{\xi = x\}$
+\end{itemize}
+\begin{itemize}
+\item Пусть $\eta$ -- случайная величина, заданная на
+    множестве $Y$,
+\item $P\{\xi = x, \eta = y\}$ -- совместное распределение
+    пары $(\xi, \eta)$ случайных величин на $X \times Y, (x, y)
+    \in X \times Y$.
+    \[ \sum_{y \in Y} P\{\xi = x, \eta = y\} = P\{\xi = x\} \]
+    \[ \sum_{x \in X} P\{\xi = x, \eta = y\} = P\{\eta = y\} \]
+\end{itemize}
+
+\definition Случайные величины $\xi, \eta$ называются
+независимыми, если \[ P\{\xi = x, \eta = y\} = P\{\xi =
+    x,\}P\{\eta = y\} \] для каждой $(x, y) \in X \times Y$
+
+\subsection{Условная энтропия}
+\begin{itemize}
+\item Условная энтропия случайной величины $\eta$ при условии
+    выполнения события $\{ \xi = x \}$: \[
+    \begin{aligned}
+        H(\eta | \xi = x) &= -
+    \sum_{y \in Y} P\{\eta = y | \xi = x \} \log_a P\{\eta = y
+                            | \xi = x \} \\
+                        &= - \sum_{x \in X} \sum_{y \in Y} P\{ \xi =
+        x, \eta = y \} \log_a P\{ \eta = y \}
+    \end{aligned}
+        \] %TODO: INCOMPLETE
+\end{itemize}
+\subsection{Взаимная информация}
+\definition Взаимная информация $I(\xi, \eta)$ случайных
+величин $\xi, \eta$ задаётся: \[ I(\xi, \eta) = \sum_{x \in X}
+    \sum_{y \in Y} P\{ \xi = x, \eta = y \} \log_a \frac{P\{\eta
+    = y, \xi = x\}}{P\{\eta = y\}P\{\xi = x\}} \]
+
+\lemme{$I(\xi, \eta) = 0 \Leftrightarrow \xi, \eta$
+    независимые случайные величины}
+
+\subsection{Корреляционная имунность и устойчивость двоичных
+    функций}
+
+\begin{itemize}
+\item \textit{Корреляционная имунность} -- мера
+    противодействия корреляционному методу анализа
+\item Отсутствие какой-нибудь информации о некоторых значениях
+    функции от ``некоторого'' подмножества её аргументов.
+    \begin{itemize}
+    \item если такая информация есть -- то её можно применять для
+    нахождения ключа
+    \item подход зависит от выбранной вероятностной модели
+    \end{itemize}
+\end{itemize}
+
+\subsection{Корреляционная иммунность}
+\begin{itemize}
+\item $\mathbb{F}_2(n) = \{f | f: V_n(2) \rightarrow \{0,
+    1\}\}$
+\item Пусть $f: V_n(2) \rightarrow \{0, 1\}$. $\xi_1, ...,
+    \xi_n$ -- независимые двоичные одинаково распределённые
+    случайные величины, \[ P\{\xi_i = 0\} = P\{\xi_i = 1\} =
+    \frac{1}{2}, i = 1, ..., n \]
+\item Двоичная случайная величина \[ \theta = f(\xi_1, ...,
+    \xi_n) \] имеет распределение \[ P\{\theta = 1\} = \|f\| *
+    2^{-n}, P\{\theta = 0\} = 1 - \|f\| * 2^{-n} \]
+\end{itemize}
+
+\definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
+называется корреляционно-иммунной порядка $m \in \{1, ..,
+n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
+i_1 < i_2 < ... < i_m \le m$ справедливо условие \[
+    I(\xi^{(i_1, i_2, ..., i_m)}, \theta) = 0 \], где $\xi^{(i)}
+= \xi^{(i_1, i_2, ..., i_m)} = (\xi_{i_1}, ..., \xi_{i_m})$
+
+\definition Двоичная функция $f: V_n(2) \rightarrow \{0, 1\}$
+называется корреляционно-иммунной порядка $m \in \{1, ..,
+n\}$, если для каждого набора $i = (i_1, i_2, ..., i_m), 1 \le
+i_1 < i_2 < ... < i_m \le m$ случайные величины $\xi_{i_1}, ...,
+\xi_{i_m}$ и [DATA EXPUNGED] % TODO: ??
+
+\subsection{Критерий корреляционной иммунности}
+
+$Cor_n^{(m)}$
+
+\statement Функция $f \in \mathbb{F}_2(n)$ является
+корреляционно-иммунной порядка $m \in \{1, ..., n - 1 \}
+\Leftrightarrow$ для каждого набора \[ i = (i_1, i_2, ...,
+    i_m) \in I_n^{(m)} и вектора \alpha = (\alpha_1, \alpha_2,
+    ..., \alpha_m) \in V_m(2)\]
+справедливо \[ \|f_{i_1, ..., i_m}^{(\alpha_1, ...,
+    \alpha_m)}\| = 2^{-m} * \|f\| \]
+\[ I_n^{(m)} = \{(i_1, ..., i_m) \in \{1, ..., n\}^m | 1 \le
+    i_1 < i_2 < ... < i_m \le n \]
+-- $I_n^{(m)}$ -- множество всех строго упорядоченных наборов
+из $m$ элементов из множества n
+
+\proof (Необходимость)\\
+Пусть $f \in Cor_n^{(m)}$. Из леммы следует что для каждого
+набора $i \in I_n^{(m)}$ заданы случайные величины \[
+    \xi^{(i)} = (\xi_{i_1}, ..., \xi_{i_m}) и \theta = f(\xi_1, ...,
+    \xi_n) \]
+Значит для каждых $\alpha \in V_m(2), \beta \in \{ 0, 1 \}$
+имеем \[ P\{\xi^{(i)} = \alpha|\theta = \beta\} = \frac{
+    P\{\xi^{(i)} = \alpha, \theta = \beta\}}{ P\{\theta =
+    \beta\}} = P\{ \xi^{(i)} = \alpha \} \]
+
+Випишем вероятности для $\beta = 1$.
+
+\[
+    \begin{aligned}
+    P\{\theta = 1\} = 2^{-n}\|f\|,\\
+    P\{\xi^{(i)} = \alpha\} = 2^{-m}
+    \end{aligned}
+\]
+
+\proof (Достаточность)\\
+Пусть на всех $i \in I_n^{(m)}$ и $\alpha \in V_m(2)$
+выполняется \[ \|f_i^{(\alpha)}\| = 2^{-m}\|f\| \]
+Проведя рассуждения в обратном порядке докажем равенство при
+$\theta = 1$
+\[
+    \begin{aligned}
+    P\{\xi^{(i)} = \alpha | \theta = 0\} &= \frac{ P\{\xi^{(i)}
+    = \alpha, \theta = 0\}}{ P\{\theta = 0\}} = \frac{
+    P\{\xi^{(i)} = \alpha\}}{1 - P\{\theta = 1\}} - \frac{
+    p\{\xi^{(i)} = \alpha, \theta = 1\}}{1 - P\{\theta = 1\}}
+    \\
+    &= \frac{2^{-m} - 2^{-n} \|f_i^{(\alpha)}\|}{1 - 2^{-n}\|f\|}
+    = \frac{2^{-m} - 2^{-n-m} \|f\|}{1 - 2^{-n}\|f\|} = 2^{-m} =
+    P\{\xi^{(i)} = \alpha\}
+    \end{aligned}
+\]
+$\implies$
+[DATA EXPUNGED]
+% TODO: implies what? didn't have time to even take a pic
+
+\subsection{Корреляционная иммунность и коэффициенты
+    Уолша-Адамара}
+-- Характеризация двоичной корреляционно-иммунной функции
+через коэффициенты Уолша-Адамара.
+
+Для $\alpha \in V_n(2), \alpha = (\alpha_1, \alpha_2, ...,
+\alpha_n)$ положим \[ supp(\alpha) = \{j \in \{1, ..., n\} |
+    \alpha_j = 1 \} \]
+
+\lection{Лекция 6}
+
+
 \end{document}
